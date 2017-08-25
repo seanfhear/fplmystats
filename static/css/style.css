@@ -1,0 +1,89 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button
+{
+    -webkit-appearance: none;
+    margin: 0;
+}
+.hide {
+    display: none;
+}
+input[type=number] {
+    -moz-appearance:textfield;
+}
+* {
+    font-family: Arimo, sans-serif;
+}
+p {
+    font-size: 110%;
+}
+li {
+    font-size: 110%;
+}
+th {
+    text-align: center;
+}
+.btn-manager {
+    background-color: #5085a0;
+}
+.btn-league {
+    background-color: #a95f4c;
+}
+.top-manager-display tr td {
+    border-color: #5085a0 !important;
+    vertical-align: middle;
+}
+.top-league-display tr td {
+    border-color: #a95f4c !important;
+    vertical-align: middle;
+}
+.main-manager-display thead tr th, .main-manager-display tbody tr td {
+    padding: 4px;
+    border-color: #5085a0;
+}
+.main-league-display thead tr th, .main-league-display tbody tr td {
+    padding: 4px;
+    border-color: #a95f4c;
+}
+.main-manager-display tbody tr:hover td {
+    background-color: #5085a0;
+    border-left: solid #336B87 0.5px;
+    border-right: solid #336B87 0.5px;
+}
+.main-league-display tbody tr:hover td {
+    background-color: #a95f4c;
+}
+table thead th {
+    vertical-align: middle;
+}
+table.weekly tbody tr td {
+    border-left: solid #5085a0 0.5px;
+    border-right: solid #5085a0 0.5px;
+}
+table.squad tbody tr td {
+    border-left: solid #5085a0 0.5px;
+    border-right: solid #5085a0 0.5px;
+}
+.general table thead tr th, .general table tbody tr td {
+    width: 7.14%;
+    vertical-align: middle;
+}
+.positions table thead tr th, .positions table tbody tr td {
+    width: 16.66%;
+    vertical-align: middle;
+}
+.team-selection table thead tr th, .team-selection table tbody tr td {
+    width: 8.33%;
+    vertical-align: middle;
+}
+.squad-one thead tr th, .squad-one tbody tr td {
+    width: 14.28%;
+    vertical-align: middle;
+}
+.squad-two thead tr th, .squad-two tbody tr td {
+    width: 50%;
+    vertical-align: middle;
+}
+.modal-table thead tr th {
+    width: 33%;
+    vertical-align: middle;
+}

@@ -1,0 +1,406 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>League Statistics: {{ league_name }}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <link rel="icon" href="{% static 'images/favicon.png' %}"/>
+</head>
+
+<body style="background-color: #c4dfe6">
+    <div class="container-fluid">
+        <div class="row">
+            <a href={% url 'index' %}><img src="{% static 'images/header.png' %}" alt="header_img" class="img-responsive"></a>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12" style="background-color: #763626">
+                    <p></p>
+                    <div class="col-md-4">
+                        <h1 style="color: white; margin-top: auto"><b><i>{{ league_name }}</i></b></h1>
+                    </div>
+                    <div class="col-md-8" style="color: white; text-align: center">
+                        <table class="table-condensed" style="margin: auto; font-size: 120%">
+                            <tr>
+                                <td>Leader:</td>
+                                <td style="color: #fbc2b2">{{ headers.0 }}</td>
+                                <td>Most Goals:</td>
+                                <td style="color: #fbc2b2">{{ headers.1 }}</td>
+                                <td>Most Clean Sheets:</td>
+                                <td style="color: #fbc2b2">{{ headers.2 }}</td>
+                            </tr>
+                            <!--
+                            <tr>
+                                <td>Best Captains:</td>
+                                <td style="color: #fbc2b2">David O'Connor</td>
+                                <td>Preferred PL Team:</td>
+                                <td style="color: #fbc2b2">Spurs</td>
+                                <td>Preferred Formation:</td>
+                                <td style="color: #fbc2b2">3-5-2</td>
+                            </tr>
+                            -->
+                        </table>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12" style="background-color: #763626">
+                    <div class="col-md-3">
+                        <br>
+                        <form>
+                            <select class="form-control" title="Analysis View" data-target=".table-view">
+                                <option data-show=".general">General Statistics</option>
+                                <option data-show=".positions">Positions</option>
+                                <option data-show=".team-selection">Team Selection</option>
+                            </select>
+                        </form>
+                        <br>
+                    </div>
+
+                    <div class="table-view">
+                        <div class="general hide">
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-8">
+                                    <br>
+                                    <div id="general-number-total" style="display: block">
+                                        <label for="summary" style="color: white">Top in Each Category:</label>
+                                        <table class="table-bordered top-league-display" style="width: 100%; color: white; text-align: center; font-size: 120%">
+                                            <tr style="vertical-align: bottom">
+                                                <td style="border-bottom: none">Minutes</td>
+                                                <td style="border-bottom: none">Goals</td>
+                                                <td style="border-bottom: none">Assists</td>
+                                                <td style="border-bottom: none">Clean Sheets</td>
+                                                <td style="border-bottom: none">Saves</td>
+                                                <td style="border-bottom: none">Goals Conceded</td>
+                                            </tr>
+                                            <tr style="color: #fbc2b2; vertical-align: top">
+                                                <td style="border-top: none; border-bottom: none">{{ general_number_max.0.1 }}</td>
+                                                <td style="border-top: none; border-bottom: none">{{ general_number_max.1.1 }}</td>
+                                                <td style="border-top: none; border-bottom: none">{{ general_number_max.2.1 }}</td>
+                                                <td style="border-top: none; border-bottom: none">{{ general_number_max.3.1 }}</td>
+                                                <td style="border-top: none; border-bottom: none">{{ general_number_max.4.1 }}</td>
+                                                <td style="border-top: none; border-bottom: none">{{ general_number_max.5.1 }}</td>
+                                            </tr>
+                                            <tr style="color: #fbc2b2; vertical-align: top">
+                                                <td style="border-top: none">{{ general_number_max.0.0 }}</td>
+                                                <td style="border-top: none">{{ general_number_max.1.0 }}</td>
+                                                <td style="border-top: none">{{ general_number_max.2.0 }}</td>
+                                                <td style="border-top: none">{{ general_number_max.3.0 }}</td>
+                                                <td style="border-top: none">{{ general_number_max.4.0 }}</td>
+                                                <td style="border-top: none">{{ general_number_max.5.0 }}</td>
+                                            </tr>
+                                            <tr style="vertical-align: bottom">
+                                                <td style="border-bottom: none">Penalties Saved</td>
+                                                <td style="border-bottom: none">Yellow Cards</td>
+                                                <td style="border-bottom: none">Red Cards</td>
+                                                <td style="border-bottom: none">Penalties Missed</td>
+                                                <td style="border-bottom: none">Own Goals</td>
+                                                <td style="border-bottom: none">Bonus Points</td>
+                                            </tr>
+                                            <tr style="color: #fbc2b2; vertical-align: top">
+                                                <td style="border-top: none; border-bottom: none">{{ general_number_max.6.1 }}</td>
+                                                <td style="border-top: none; border-bottom: none">{{ general_number_max.7.1 }}</td>
+                                                <td style="border-top: none; border-bottom: none">{{ general_number_max.8.1 }}</td>
+                                                <td style="border-top: none; border-bottom: none">{{ general_number_max.9.1 }}</td>
+                                                <td style="border-top: none; border-bottom: none">{{ general_number_max.10.1 }}</td>
+                                                <td style="border-top: none; border-bottom: none">{{ general_number_max.11.1 }}</td>
+                                            </tr>
+                                            <tr style="color: #fbc2b2; vertical-align: top">
+                                                <td style="border-top: none">{{ general_number_max.6.0 }}</td>
+                                                <td style="border-top: none">{{ general_number_max.7.0 }}</td>
+                                                <td style="border-top: none">{{ general_number_max.8.0 }}</td>
+                                                <td style="border-top: none">{{ general_number_max.9.0 }}</td>
+                                                <td style="border-top: none">{{ general_number_max.10.0 }}</td>
+                                                <td style="border-top: none">{{ general_number_max.11.0 }}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div id="general-points-total" style="display: none">
+                                        <label for="summary" style="color: white">Top in Each Category:</label>
+                                        <table class="table-bordered top-league-display" style="width: 100%; color: white; text-align: center; font-size: 120%">
+                                            <tr style="vertical-align: bottom">
+                                                <td style="border-bottom: none">Minutes</td>
+                                                <td style="border-bottom: none">Goals</td>
+                                                <td style="border-bottom: none">Assists</td>
+                                                <td style="border-bottom: none">Clean Sheets</td>
+                                                <td style="border-bottom: none">Saves</td>
+                                                <td style="border-bottom: none">Goals Conceded</td>
+                                            </tr>
+                                            <tr style="color: #fbc2b2; vertical-align: top">
+                                                <td style="border-top: none; border-bottom: none">{{ general_points_max.0.1 }}</td>
+                                                <td style="border-top: none; border-bottom: none">{{ general_points_max.1.1 }}</td>
+                                                <td style="border-top: none; border-bottom: none">{{ general_points_max.2.1 }}</td>
+                                                <td style="border-top: none; border-bottom: none">{{ general_points_max.3.1 }}</td>
+                                                <td style="border-top: none; border-bottom: none">{{ general_points_max.4.1 }}</td>
+                                                <td style="border-top: none; border-bottom: none">{{ general_points_max.5.1 }}</td>
+                                            </tr>
+                                            <tr style="color: #fbc2b2; vertical-align: top">
+                                                <td style="border-top: none">{{ general_points_max.0.0 }}</td>
+                                                <td style="border-top: none">{{ general_points_max.1.0 }}</td>
+                                                <td style="border-top: none">{{ general_points_max.2.0 }}</td>
+                                                <td style="border-top: none">{{ general_points_max.3.0 }}</td>
+                                                <td style="border-top: none">{{ general_points_max.4.0 }}</td>
+                                                <td style="border-top: none">{{ general_points_max.5.0 }}</td>
+                                            </tr>
+                                            <tr style="vertical-align: bottom">
+                                                <td style="border-bottom: none">Penalties Saved</td>
+                                                <td style="border-bottom: none">Yellow Cards</td>
+                                                <td style="border-bottom: none">Red Cards</td>
+                                                <td style="border-bottom: none">Penalties Missed</td>
+                                                <td style="border-bottom: none">Own Goals</td>
+                                                <td style="border-bottom: none">Bonus Points</td>
+                                            </tr>
+                                            <tr style="color: #fbc2b2; vertical-align: top">
+                                                <td style="border-top: none; border-bottom: none">{{ general_points_max.6.1 }}</td>
+                                                <td style="border-top: none; border-bottom: none">{{ general_points_max.7.1 }}</td>
+                                                <td style="border-top: none; border-bottom: none">{{ general_points_max.8.1 }}</td>
+                                                <td style="border-top: none; border-bottom: none">{{ general_points_max.9.1 }}</td>
+                                                <td style="border-top: none; border-bottom: none">{{ general_points_max.10.1 }}</td>
+                                                <td style="border-top: none; border-bottom: none">{{ general_points_max.11.1 }}</td>
+                                            </tr>
+                                            <tr style="color: #fbc2b2; vertical-align: top">
+                                                <td style="border-top: none">{{ general_points_max.6.0 }}</td>
+                                                <td style="border-top: none">{{ general_points_max.7.0 }}</td>
+                                                <td style="border-top: none">{{ general_points_max.8.0 }}</td>
+                                                <td style="border-top: none">{{ general_points_max.9.0 }}</td>
+                                                <td style="border-top: none">{{ general_points_max.10.0 }}</td>
+                                                <td style="border-top: none">{{ general_points_max.11.0 }}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="positions hide">
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-8">
+                                    <br>
+                                    <label for="summary" style="color: white">Top in Each Category:</label>
+                                    <table class="table-bordered top-league-display" style="width: 100%; color: white; text-align: center; font-size: 120%">
+                                        <tr style="vertical-align: bottom">
+                                            <td style="border-bottom: none">Goalkeeper</td>
+                                            <td style="border-bottom: none">Defence</td>
+                                            <td style="border-bottom: none">Midfield</td>
+                                            <td style="border-bottom: none">Forwards</td>
+                                        </tr>
+                                        <tr style="color: #fbc2b2">
+                                            <td style="border-top: none; border-bottom: none">Sean Hassett</td>
+                                            <td style="border-top: none; border-bottom: none">Sean Hassett</td>
+                                            <td style="border-top: none; border-bottom: none">David O'Connor</td>
+                                            <td style="border-top: none; border-bottom: none">Columb Connolly</td>
+                                        </tr>
+                                        <tr style="color: #fbc2b2; vertical-align: top">
+                                            <td style="border-top: none">125</td>
+                                            <td style="border-top: none">400</td>
+                                            <td style="border-top: none">1000</td>
+                                            <td style="border-top: none">800</td>
+                                    </table>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="team-selection hide">
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-8">
+                                    <br>
+                                    <label for="summary" style="color: white">Top in Each Category:</label>
+                                    <table class="table-bordered top-league-display" style="width: 100%; color: white; text-align: center; font-size: 120%">
+                                        <tr style="vertical-align: bottom">
+                                            <td style="border-bottom: none">Captain<br />Points</td>
+                                            <td style="border-bottom: none">MVP<br />Points</td>
+                                            <td style="border-bottom: none">Cpn Potential<br />Lost</td>
+                                            <td style="border-bottom: none">Bench Potential<br />Lost</td>
+                                            <td style="border-bottom: none">Max Possible<br />Points</td>
+                                            <td style="border-bottom: none">Potential<br />Lost</td>
+                                        </tr>
+                                        <tr style="color: #fbc2b2; vertical-align: top">
+                                            <td style="border-top: none; border-bottom: none">Sean Hassett</td>
+                                            <td style="border-top: none; border-bottom: none">Sean Hassett</td>
+                                            <td style="border-top: none; border-bottom: none">David O'Connor</td>
+                                            <td style="border-top: none; border-bottom: none">Columb Connolly</td>
+                                            <td style="border-top: none; border-bottom: none">Nigel Kennedy</td>
+                                            <td style="border-top: none; border-bottom: none">Abhishek Wilson</td>
+                                        </tr>
+                                        <tr style="color: #fbc2b2; vertical-align: top">
+                                            <td style="border-top: none">247</td>
+                                            <td style="border-top: none">278</td>
+                                            <td style="border-top: none">31</td>
+                                            <td style="border-top: none">87</td>
+                                            <td style="border-top: none">1623</td>
+                                            <td style="border-top: none">166</td>
+                                    </table>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 table-view">
+                        <div class="general hide">
+                            <div id="buttons" class="btn-group" data-toggle="buttons" style="color: lightgray">
+                                <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#generalModal" style="color: white">here</a> for an explanation of each column.</p>
+                                <label for="points-btn" class="btn btn-league active" onClick="toggleToNumber()"><b>Number</b>
+                                    <input type="radio" id="number-btn">
+                                </label>
+                                <label for="points-btn" class="btn btn-league" onClick="toggleToPoints()"><b>Points</b>
+                                    <input type="radio" id="points-btn">
+                                </label>
+
+                                <div id="general-number" class="general" style="display: block">
+                                    <table class="manager table table-hover main-league-display" style="text-align: center; width: 100%">
+                                        <thead style="color: lightgray; background-color: #491a0d">
+                                            <tr>
+                                                <th>Manager</th>
+                                                <th>Base<br />Points</th>
+                                                <th>Minutes</th>
+                                                <th>Goals</th>
+                                                <th>Assists</th>
+                                                <th>Clean<br />Sheets</th>
+                                                <th>Saves</th>
+                                                <th>Goals<br />Conceded</th>
+                                                <th>Penalties<br />Saved</th>
+                                                <th>Yellow<br />Cards</th>
+                                                <th>Red<br />Cards</th>
+                                                <th>Penalties<br />Missed</th>
+                                                <th>Own<br />Goals</th>
+                                                <th>Bonus<br />Points</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody style="color: white">
+                                            {% for manager in general_number %}
+                                            <tr>
+                                                <td><a href="{% url 'manager:detail' manager.0%}" style="color: white">{{ manager.1 }}</a></td>
+                                                {% for item in manager|slice:"2:15" %}
+                                                    <td>{{ item }}</td>
+                                                {% endfor %}
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div id="general-points" class="general" style="display: none">
+                                    <table class="manager table table-hover main-league-display" style="text-align: center; width: 100%">
+                                        <thead style="color: lightgray; background-color: #491a0d">
+                                            <tr>
+                                                <th>Manager</th>
+                                                <th>Base<br />Points</th>
+                                                <th>Minutes</th>
+                                                <th>Goals</th>
+                                                <th>Assists</th>
+                                                <th>Clean<br />Sheets</th>
+                                                <th>Saves</th>
+                                                <th>Goals<br />Conceded</th>
+                                                <th>Penalties<br />Saved</th>
+                                                <th>Yellow<br />Cards</th>
+                                                <th>Red<br />Cards</th>
+                                                <th>Penalties<br />Missed</th>
+                                                <th>Own<br />Goals</th>
+                                                <th>Bonus<br />Points</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody style="color: white">
+                                            {% for manager in general_points %}
+                                            <tr>
+                                                <td><a href="{% url 'manager:detail' manager.0%}" style="color: white">{{ manager.1 }}</a></td>
+                                                {% for item in manager|slice:"2:15" %}
+                                                    <td>{{ item }}</td>
+                                                {% endfor %}
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="positions hide">
+                            <table id="" class="manager table table-hover main-league-display" style="text-align: center; width: 100%">
+                                <thead style="color: lightgray; background-color: #491a0d">
+                                    <tr>
+                                        <th>Manager</th>
+                                        <th>Preferred<br />Formation</th>
+                                        <th>Points<br />From GK</th>
+                                        <th>Points<br />From DEF</th>
+                                        <th>Points<br />From MID</th>
+                                        <th>Points<br />From FWD</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="color: white">
+                                    <tr>
+                                        <td>Sean Hassett</td>
+                                        <td>3-5-2</td>
+                                        <td>125</td>
+                                        <td>342</td>
+                                        <td>751</td>
+                                        <td>453</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="team-selection hide">
+                            <table id="" class="manager table table-hover main-league-display" style="text-align: center; width: 100%">
+                                <thead style="color: lightgray; background-color: #491a0d">
+                                    <tr>
+                                        <th>Manager</th>
+                                        <th>Preferred<br />Captain</th>
+                                        <th>Captain<br />Points</th>
+                                        <th>Season<br />MVP</th>
+                                        <th>MVP<br />Points</th>
+                                        <th>Captain<br />Potential Lost</th>
+                                        <th>Points<br />on Bench</th>
+                                        <th>Bench<br />Potential Lost</th>
+                                        <th>Points</th>
+                                        <th>Max Possible<br />Points</th>
+                                        <th>Potential<br />Lost</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="color: white">
+                                    {% for name in manager_names %}
+                                        <tr>
+                                            <td><a href="{% url 'manager:detail' name.0%}" style="color: white">{{ name.1 }}</a></td>
+                                            <td>Aguero</td>
+                                            <td>6</td>
+                                            <td>Hazard</td>
+                                            <td>10</td>
+                                            <td>4</td>
+                                            <td>13</td>
+                                            <td>5</td>
+                                            <td>54</td>
+                                            <td>63</td>
+                                            <td>9</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</body>
+</html>

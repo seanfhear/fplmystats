@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>FPL: My Stats</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link rel="icon" href="{% static 'images/favicon.png' %}"/>
+</head>
+
+<body style="background-color: #c4dfe6">
+    <div class="container-fluid">
+        <div class="row">
+            <img src="{% static 'images/header.png' %}" alt="header_img" class="img-responsive">
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-md-12" style="background-color: #336B87">
+                    <h1 style="text-align: center; color: white"><b>Manager Stats</b></h1>
+                    <form action="{% url 'manager:search' %}" method="post">
+                        {% csrf_token %}
+                        <div class="input">
+                            <br>
+                            <!--<p style="text-align: center; color: lightgray"><u>Search disabled until the new season starts</u></p>-->
+                            <input  class="form-control input-lg" name="manager_id" id="inputlg" type="number" placeholder="Manager ID" onfocus="placeholder=''" onblur="placeholder = 'Manager ID'" style="text-align: center">
+                            <br><br>
+                        </div>
+                    </form>
+                    <div style="color: white">
+                        <p>Enter a manager's ID number to view in-depth statistics relating to their team including:</p>
+                        <ul>
+                            <li>How many goals, assists, clean sheets, bonus points etc. have been obtained in the season</li>
+                            <li>How many points have been obtained from each position.</li>
+                            <li>Their favourite choice for captain</li>
+                            <li>Which players have featured in the team the most often</li>
+                            <li>Which players have earned the team the most points</li>
+                            <li>Which players have offered the best value for money</li>
+                        </ul>
+                        <br><br>
+                        <p>To find out a manager's ID, click on <u>'View Gameweek history'</u> and see the ID in the URL</p>
+                        <img src="{% static 'images/sample_manager_id.png' %}" alt="sample_manager_ID" class="img-responsive">
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-12" style="background-color: #763626">
+                    <h1 style="text-align: center; color: white"><b>League Stats</b></h1>
+                    <form action="{% url 'league:detail' %}" method="post">
+                        {% csrf_token %}
+                        <div class="input">
+                            <br>
+                            <!--<p style="text-align: center; color: lightgray"><u>Search disabled until the new season starts</u></p>-->
+                            <input class="form-control input-lg" name="league_id" id="inputlg" type="number" placeholder="League ID" onfocus="placeholder=''" onblur="placeholder = 'League ID'" style="text-align: center">
+                            <br><br>
+                        </div>
+                    </form>
+                    <div style="color: white">
+                        <p>Enter a league's ID number to view stats relating to the top 50 players in the league including:</p>
+                        <ul>
+                            <li>Who has the most goals, assists, clean sheets, bonus points etc.</li>
+                            <li>Who has the highest scoring defense, midfield etc.</li>
+                            <li>Who is the best at picking their captain</li>
+                            <li>Who is each team's MVP</li>
+                            <li>Who leaves the most points on the bench</li>
+                            <li>The favourite formation of each member</li>
+                        </ul>
+                        <br><br>
+                        <p>To find out a league's ID, click on the league and see the ID in the URL</p>
+                        <img src="{% static 'images/sample_league_id.png' %}" alt="sample_league_ID" class="img-responsive">
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
