@@ -16,7 +16,7 @@ for entry in static_data['events']:
         current_week = entry['id']
 
 current_season = getattr(settings, 'CURRENT_SEASON', None)
-data_file = 'FPL_db.sqlite'
+data_file = 'FPLdb.sqlite'
 
 MINUTES_LESS_THAN_SIXTY_VALUE = 1
 MINUTES_SIXTY_PLUS_VALUE = 2

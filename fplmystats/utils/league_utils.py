@@ -3,17 +3,16 @@ import json
 from collections import namedtuple
 from fplmystats.utils import manager_utils
 
-dynamic_url = 'https://fantasy.premierleague.com/drf/bootstrap-dynamic'
-manager_info_url = 'https://fantasy.premierleague.com/drf/entry/'
+static_url = 'https://fantasy.premierleague.com/drf/bootstrap-static'
 classic_league_info_url = 'https://fantasy.premierleague.com/drf/leagues-classic-standings/'
 h2h_league_info_url = 'https://fantasy.premierleague.com/drf/leagues-h2h-standings/'
 
-with urllib.request.urlopen('{}'.format(dynamic_url)) as dynamic_json:
-    dynamic_data = json.loads(dynamic_json.read().decode())
-current_week = 3
-
-field_type_INT = 'INTEGER'
-field_type_TEXT = 'TEXT'
+with urllib.request.urlopen('{}'.format(static_url)) as static_json:
+    static_data = json.loads(static_json.read().decode())
+current_week = 0
+for entry in static_data['events']:
+    if entry['is_current']:
+        current_week = entry['id']
 
 
 def get_league_name(league_id):
