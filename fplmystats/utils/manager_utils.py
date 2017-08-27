@@ -5,12 +5,15 @@ import sqlite3
 import json
 import math
 
-dynamic_url = 'https://fantasy.premierleague.com/drf/bootstrap-dynamic'
+static_url = 'https://fantasy.premierleague.com/drf/bootstrap-static'
 manager_info_url = 'https://fantasy.premierleague.com/drf/entry/'
 
-with urllib.request.urlopen('{}'.format(dynamic_url)) as dynamic_json:
-    dynamic_data = json.loads(dynamic_json.read().decode())
-current_week = dynamic_data['current-event']
+with urllib.request.urlopen('{}'.format(static_url)) as static_json:
+    static_data = json.loads(static_json.read().decode())
+current_week = 0
+for entry in static_data['events']:
+    if entry['is_current']:
+        current_week = entry['id']
 
 current_season = getattr(settings, 'CURRENT_SEASON', None)
 data_file = 'FPL_db.sqlite'
@@ -117,7 +120,7 @@ def get_stats(manager_id):
         table_data.general_number.append([0] * 14)
         table_data.general_points.append([0] * 14)
         table_data.positions.append([0] * 6)
-        table_data.team_selection.append([0] * 12)
+        table_data.team_selection.append([0] * 13)
         formation = [0, 0, 0]
 
         # set first element of each section to the current working week
@@ -144,6 +147,7 @@ def get_stats(manager_id):
             table_data.team_selection[week - 1][1] = 'Wildcard'
         else:
             table_data.team_selection[week - 1][1] = '-'
+        table_data.team_selection[week - 1][2] = data['entry_history']['event_transfers_cost']
 
         week_points = data['entry_history']['points']
         if week_points > highest_points:
@@ -413,29 +417,29 @@ def get_stats(manager_id):
             table_data.max_teams.append(max_points_team)
 
         if captain_played or not vice_captain_played:
-            table_data.team_selection[week - 1][2] = captain_name
-            table_data.team_selection[week - 1][3] = captain_points * captain_multiplier
+            table_data.team_selection[week - 1][3] = captain_name
+            table_data.team_selection[week - 1][4] = captain_points * captain_multiplier
             if captain_name not in player_captain_dict:
                 player_captain_dict[captain_name] = 0
             player_captain_dict[captain_name] += 1
         else:
-            table_data.team_selection[week - 1][2] = vice_captain_name
-            table_data.team_selection[week - 1][3] = vice_captain_points
+            table_data.team_selection[week - 1][3] = vice_captain_name
+            table_data.team_selection[week - 1][4] = vice_captain_points
             if vice_captain_name not in player_captain_dict:
                 player_captain_dict[vice_captain_name] = 0
             player_captain_dict[vice_captain_name] += 1
 
-        table_data.team_selection[week - 1][4] = mvp_name
-        table_data.team_selection[week - 1][5] = mvp_points
-        table_data.team_selection[week - 1][6] = (mvp_points - captain_points) * captain_multiplier
-        table_data.team_selection[week - 1][7] = bench_points
-        table_data.team_selection[week - 1][8] = bench_potential_lost
-        table_data.team_selection[week - 1][9] = table_data.general_points[week - 1][1] +\
-            (table_data.team_selection[week - 1][3])
-        table_data.team_selection[week - 1][11] = table_data.team_selection[week - 1][6] +\
-            table_data.team_selection[week - 1][8]
-        table_data.team_selection[week - 1][10] = table_data.team_selection[week - 1][9] +\
-            table_data.team_selection[week - 1][11]
+        table_data.team_selection[week - 1][5] = mvp_name
+        table_data.team_selection[week - 1][6] = mvp_points
+        table_data.team_selection[week - 1][7] = (mvp_points - captain_points) * captain_multiplier
+        table_data.team_selection[week - 1][8] = bench_points
+        table_data.team_selection[week - 1][9] = bench_potential_lost
+        table_data.team_selection[week - 1][10] = table_data.general_points[week - 1][1] +\
+            table_data.team_selection[week - 1][4] - table_data.team_selection[week - 1][2]
+        table_data.team_selection[week - 1][12] = table_data.team_selection[week - 1][7] +\
+            table_data.team_selection[week - 1][9]
+        table_data.team_selection[week - 1][11] = table_data.team_selection[week - 1][10] +\
+            table_data.team_selection[week - 1][12]
 
         week += 1
 
@@ -449,12 +453,14 @@ def get_stats(manager_id):
 
     # TODO add triple captain points to total captain points
     table_data.team_selection_totals = [0]*7
-    table_data.team_selection_totals[0] = sum(week[3] for week in table_data.team_selection)    # captain points
-    table_data.team_selection_totals[1] = sum(week[5] for week in table_data.team_selection)    # mvp total
-    table_data.team_selection_totals[2] = sum(week[6] for week in table_data.team_selection)    # captain lost
-    table_data.team_selection_totals[3] = sum(week[7] for week in table_data.team_selection)    # bench points
-    table_data.team_selection_totals[4] = sum(week[8] for week in table_data.team_selection)    # bench lost
-    table_data.team_selection_totals[6] = sum(week[11] for week in table_data.team_selection)   # all lost
+    table_data.team_selection_totals[0] = sum(entry[2] for entry in table_data.team_selection)    # transfer cost
+    table_data.team_selection_totals[1] = sum(entry[4] for entry in table_data.team_selection)    # captain points
+    table_data.team_selection_totals[2] = sum(entry[6] for entry in table_data.team_selection)    # mvp total
+    table_data.team_selection_totals[3] = sum(entry[7] for entry in table_data.team_selection)    # captain lost
+    # table_data.team_selection_totals[4] = sum(week[8] for entry in table_data.team_selection)    # bench points
+    table_data.team_selection_totals[4] = sum(entry[9] for entry in table_data.team_selection)    # bench lost
+    table_data.team_selection_totals[5] = sum(entry[11] for entry in table_data.team_selection)   # max possible
+    table_data.team_selection_totals[6] = sum(entry[12] for entry in table_data.team_selection)   # all lost
 
     table_data.squad_stats_players = []
     for player in player_apps_xv_dict:
@@ -490,14 +496,7 @@ def get_stats(manager_id):
 
     table_data.headers = [0] * 7
 
-    data_url = manager_info_url + str(manager_id)
-    with urllib.request.urlopen('{}'.format(data_url)) as url:
-        data = json.loads(url.read().decode())
-
-    # max points, current points plus potential lost
-    table_data.team_selection_totals[5] = data['entry']['summary_overall_points'] + table_data.team_selection_totals[6]
-
-    table_data.headers[0] = data['entry']['summary_overall_points']
+    table_data.headers[0] = sum(entry[10] for entry in table_data.team_selection)
     table_data.headers[1] = highest_points
     table_data.headers[2] = highest_rank
     table_data.headers[3] = max(player_captain_dict, key=player_captain_dict.get)

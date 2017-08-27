@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from fplmystats.utils import manager_utils
 
 # TODO scroll headers with window
+# TODO for squad statistics, include captain points for players
 
 
 def search(request):

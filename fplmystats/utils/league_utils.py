@@ -10,7 +10,7 @@ h2h_league_info_url = 'https://fantasy.premierleague.com/drf/leagues-h2h-standin
 
 with urllib.request.urlopen('{}'.format(dynamic_url)) as dynamic_json:
     dynamic_data = json.loads(dynamic_json.read().decode())
-current_week = dynamic_data['current-event']
+current_week = 3
 
 field_type_INT = 'INTEGER'
 field_type_TEXT = 'TEXT'

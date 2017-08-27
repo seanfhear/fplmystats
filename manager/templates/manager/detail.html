@@ -30,11 +30,11 @@
                 <div class="col-md-12" style="background-color: #336B87">
                     <p></p>
                     <div class="col-md-6">
-                        <h1 style="color: white; margin-top: auto"><b>{{ manager_name }}</b></h1>
+                        <h1 style="margin-top: auto"><a href="https://fantasy.premierleague.com/a/team/{{ manager_id }}" style="color: white"><b>{{ manager_name }}</b></a></h1>
                     </div>
                     <div class="col-md-6">
                         <div class="pull-right">
-                            <h1 style="color: white; text-align: right; margin-top: auto"><i>{{ team_name }}</i></h1>
+                            <h1 style="text-align: right; margin-top: auto"><a href="https://fantasy.premierleague.com/a/team/{{ manager_id }}" style="color: white"><i>{{ team_name }}</i></a></h1>
                         </div>
                     </div>
                     <div class="col-md-12" style="color: white; text-align: center">
@@ -195,6 +195,7 @@
                                     <label for="summary" style="color: white">Totals:</label>
                                     <table class="table-bordered top-manager-display" style="width: 100%; color: white; text-align: center; font-size: 120%">
                                         <tr style="vertical-align: bottom">
+                                            <td style="border-bottom: none">Transfer<br />Cost</td>
                                             <td style="border-bottom: none">Captain<br />Points</td>
                                             <td style="border-bottom: none">MVP<br />Points</td>
                                             <td style="border-bottom: none">Captain<br />Points Lost</td>
@@ -203,12 +204,9 @@
                                             <td style="border-bottom: none">Potential<br />Lost</td>
                                         </tr>
                                         <tr style="color: #c4dfe6; vertical-align: top">
-                                            <td style="border-top: none">{{ team_selection_totals.0 }}</td>
-                                            <td style="border-top: none">{{ team_selection_totals.1 }}</td>
-                                            <td style="border-top: none">{{ team_selection_totals.2 }}</td>
-                                            <td style="border-top: none">{{ team_selection_totals.4 }}</td>
-                                            <td style="border-top: none">{{ team_selection_totals.5 }}</td>
-                                            <td style="border-top: none">{{ team_selection_totals.6 }}</td>
+                                            {% for item in team_selection_totals %}
+                                                <td style="border-top: none">{{ item }}</td>
+                                            {% endfor %}
                                     </table>
                                     <br>
                                 </div>
@@ -403,8 +401,10 @@
                                             <ul><li>The Gameweek number.</li></ul>
                                             <h4>Chip Used</h4>
                                             <ul><li>Which Chip was played, if any.</li></ul>
+                                            <h4>Transfer Cost</h4>
+                                            <ul><li>The amount of points spent on transfers</li></ul>
                                             <h4>Captain</h4>
-                                            <ul><li>Which player was chosen as Captain. If the Vice Captain ended up being the player who the multiple was applied to because the Captain didn't play, the Vice Captain's name will be here instead.</li></ul>
+                                            <ul><li>Which player was chosen as Captain. If the Vice Captain played and the Captain didn't play (or has yet to play in the current week), the Vice Captain's name will be here instead.</li></ul>
                                             <h4>Captain Points</h4>
                                             <ul><li>How many points the Captain (or Vice Captain, if applicable) scored.</li></ul>
                                             <h4>MVP</h4>
@@ -418,7 +418,7 @@
                                             <h4>Bench Points Lost</h4>
                                             <ul><li>How many points on the bench could have been on the pitch.</li></ul>
                                             <h4>Points</h4>
-                                            <ul><li>Total points scored.</li></ul>
+                                            <ul><li>Total points scored, including the Captain multiplier and deductions for transfers.</li></ul>
                                             <h4>Maximum Points</h4>
                                             <ul><li>The maximum amount of points that could have been obtained by choosing the best Captain and starting eleven.<br />Click on the number to see the best possible lineup for that week.</li></ul>
                                             <h4>Potential Lost</h4>
@@ -436,6 +436,7 @@
                                     <tr>
                                         <th>Week</th>
                                         <th>Chip<br />Used</th>
+                                        <th>Transfer<br />Cost</th>
                                         <th>Captain</th>
                                         <th>Captain<br />Points</th>
                                         <th>MVP</th>
@@ -451,11 +452,11 @@
                                 <tbody style="color: white">
                                     {% for week in team_selection %}
                                         <tr>
-                                            {% for item in week|slice:":10" %}
+                                            {% for item in week|slice:":11" %}
                                                 <td>{{ item }}</td>
                                             {% endfor %}
-                                            <td><a data-toggle="modal" href="#maxModal" style="color: white">{{ week.10 }}</a></td>
-                                            <td>{{ week.11 }}</td>
+                                            <td><a data-toggle="modal" href="#maxModal" style="color: white">{{ week.11 }}</a></td>
+                                            <td>{{ week.12 }}</td>
                                         </tr>
                                         <!--
                                         <div class="modal fade" id="maxModal" role="dialog">

@@ -6,7 +6,7 @@ import json
 dynamic_url = 'https://fantasy.premierleague.com/drf/bootstrap-dynamic'
 with urllib.request.urlopen('{}'.format(dynamic_url)) as dynamic_json:
     dynamic_data = json.loads(dynamic_json.read().decode())
-current_week = dynamic_data['current-event']
+current_week = 3
 
 current_season = getattr(settings, 'CURRENT_SEASON', None)
 data_file = 'FPL_db.sqlite'
