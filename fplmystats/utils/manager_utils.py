@@ -11,9 +11,9 @@ manager_info_url = 'https://fantasy.premierleague.com/drf/entry/'
 with urllib.request.urlopen('{}'.format(static_url)) as static_json:
     static_data = json.loads(static_json.read().decode())
 current_week = 0
-for entry in static_data['events']:
-    if entry['is_current']:
-        current_week = entry['id']
+for event in static_data['events']:
+    if event['is_current']:
+        current_week = event['id']
 
 current_season = getattr(settings, 'CURRENT_SEASON', None)
 data_file = 'FPLdb.sqlite'
@@ -272,7 +272,7 @@ def get_stats(manager_id):
                 table_data.general_points[week - 1][12] += player_datum[12] * OWN_GOALS_VALUE         # own goals
                 table_data.general_points[week - 1][13] += player_datum[13]                           # bonus points
 
-                player_points_dict[player_name] += player_datum[1]
+                player_points_dict[player_name] += player_datum[1] * player_id[1]
 
                 if player_datum[1] > mvp_points:
                     mvp_points = player_datum[1]
@@ -452,15 +452,15 @@ def get_stats(manager_id):
     table_data.positions_totals = [sum(n) for n in table_data.positions_totals]
 
     # TODO add triple captain points to total captain points
-    table_data.team_selection_totals = [0]*7
+    table_data.team_selection_totals = [0]*8
     table_data.team_selection_totals[0] = sum(entry[2] for entry in table_data.team_selection)    # transfer cost
     table_data.team_selection_totals[1] = sum(entry[4] for entry in table_data.team_selection)    # captain points
     table_data.team_selection_totals[2] = sum(entry[6] for entry in table_data.team_selection)    # mvp total
     table_data.team_selection_totals[3] = sum(entry[7] for entry in table_data.team_selection)    # captain lost
-    # table_data.team_selection_totals[4] = sum(week[8] for entry in table_data.team_selection)    # bench points
-    table_data.team_selection_totals[4] = sum(entry[9] for entry in table_data.team_selection)    # bench lost
-    table_data.team_selection_totals[5] = sum(entry[11] for entry in table_data.team_selection)   # max possible
-    table_data.team_selection_totals[6] = sum(entry[12] for entry in table_data.team_selection)   # all lost
+    table_data.team_selection_totals[4] = sum(entry[8] for entry in table_data.team_selection)   # bench points
+    table_data.team_selection_totals[5] = sum(entry[9] for entry in table_data.team_selection)    # bench lost
+    table_data.team_selection_totals[6] = sum(entry[11] for entry in table_data.team_selection)   # max possible
+    table_data.team_selection_totals[7] = sum(entry[12] for entry in table_data.team_selection)   # all lost
 
     table_data.squad_stats_players = []
     for player in player_apps_xv_dict:
@@ -483,9 +483,9 @@ def get_stats(manager_id):
         if weeks_in_xi != 0:
             points_per_game = round(points / weeks_in_xi, 1)
 
-        value_added_per_million = 0.0
+        value_added_per_million = 0.00
         if weeks_in_xi != 0:
-            value_added_per_million = round((points_per_game - 2) / player_value, 1)
+            value_added_per_million = round((points_per_game - 2) / player_value, 2)
 
         table_data.squad_stats_players.append([name, weeks_in_xi, weeks_in_xv, weeks_captain, points,
                                               points_per_game, value_added_per_million])

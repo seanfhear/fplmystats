@@ -94,20 +94,14 @@
                                                 <td style="border-bottom: none">Goals Conceded</td>
                                             </tr>
                                             <tr style="color: #fbc2b2; vertical-align: top">
-                                                <td style="border-top: none; border-bottom: none">{{ general_number_max.0.1 }}</td>
-                                                <td style="border-top: none; border-bottom: none">{{ general_number_max.1.1 }}</td>
-                                                <td style="border-top: none; border-bottom: none">{{ general_number_max.2.1 }}</td>
-                                                <td style="border-top: none; border-bottom: none">{{ general_number_max.3.1 }}</td>
-                                                <td style="border-top: none; border-bottom: none">{{ general_number_max.4.1 }}</td>
-                                                <td style="border-top: none; border-bottom: none">{{ general_number_max.5.1 }}</td>
+                                                {% for item in general_number_max|slice:"0:6" %}
+                                                    <td style="border-top: none; border-bottom: none">{{ item.1 }}</td>
+                                                {% endfor %}
                                             </tr>
                                             <tr style="color: #fbc2b2; vertical-align: top">
-                                                <td style="border-top: none">{{ general_number_max.0.0 }}</td>
-                                                <td style="border-top: none">{{ general_number_max.1.0 }}</td>
-                                                <td style="border-top: none">{{ general_number_max.2.0 }}</td>
-                                                <td style="border-top: none">{{ general_number_max.3.0 }}</td>
-                                                <td style="border-top: none">{{ general_number_max.4.0 }}</td>
-                                                <td style="border-top: none">{{ general_number_max.5.0 }}</td>
+                                                {% for item in general_number_max|slice:"0:6" %}
+                                                    <td style="border-top: none; border-bottom: none">{{ item.0 }}</td>
+                                                {% endfor %}
                                             </tr>
                                             <tr style="vertical-align: bottom">
                                                 <td style="border-bottom: none">Penalties Saved</td>
@@ -118,20 +112,14 @@
                                                 <td style="border-bottom: none">Bonus Points</td>
                                             </tr>
                                             <tr style="color: #fbc2b2; vertical-align: top">
-                                                <td style="border-top: none; border-bottom: none">{{ general_number_max.6.1 }}</td>
-                                                <td style="border-top: none; border-bottom: none">{{ general_number_max.7.1 }}</td>
-                                                <td style="border-top: none; border-bottom: none">{{ general_number_max.8.1 }}</td>
-                                                <td style="border-top: none; border-bottom: none">{{ general_number_max.9.1 }}</td>
-                                                <td style="border-top: none; border-bottom: none">{{ general_number_max.10.1 }}</td>
-                                                <td style="border-top: none; border-bottom: none">{{ general_number_max.11.1 }}</td>
+                                                {% for item in general_number_max|slice:"6:12" %}
+                                                    <td style="border-top: none; border-bottom: none">{{ item.1 }}</td>
+                                                {% endfor %}
                                             </tr>
                                             <tr style="color: #fbc2b2; vertical-align: top">
-                                                <td style="border-top: none">{{ general_number_max.6.0 }}</td>
-                                                <td style="border-top: none">{{ general_number_max.7.0 }}</td>
-                                                <td style="border-top: none">{{ general_number_max.8.0 }}</td>
-                                                <td style="border-top: none">{{ general_number_max.9.0 }}</td>
-                                                <td style="border-top: none">{{ general_number_max.10.0 }}</td>
-                                                <td style="border-top: none">{{ general_number_max.11.0 }}</td>
+                                                {% for item in general_number_max|slice:"6:12" %}
+                                                    <td style="border-top: none; border-bottom: none">{{ item.0 }}</td>
+                                                {% endfor %}
                                             </tr>
                                         </table>
                                     </div>
@@ -147,20 +135,14 @@
                                                 <td style="border-bottom: none">Goals Conceded</td>
                                             </tr>
                                             <tr style="color: #fbc2b2; vertical-align: top">
-                                                <td style="border-top: none; border-bottom: none">{{ general_points_max.0.1 }}</td>
-                                                <td style="border-top: none; border-bottom: none">{{ general_points_max.1.1 }}</td>
-                                                <td style="border-top: none; border-bottom: none">{{ general_points_max.2.1 }}</td>
-                                                <td style="border-top: none; border-bottom: none">{{ general_points_max.3.1 }}</td>
-                                                <td style="border-top: none; border-bottom: none">{{ general_points_max.4.1 }}</td>
-                                                <td style="border-top: none; border-bottom: none">{{ general_points_max.5.1 }}</td>
+                                                {% for item in general_points_max|slice:"0:6" %}
+                                                    <td style="border-top: none; border-bottom: none">{{ item.1 }}</td>
+                                                {% endfor %}
                                             </tr>
                                             <tr style="color: #fbc2b2; vertical-align: top">
-                                                <td style="border-top: none">{{ general_points_max.0.0 }}</td>
-                                                <td style="border-top: none">{{ general_points_max.1.0 }}</td>
-                                                <td style="border-top: none">{{ general_points_max.2.0 }}</td>
-                                                <td style="border-top: none">{{ general_points_max.3.0 }}</td>
-                                                <td style="border-top: none">{{ general_points_max.4.0 }}</td>
-                                                <td style="border-top: none">{{ general_points_max.5.0 }}</td>
+                                                {% for item in general_points_max|slice:"0:6" %}
+                                                    <td style="border-top: none; border-bottom: none">{{ item.0 }}</td>
+                                                {% endfor %}
                                             </tr>
                                             <tr style="vertical-align: bottom">
                                                 <td style="border-bottom: none">Penalties Saved</td>
@@ -171,20 +153,14 @@
                                                 <td style="border-bottom: none">Bonus Points</td>
                                             </tr>
                                             <tr style="color: #fbc2b2; vertical-align: top">
-                                                <td style="border-top: none; border-bottom: none">{{ general_points_max.6.1 }}</td>
-                                                <td style="border-top: none; border-bottom: none">{{ general_points_max.7.1 }}</td>
-                                                <td style="border-top: none; border-bottom: none">{{ general_points_max.8.1 }}</td>
-                                                <td style="border-top: none; border-bottom: none">{{ general_points_max.9.1 }}</td>
-                                                <td style="border-top: none; border-bottom: none">{{ general_points_max.10.1 }}</td>
-                                                <td style="border-top: none; border-bottom: none">{{ general_points_max.11.1 }}</td>
+                                                {% for item in general_points_max|slice:"6:12" %}
+                                                    <td style="border-top: none; border-bottom: none">{{ item.1 }}</td>
+                                                {% endfor %}
                                             </tr>
                                             <tr style="color: #fbc2b2; vertical-align: top">
-                                                <td style="border-top: none">{{ general_points_max.6.0 }}</td>
-                                                <td style="border-top: none">{{ general_points_max.7.0 }}</td>
-                                                <td style="border-top: none">{{ general_points_max.8.0 }}</td>
-                                                <td style="border-top: none">{{ general_points_max.9.0 }}</td>
-                                                <td style="border-top: none">{{ general_points_max.10.0 }}</td>
-                                                <td style="border-top: none">{{ general_points_max.11.0 }}</td>
+                                                {% for item in general_points_max|slice:"6:12" %}
+                                                    <td style="border-top: none; border-bottom: none">{{ item.0 }}</td>
+                                                {% endfor %}
                                             </tr>
                                         </table>
                                     </div>
@@ -206,16 +182,14 @@
                                             <td style="border-bottom: none">Forwards</td>
                                         </tr>
                                         <tr style="color: #fbc2b2">
-                                            <td style="border-top: none; border-bottom: none">Sean Hassett</td>
-                                            <td style="border-top: none; border-bottom: none">Sean Hassett</td>
-                                            <td style="border-top: none; border-bottom: none">David O'Connor</td>
-                                            <td style="border-top: none; border-bottom: none">Columb Connolly</td>
+                                            {% for item in positions_max %}
+                                                <td style="border-top: none; border-bottom: none">{{ item.1 }}</td>
+                                            {% endfor %}
                                         </tr>
                                         <tr style="color: #fbc2b2; vertical-align: top">
-                                            <td style="border-top: none">125</td>
-                                            <td style="border-top: none">400</td>
-                                            <td style="border-top: none">1000</td>
-                                            <td style="border-top: none">800</td>
+                                            {% for item in positions_max %}
+                                                <td style="border-top: none; border-bottom: none">{{ item.0 }}</td>
+                                            {% endfor %}
                                     </table>
                                     <br>
                                 </div>
@@ -229,28 +203,23 @@
                                     <label for="summary" style="color: white">Top in Each Category:</label>
                                     <table class="table-bordered top-league-display" style="width: 100%; color: white; text-align: center; font-size: 120%">
                                         <tr style="vertical-align: bottom">
+                                            <td style="border-bottom: none">Transfer<br />Cost</td>
                                             <td style="border-bottom: none">Captain<br />Points</td>
                                             <td style="border-bottom: none">MVP<br />Points</td>
-                                            <td style="border-bottom: none">Cpn Potential<br />Lost</td>
-                                            <td style="border-bottom: none">Bench Potential<br />Lost</td>
+                                            <td style="border-bottom: none">Captain Points<br />Lost</td>
+                                            <td style="border-bottom: none">Bench Points<br />Lost</td>
                                             <td style="border-bottom: none">Max Possible<br />Points</td>
                                             <td style="border-bottom: none">Potential<br />Lost</td>
                                         </tr>
                                         <tr style="color: #fbc2b2; vertical-align: top">
-                                            <td style="border-top: none; border-bottom: none">Sean Hassett</td>
-                                            <td style="border-top: none; border-bottom: none">Sean Hassett</td>
-                                            <td style="border-top: none; border-bottom: none">David O'Connor</td>
-                                            <td style="border-top: none; border-bottom: none">Columb Connolly</td>
-                                            <td style="border-top: none; border-bottom: none">Nigel Kennedy</td>
-                                            <td style="border-top: none; border-bottom: none">Abhishek Wilson</td>
+                                            {% for item in team_selection_max %}
+                                                <td style="border-top: none; border-bottom: none">{{ item.1 }}</td>
+                                            {% endfor %}
                                         </tr>
                                         <tr style="color: #fbc2b2; vertical-align: top">
-                                            <td style="border-top: none">247</td>
-                                            <td style="border-top: none">278</td>
-                                            <td style="border-top: none">31</td>
-                                            <td style="border-top: none">87</td>
-                                            <td style="border-top: none">1623</td>
-                                            <td style="border-top: none">166</td>
+                                            {% for item in team_selection_max %}
+                                                <td style="border-top: none; border-bottom: none">{{ item.0 }}</td>
+                                            {% endfor %}
                                     </table>
                                     <br>
                                 </div>
@@ -349,14 +318,14 @@
                                     </tr>
                                 </thead>
                                 <tbody style="color: white">
-                                    <tr>
-                                        <td>Sean Hassett</td>
-                                        <td>3-5-2</td>
-                                        <td>125</td>
-                                        <td>342</td>
-                                        <td>751</td>
-                                        <td>453</td>
-                                    </tr>
+                                    {% for manager in positions %}
+                                        <tr>
+                                            <td><a href="{% url 'manager:detail' manager.0%}" style="color: white">{{ manager.1 }}</a></td>
+                                            {% for item in manager|slice:"2:7" %}
+                                                <td>{{ item }}</td>
+                                            {% endfor %}
+                                        </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -365,32 +334,26 @@
                                 <thead style="color: lightgray; background-color: #491a0d">
                                     <tr>
                                         <th>Manager</th>
+                                        <th>Transfer<br />Cost</th>
                                         <th>Preferred<br />Captain</th>
                                         <th>Captain<br />Points</th>
                                         <th>Season<br />MVP</th>
                                         <th>MVP<br />Points</th>
-                                        <th>Captain<br />Potential Lost</th>
+                                        <th>Captain<br />Points Lost</th>
                                         <th>Points<br />on Bench</th>
-                                        <th>Bench<br />Potential Lost</th>
+                                        <th>Bench<br />Points Lost</th>
                                         <th>Points</th>
-                                        <th>Max Possible<br />Points</th>
+                                        <th>Max<br />Points</th>
                                         <th>Potential<br />Lost</th>
                                     </tr>
                                 </thead>
                                 <tbody style="color: white">
-                                    {% for name in manager_names %}
+                                    {% for manager in team_selection %}
                                         <tr>
-                                            <td><a href="{% url 'manager:detail' name.0%}" style="color: white">{{ name.1 }}</a></td>
-                                            <td>Aguero</td>
-                                            <td>6</td>
-                                            <td>Hazard</td>
-                                            <td>10</td>
-                                            <td>4</td>
-                                            <td>13</td>
-                                            <td>5</td>
-                                            <td>54</td>
-                                            <td>63</td>
-                                            <td>9</td>
+                                            <td><a href="{% url 'manager:detail' manager.0%}" style="color: white">{{ manager.1 }}</a></td>
+                                            {% for item in manager|slice:"2:13" %}
+                                                <td>{{ item }}</td>
+                                            {% endfor %}
                                         </tr>
                                     {% endfor %}
                                 </tbody>

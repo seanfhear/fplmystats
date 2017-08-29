@@ -3,13 +3,17 @@ import urllib.request
 import sqlite3
 import json
 
-dynamic_url = 'https://fantasy.premierleague.com/drf/bootstrap-dynamic'
-with urllib.request.urlopen('{}'.format(dynamic_url)) as dynamic_json:
-    dynamic_data = json.loads(dynamic_json.read().decode())
-current_week = 3
+static_url = 'https://fantasy.premierleague.com/drf/bootstrap-static'
+
+with urllib.request.urlopen('{}'.format(static_url)) as static_json:
+    static_data = json.loads(static_json.read().decode())
+current_week = 0
+for entry in static_data['events']:
+    if entry['is_current']:
+        current_week = entry['id']
 
 current_season = getattr(settings, 'CURRENT_SEASON', None)
-data_file = 'FPL_db.sqlite'
+data_file = 'FPLdb.sqlite'
 
 field_type_INT = 'INTEGER'
 field_type_TEXT = 'TEXT'
@@ -24,7 +28,6 @@ def create_season_tables():
     conn = sqlite3.connect(data_file)
     c = conn.cursor()
 
-    static_url = 'https://fantasy.premierleague.com/drf/bootstrap-static'
     with urllib.request.urlopen('{}'.format(static_url)) as url:
         data = json.loads(url.read().decode())
 
@@ -79,7 +82,6 @@ def update_player_id_table():
     table_name = '{}playerIDs'.format(str(current_season))
     c.execute('DELETE FROM "{}"'.format(table_name))
 
-    static_url = 'https://fantasy.premierleague.com/drf/bootstrap-static'
     with urllib.request.urlopen('{}'.format(static_url)) as url:
         data = json.loads(url.read().decode())
 

@@ -10,9 +10,9 @@ h2h_league_info_url = 'https://fantasy.premierleague.com/drf/leagues-h2h-standin
 with urllib.request.urlopen('{}'.format(static_url)) as static_json:
     static_data = json.loads(static_json.read().decode())
 current_week = 0
-for entry in static_data['events']:
-    if entry['is_current']:
-        current_week = entry['id']
+for week in static_data['events']:
+    if week['is_current']:
+        current_week = week['id']
 
 
 def get_league_name(league_id):
@@ -38,10 +38,13 @@ def get_stats(league_id):
 
     table_data.general_number_totals = []
     table_data.general_points_totals = []
+    table_data.positions_totals = []
     table_data.team_selection_totals = []
 
     table_data.general_number_max = []
     table_data.general_points_max = []
+    table_data.positions_max = []
+    table_data.team_selection_max = []
 
     table_data.headers = [0] * 6
 
@@ -62,6 +65,8 @@ def get_stats(league_id):
     #  9 - penalties missed
     # 10 - own goals
     # 11 - bonus points
+    max_positions = [[0, '-'], [0, '-'], [0, '-'], [0, '-']]
+    max_team_selection = [[0, '-'], [0, '-'], [0, '-'], [0, '-'], [0, '-'], [0, '-'], [0, '-']]
 
     have_leader = False
 
@@ -79,6 +84,7 @@ def get_stats(league_id):
             table_data.headers[0] = manager_id[1]
             have_leader = True
 
+        # general number
         manager_general_number_totals = ([0] * 15)
         manager_general_number_totals[0] = manager_id[0]  # manager id
         manager_general_number_totals[1] = manager_id[1]  # manager name
@@ -92,6 +98,7 @@ def get_stats(league_id):
                 max_number[i][0] = data.general_number_totals[i + 1]
                 max_number[i][1] = manager_id[1]
 
+        # general points
         manager_general_points_totals = ([0] * 15)
         manager_general_points_totals[0] = manager_id[0]  # manager id
         manager_general_points_totals[1] = manager_id[1]  # manager name
@@ -110,24 +117,70 @@ def get_stats(league_id):
                     max_points[i][0] = data.general_points_totals[i + 1]
                     max_points[i][1] = manager_id[1]
 
-        manager_team_selection_totals = ([0] * 12)
+        # positions
+        manager_positions_totals = ([0] * 7)
+        manager_positions_totals[0] = manager_id[0]    # manager id
+        manager_positions_totals[1] = manager_id[1]    # manager name
+        manager_positions_totals[2] = data.headers[6]  # prreferred formation
+
+        for i in range(3, 7):
+            manager_positions_totals[i] = data.positions_totals[i-3]
+        table_data.positions_totals.append(manager_positions_totals)
+
+        for i in range(4):
+            if data.positions_totals[i] > max_positions[i][0]:
+                max_positions[i][0] = data.positions_totals[i]
+                max_positions[i][1] = manager_id[1]
+
+        # team selection
+        manager_team_selection_totals = ([0] * 13)
         manager_team_selection_totals[0] = manager_id[0]                   # manager id
         manager_team_selection_totals[1] = manager_id[1]                   # manager name
-        manager_team_selection_totals[2] = data.headers[3]                 # preferred captain
-        manager_team_selection_totals[3] = data.team_selection_totals[0]   # captain points
-        manager_team_selection_totals[4] = data.headers[4]                 # season mvp
-        manager_team_selection_totals[5] = data.headers[5]                 # mvp points
-        manager_team_selection_totals[6] = data.team_selection_totals[2]   # captain points lost
-        manager_team_selection_totals[7] = data.team_selection_totals[3]   # points on bench
-        manager_team_selection_totals[8] = data.team_selection_totals[4]   # bench potential lost
-        manager_team_selection_totals[9] = data.headers[0]                 # points
-        manager_team_selection_totals[10] = data.team_selection_totals[5]  # max points
-        manager_team_selection_totals[11] = data.team_selection_totals[6]  # potential lost
+        manager_team_selection_totals[2] = data.team_selection_totals[0]   # transfer cost
+        if max_team_selection[0][0] < data.team_selection_totals[0]:
+            max_team_selection[0][0] = data.team_selection_totals[0]
+            max_team_selection[0][1] = manager_id[1]
+
+        manager_team_selection_totals[3] = data.headers[3]                 # preferred captain
+        manager_team_selection_totals[4] = data.team_selection_totals[1]   # captain points
+        if max_team_selection[1][0] < data.team_selection_totals[1]:
+            max_team_selection[1][0] = data.team_selection_totals[1]
+            max_team_selection[1][1] = manager_id[1]
+
+        manager_team_selection_totals[5] = data.headers[4]                 # season mvp
+        manager_team_selection_totals[6] = data.headers[5]                 # mvp points
+        if max_team_selection[2][0] < data.headers[5]:
+            max_team_selection[2][0] = data.headers[5]
+            max_team_selection[2][1] = manager_id[1]
+
+        manager_team_selection_totals[7] = data.team_selection_totals[3]   # captain points lost
+        if max_team_selection[3][0] < data.team_selection_totals[3]:
+            max_team_selection[3][0] = data.team_selection_totals[3]
+            max_team_selection[3][1] = manager_id[1]
+
+        manager_team_selection_totals[8] = data.team_selection_totals[4]   # points on bench
+        manager_team_selection_totals[9] = data.team_selection_totals[5]   # bench potential lost
+        if max_team_selection[4][0] < data.team_selection_totals[5]:
+            max_team_selection[4][0] = data.team_selection_totals[5]
+            max_team_selection[4][1] = manager_id[1]
+
+        manager_team_selection_totals[10] = data.headers[0]                # points
+        manager_team_selection_totals[11] = data.team_selection_totals[6]  # max points
+        if max_team_selection[5][0] < data.team_selection_totals[6]:
+            max_team_selection[5][0] = data.team_selection_totals[6]
+            max_team_selection[5][1] = manager_id[1]
+
+        manager_team_selection_totals[12] = data.team_selection_totals[7]  # potential lost
+        if max_team_selection[6][0] < data.team_selection_totals[7]:
+            max_team_selection[6][0] = data.team_selection_totals[7]
+            max_team_selection[6][1] = manager_id[1]
 
         table_data.team_selection_totals.append(manager_team_selection_totals)
 
     table_data.general_number_max = max_number
     table_data.general_points_max = max_points
+    table_data.positions_max = max_positions
+    table_data.team_selection_max = max_team_selection
 
     table_data.headers[1] = max_number[1][1]
     table_data.headers[2] = max_number[3][1]
