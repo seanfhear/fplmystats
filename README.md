@@ -6,7 +6,7 @@ A website that displays in depth statistics relating to users in FPL.
 ### Prerequisites
 
 ```
-The user needs only their Manager ID number or League ID number.
+The user needs only their Manager ID number or League ID number. Instructions to find these numbers are given.
 ```
 
 ## Built With
