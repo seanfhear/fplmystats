@@ -15,6 +15,7 @@ The user needs only their Manager ID number or League ID number. Instructions to
 * Django
 * SQLite
 * Bootstrap
+* [Data Tables](https://datatables.net)
 * FPL API: https://fantasy.premierleague.com/drf/
 
 ## Hosted On
