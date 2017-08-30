@@ -15,7 +15,7 @@
 <body style="background-color: #c4dfe6">
     <div class="container-fluid">
         <div class="row">
-            <img src="{% static 'images/header.png' %}" alt="header_img" class="img-responsive">
+            <a href={% url 'index' %}><img src="{% static 'images/header.png' %}" alt="header_img" class="img-responsive"></a>
         </div>
     </div>
     <div class="container-fluid">
@@ -29,10 +29,23 @@
                             <br>
                             <!--<p style="text-align: center; color: lightgray"><u>Search disabled until the new season starts</u></p>-->
                             <input  class="form-control input-lg" name="manager_id" id="inputlg" type="number" placeholder="Manager ID" onfocus="placeholder=''" onblur="placeholder = 'Manager ID'" style="text-align: center">
-                            <br><br>
+                            <br>
                         </div>
                     </form>
+                    {% if manager_error %}
+                        <div id="manager-err-msg" class="col-md-12" style="color: #1c4d66; background-color: #c4dfe6; border: solid 2px red; border-radius: 10px">
+                            <p></p>
+                            <div class="col-md-6">
+                                <p><span class="glyphicon glyphicon-exclamation-sign pull-left" style="font-size: 150%"></span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><span class="glyphicon glyphicon-exclamation-sign pull-right" style="font-size: 150%"></span></p>
+                            </div>
+                            <p style="text-align: center">The ID you entered was invalid. The Fantasy Premier League website may be updating or else there is no existing Manager corresponding to the ID you entered.</p>
+                        </div>
+                    {% endif %}
                     <div style="color: white">
+                        <br>
                         <p>Enter a manager's ID number to view in-depth statistics relating to their team including:</p>
                         <ul>
                             <li>How many goals, assists, clean sheets, bonus points etc. have been obtained in the season</li>
@@ -58,10 +71,23 @@
                             <br>
                             <!--<p style="text-align: center; color: lightgray"><u>Search disabled until the new season starts</u></p>-->
                             <input class="form-control input-lg" name="league_id" id="inputlg" type="number" placeholder="League ID" onfocus="placeholder=''" onblur="placeholder = 'League ID'" style="text-align: center">
-                            <br><br>
+                            <br>
                         </div>
                     </form>
+                    {% if league_error %}
+                        <div id="league-err-msg" class="col-md-12" style="color: #491a0d; background-color: #fbc2b2; border: solid 2px red; border-radius: 10px">
+                            <p></p>
+                            <div class="col-md-6">
+                                <p><span class="glyphicon glyphicon-exclamation-sign pull-left" style="font-size: 150%"></span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><span class="glyphicon glyphicon-exclamation-sign pull-right" style="font-size: 150%"></span></p>
+                            </div>
+                            <p style="text-align: center">The ID you entered was invalid. The Fantasy Premier League website may be updating or else there is no existing League corresponding to the ID you entered.</p>
+                        </div>
+                    {% endif %}
                     <div style="color: white">
+                        <br>
                         <p>Enter a league's ID number to view stats relating to the top 50 players in the league including:</p>
                         <ul>
                             <li>Who has the most goals, assists, clean sheets, bonus points etc.</li>

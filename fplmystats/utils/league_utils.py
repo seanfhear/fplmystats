@@ -2,6 +2,7 @@ import urllib.request
 import json
 from collections import namedtuple
 from fplmystats.utils import manager_utils
+from urllib.error import HTTPError
 
 static_url = 'https://fantasy.premierleague.com/drf/bootstrap-static'
 classic_league_info_url = 'https://fantasy.premierleague.com/drf/leagues-classic-standings/'
@@ -19,10 +20,14 @@ def get_league_name(league_id):
     """
     Return the name of the league
     """
-    # TODO account for h2h leagues
-    data_url = classic_league_info_url + str(league_id)
-    with urllib.request.urlopen('{}'.format(data_url)) as url:
-        data = json.loads(url.read().decode())
+    try:
+        data_url = classic_league_info_url + str(league_id)
+        with urllib.request.urlopen('{}'.format(data_url)) as url:
+            data = json.loads(url.read().decode())
+    except HTTPError:
+        data_url = h2h_league_info_url + str(league_id)
+        with urllib.request.urlopen('{}'.format(data_url)) as url:
+            data = json.loads(url.read().decode())
 
     return data['league']['name']
 
@@ -70,9 +75,14 @@ def get_stats(league_id):
 
     have_leader = False
 
-    data_url = classic_league_info_url + str(league_id)
-    with urllib.request.urlopen('{}'.format(data_url)) as url:
-        data = json.loads(url.read().decode())
+    try:
+        data_url = classic_league_info_url + str(league_id)
+        with urllib.request.urlopen('{}'.format(data_url)) as url:
+            data = json.loads(url.read().decode())
+    except HTTPError:
+        data_url = h2h_league_info_url + str(league_id)
+        with urllib.request.urlopen('{}'.format(data_url)) as url:
+            data = json.loads(url.read().decode())
 
     for entry in data['standings']['results']:
         manager_ids.append([entry['entry'], entry['player_name']])

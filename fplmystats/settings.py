@@ -12,7 +12,7 @@ SECRET_KEY = '9&g2i*5--r($!0pirv9n*0gvm!u)0v)zsr2u9%e(dh=(qbg32y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["server_domain_or_IP", "127.0.0.1", "127.0.1.1"]
+ALLOWED_HOSTS = ["178.62.78.17", "127.0.0.1", "127.0.1.1"]
 
 
 # Application definition
@@ -69,7 +69,7 @@ DATABASES = {
     },
     'data': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'FPL_db.sqlite'),
+        'NAME': os.path.join(BASE_DIR, 'FPLdb.sqlite'),
     }
 }
 
