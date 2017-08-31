@@ -17,6 +17,7 @@ with open('C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\cur
         current_season = x
 # data_file = '/home/admin/fplmystats/FPLdb.sqlite'
 data_file = 'FPLdb.sqlite'
+changes_file = 'C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\daily_price_changes.txt'
 
 field_type_INT = 'INTEGER'
 field_type_TEXT = 'TEXT'
@@ -83,6 +84,8 @@ def update_player_id_table():
     c = conn.cursor()
 
     table_name = '{}playerIDs'.format(str(current_season))
+    c.execute('SELECT id, price FROM "{}"'.format(table_name))
+    pre_list = c.fetchall()
     c.execute('DELETE FROM "{}"'.format(table_name))
 
     with urllib.request.urlopen('{}'.format(static_url)) as url:
@@ -106,8 +109,27 @@ def update_player_id_table():
                           psv=position,
                           tmv=team_id,
                           prv=price))
+
+    c.execute('SELECT id, price FROM "{}"'.format(table_name))
+    post_list = c.fetchall()
+
     conn.commit()
     conn.close()
+
+    num_new_players = len(post_list) - len(pre_list)
+    changed_ids = []
+    for i in range(len(pre_list)):
+        if pre_list[i][1] != post_list[i][1]:
+            changed_ids.append(post_list[i][0])
+
+    while num_new_players > 0:
+        changed_ids.append(post_list[-num_new_players][0])
+        num_new_players -= 1
+
+    with open(changes_file, 'r+') as changes:
+        changes.truncate()
+        for item in changed_ids:
+            changes.write(print_player(item))
 
 
 def create_weekly_tables():
@@ -173,3 +195,35 @@ def update_weekly_table():
 
     conn.commit()
     conn.close()
+
+
+def print_player(player_id):
+    conn = sqlite3.connect(data_file)
+    c = conn.cursor()
+
+    table_name = '{}playerIDs'.format(str(current_season))
+    c.execute('SELECT * FROM "{}" WHERE id = {}'.format(table_name, player_id))
+    player = c.fetchone()
+
+    if player[1] == player[3]:
+        player_name = player[2] + ' ' + player[3]
+    else:
+        player_name = player[1]
+
+    position = player[4]
+    if position == 0:
+        position_string = "GK"
+    elif position == 1:
+        position_string = "DEF"
+    elif position == 2:
+        position_string = "MID"
+    else:
+        position_string = "FWD"
+
+    team_id = player[5]
+    table_name = '{}teamIDs'.format(str(current_season))
+    c.execute('SELECT name FROM "{}" WHERE id = {}'.format(table_name, team_id))
+    team_string = c.fetchone()[0]
+    price = player[6]
+
+    return "NAME: {}; TEAM: {}; POSITION: {}; PRICE: {}\n".format(player_name, team_string, position_string, price)
