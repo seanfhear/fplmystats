@@ -4,7 +4,8 @@ from django.urls import NoReverseMatch
 from urllib.error import HTTPError
 from json import JSONDecodeError
 
-# TODO modal windows for league
+# TODO Min & Max view switch for totals in league view
+# TODO Squad Statistics view for league view
 
 
 def search(request):

@@ -1,5 +1,4 @@
 from collections import namedtuple
-from django.conf import settings
 import urllib.request
 import sqlite3
 import json
@@ -15,7 +14,11 @@ for event in static_data['events']:
     if event['is_current']:
         current_week = event['id']
 
-current_season = getattr(settings, 'CURRENT_SEASON', None)
+# with open('/home/admin/fplmystats/fplmystats/utils/current_season.txt') as file:
+with open('C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\current_season.txt') as file:
+    for x in file:
+        current_season = x
+# data_file = '/home/admin/fplmystats/FPLdb.sqlite'
 data_file = 'FPLdb.sqlite'
 
 MINUTES_LESS_THAN_SIXTY_VALUE = 1
@@ -132,12 +135,12 @@ def get_stats(manager_id):
         with urllib.request.urlopen('{}'.format(picks_url)) as url:
             data = json.loads(url.read().decode())
 
-        captain_multiplier = 1
+        captain_multiplier = 2
         bench_boost = False
         chip = data['active_chip']
         if chip == '3xc':
             table_data.team_selection[week - 1][1] = 'Triple Captain'
-            captain_multiplier = 2
+            captain_multiplier = 3
         elif chip == 'bboost':
             table_data.team_selection[week - 1][1] = 'Bench Boost'
             bench_boost = True
@@ -424,7 +427,7 @@ def get_stats(manager_id):
             player_captain_dict[captain_name] += 1
         else:
             table_data.team_selection[week - 1][3] = vice_captain_name
-            table_data.team_selection[week - 1][4] = vice_captain_points
+            table_data.team_selection[week - 1][4] = vice_captain_points * captain_multiplier
             if vice_captain_name not in player_captain_dict:
                 player_captain_dict[vice_captain_name] = 0
             player_captain_dict[vice_captain_name] += 1
@@ -451,12 +454,11 @@ def get_stats(manager_id):
     table_data.positions_totals = [n for n in zip(*table_data.positions)][2:7]
     table_data.positions_totals = [sum(n) for n in table_data.positions_totals]
 
-    # TODO add triple captain points to total captain points
     table_data.team_selection_totals = [0]*8
     table_data.team_selection_totals[0] = sum(entry[2] for entry in table_data.team_selection)    # transfer cost
     table_data.team_selection_totals[1] = sum(entry[4] for entry in table_data.team_selection)    # captain points
     table_data.team_selection_totals[2] = sum(entry[6] for entry in table_data.team_selection)    # mvp total
-    table_data.team_selection_totals[3] = sum(entry[7] for entry in table_data.team_selection)    # captain lost
+    table_data.team_selection_totals[3] += sum(entry[7] for entry in table_data.team_selection)    # captain lost
     table_data.team_selection_totals[4] = sum(entry[8] for entry in table_data.team_selection)   # bench points
     table_data.team_selection_totals[5] = sum(entry[9] for entry in table_data.team_selection)    # bench lost
     table_data.team_selection_totals[6] = sum(entry[11] for entry in table_data.team_selection)   # max possible

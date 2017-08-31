@@ -231,6 +231,51 @@
                         <div class="general hide">
                             <div id="buttons" class="btn-group" data-toggle="buttons" style="color: lightgray">
                                 <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#generalModal" style="color: white">here</a> for an explanation of each column.</p>
+                                <div class="modal fade" id="generalModal" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content" style="background-color: #fbc2b2">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h3 class="modal-title" style="text-align: center; color: #491a0d">General Statistics</h3>
+                                            </div>
+                                            <div class="modal-body" style="color: #491a0d">
+                                                <h4>Number/Points</h4>
+                                                <ul><li>Use these buttons to toggle between Number View and Points View. Number View shows you how many of each category has been scored while Points View shows you how many points have been gained or lost in each category.</li></ul>
+                                                <h4>Manager</h4>
+                                                <ul><li>The Manager's name.</li></ul>
+                                                <h4>Base Points</h4>
+                                                <ul><li>Total points before the Captain multiplier is applied or deductions for transfers are made.</li></ul>
+                                                <h4>Minutes</h4>
+                                                <ul><li>Total amount of minutes played by all players or points gained from minutes played.</li></ul>
+                                                <h4>Goals</h4>
+                                                <ul><li>Total goals scored by all players or total points gained from goals.</li></ul>
+                                                <h4>Assists</h4>
+                                                <ul><li>Total assists made by all players or total points gained from assists.</li></ul>
+                                                <h4>Clean Sheets</h4>
+                                                <ul><li>For Number View, shows the number of clean sheets kept by the Goalkeeper and Defenders.<br />For Points View, shows the points obtained from clean sheets kept by the Goalkeeper, Defenders <i>and</i> Midfielders.</li></ul>
+                                                <h4>Saves</h4>
+                                                <ul><li>Total saves made by all players or total points gained from saves.</li></ul>
+                                                <h4>Goals Conceded</h4>
+                                                <ul><li>Total goals conceded by the Goalkeeper and Defenders or total points lost from goals conceded.</li></ul>
+                                                <h4>Penalties Saved</h4>
+                                                <ul><li>Total penalties saved by all players or total points gained from penalties saved.</li></ul>
+                                                <h4>Yellow Cards</h4>
+                                                <ul><li>Total yellow cards received by all players or total points lost from yellow cards.</li></ul>
+                                                <h4>Red Cards</h4>
+                                                <ul><li>Total red cards received by all players or total points lost from red cards.</li></ul>
+                                                <h4>Penalties Missed</h4>
+                                                <ul><li>Total penalties missed by all players or total points lost from penalties missed.</li></ul>
+                                                <h4>Own Goals</h4>
+                                                <ul><li>Total own goals scored by all players or total points lost from own goals.</li></ul>
+                                                <h4>Bonus Points</h4>
+                                                <ul><li>Total Bonus Points awarded to all players.</li></ul>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn" data-dismiss="modal" style="background-color: #fbc2b2; color: #491a0d">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <label for="points-btn" class="btn btn-league active" onClick="toggleToNumber()"><b>Number</b>
                                     <input type="radio" id="number-btn">
                                 </label>
@@ -239,7 +284,7 @@
                                 </label>
 
                                 <div id="general-number" class="general" style="display: block">
-                                    <table class="manager table table-hover main-league-display" style="text-align: center; width: 100%">
+                                    <table class="league-general table table-hover main-league-display" style="text-align: center; width: 100%">
                                         <thead style="color: lightgray; background-color: #491a0d">
                                             <tr>
                                                 <th>Manager</th>
@@ -272,7 +317,7 @@
                                 </div>
 
                                 <div id="general-points" class="general" style="display: none">
-                                    <table class="manager table table-hover main-league-display" style="text-align: center; width: 100%">
+                                    <table class="league-general table table-hover main-league-display" style="text-align: center; width: 100%">
                                         <thead style="color: lightgray; background-color: #491a0d">
                                             <tr>
                                                 <th>Manager</th>
@@ -306,7 +351,35 @@
                             </div>
                         </div>
                         <div class="positions hide">
-                            <table id="" class="manager table table-hover main-league-display" style="text-align: center; width: 100%">
+                            <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#positionModal" style="color: white">here</a> for an explanation of each column.</p>
+                            <div class="modal fade" id="positionModal" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content" style="background-color: #fbc2b2">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h3 class="modal-title" style="text-align: center; color: #491a0d">Positions</h3>
+                                        </div>
+                                        <div class="modal-body" style="color: #491a0d">
+                                            <h4>Manager</h4>
+                                            <ul><li>The Manager's name.</li></ul>
+                                            <h4>Preferred Formation</h4>
+                                            <ul><li>The formation used most often by the manager.</li></ul>
+                                            <h4>Points from GK</h4>
+                                            <ul><li>Total points obtained from the Goalkeeper.</li></ul>
+                                            <h4>Points from DEF</h4>
+                                            <ul><li>Total points obtained from the Defenders.</li></ul>
+                                            <h4>Points from MID</h4>
+                                            <ul><li>Total points obtained from the Midfielders.</li></ul>
+                                            <h4>Points from FWD</h4>
+                                            <ul><li>Total points obtained from the Forwards.</li></ul>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn" data-dismiss="modal" style="background-color: #fbc2b2; color: #491a0d">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <table id="" class="league-positions table table-hover main-league-display" style="text-align: center; width: 100%">
                                 <thead style="color: lightgray; background-color: #491a0d">
                                     <tr>
                                         <th>Manager</th>
@@ -330,7 +403,47 @@
                             </table>
                         </div>
                         <div class="team-selection hide">
-                            <table id="" class="manager table table-hover main-league-display" style="text-align: center; width: 100%">
+                            <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#teamModal" style="color: white">here</a> for an explanation of each column.</p>
+                            <div class="modal fade" id="teamModal" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content" style="background-color: #fbc2b2">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h3 class="modal-title" style="text-align: center; color: #491a0d">Team Selection</h3>
+                                        </div>
+                                        <div class="modal-body" style="color: #491a0d">
+                                            <h4>Manager</h4>
+                                            <ul><li>The Manager's name.</li></ul>
+                                            <h4>Transfer Cost</h4>
+                                            <ul><li>The amount of points spent on transfers.</li></ul>
+                                            <h4>Preferred Captain</h4>
+                                            <ul><li>The player who was chosen as Captain the most often. If the Vice Captain played and the Captain didn't play (or has yet to play in the current week), the Vice Captain is counted instead.</li></ul>
+                                            <h4>Captain Points</h4>
+                                            <ul><li>How many points have been acquired from Captains over the season.</li></ul>
+                                            <h4>Season MVP</h4>
+                                            <ul><li>The player who has scored the most points for the team, including points gained as Captain.</li></ul>
+                                            <h4>MVP Points</h4>
+                                            <ul><li>How many points the Season MVP has scored.</li></ul>
+                                            <h4>Captain Points Lost</h4>
+                                            <ul><li>How many points in total the team lost due to not selecting the highest scoring player as Captain each week.</li></ul>
+                                            <h4>Points on Bench</h4>
+                                            <ul><li>Total number of points scored by the players on the bench.</li></ul>
+                                            <h4>Bench Points Lost</h4>
+                                            <ul><li>Total points lost by not selecting the optimal starting eleven each week.</li></ul>
+                                            <h4>Points</h4>
+                                            <ul><li>Total points scored, including the Captain multiplier and deductions for transfers.</li></ul>
+                                            <h4>Maximum Points</h4>
+                                            <ul><li>The maximum amount of points that could have been obtained by choosing the optimal Captain and starting eleven every week.</li></ul>
+                                            <h4>Potential Lost</h4>
+                                            <ul><li>Total points lost by not choosing the optimal Captain and starting eleven every week.</li></ul>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn" data-dismiss="modal" style="background-color: #fbc2b2; color: #491a0d">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <table id="" class="league-team table table-hover main-league-display" style="text-align: center; width: 100%">
                                 <thead style="color: lightgray; background-color: #491a0d">
                                     <tr>
                                         <th>Manager</th>

@@ -10,7 +10,16 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-    $('table.squad').DataTable( {
+    $('table.squad-player').DataTable( {
+        "paging": false,
+        "searching": false,
+        "bInfo": false,
+        "order": [[4, "desc"]]
+    });
+});
+
+$(document).ready(function() {
+    $('table.squad-team').DataTable( {
         "paging": false,
         "searching": false,
         "bInfo": false,
@@ -19,11 +28,29 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-    $('table.manager').DataTable( {
+    $('table.league-general').DataTable( {
         "paging": false,
         "searching": false,
         "bInfo": false,
         "order": [[1, "desc"]]
+    });
+});
+
+$(document).ready(function() {
+    $('table.league-positions').DataTable( {
+        "paging": false,
+        "searching": false,
+        "bInfo": false,
+        "order": [[0, "asc"]]
+    });
+});
+
+$(document).ready(function() {
+    $('table.league-team').DataTable( {
+        "paging": false,
+        "searching": false,
+        "bInfo": false,
+        "order": [[9, "desc"]]
     });
 });
 

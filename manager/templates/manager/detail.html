@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-    <title>Manager Statistics: {{ team_name }}</title>
+    <title>Team Statistics: {{ team_name }}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% load staticfiles %}
@@ -388,7 +388,6 @@
                             </table>
                         </div>
                         <div class="team-selection hide">
-
                             <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#teamModal" style="color: white">here</a> for an explanation of each column.</p>
                             <div class="modal fade" id="teamModal" role="dialog">
                                 <div class="modal-dialog">
@@ -403,15 +402,15 @@
                                             <h4>Chip Used</h4>
                                             <ul><li>Which Chip was played, if any.</li></ul>
                                             <h4>Transfer Cost</h4>
-                                            <ul><li>The amount of points spent on transfers</li></ul>
+                                            <ul><li>The amount of points spent on transfers.</li></ul>
                                             <h4>Captain</h4>
                                             <ul><li>Which player was chosen as Captain. If the Vice Captain played and the Captain didn't play (or has yet to play in the current week), the Vice Captain's name will be here instead.</li></ul>
                                             <h4>Captain Points</h4>
-                                            <ul><li>How many points the Captain (or Vice Captain, if applicable) scored.</li></ul>
+                                            <ul><li>How many points the Captain (or Vice Captain, if applicable) scored including the 2x multiplier. (Or 3x if the Triple Captain chip was played.)</li></ul>
                                             <h4>MVP</h4>
                                             <ul><li>Which player scored the most points.</li></ul>
                                             <h4>MVP Points</h4>
-                                            <ul><li>How many points the MVP scored.</li></ul>
+                                            <ul><li>How many points the MVP scored.<br />Note that the Total figure for MVP points shown is the cumulative figure of the MVP of each week. The number of points that the Season MVP has scored can be seen on the Squad Statistics page.</li></ul>
                                             <h4>Captain Points Lost</h4>
                                             <ul><li>How many points the team lost due to not selecting the highest scoring player as Captain. This is the difference between the MVP Points and the Captain Points, or double that if the Triple Captain chip was played.</li></ul>
                                             <h4>Points on Bench</h4>
@@ -431,7 +430,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <table class="weekly table-hover main-manager-display" style="text-align: center; width: 100%">
                                 <thead style="color: lightgray; background-color: #1c4d66">
                                     <tr>
@@ -497,7 +495,6 @@
                             </table>
                         </div>
                         <div class="squad-stats hide">
-
                             <div class="col-md-8">
                                 <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#squadModal" style="color: white">here</a> for an explanation of each column.</p>
                                 <div class="modal fade" id="squadModal" role="dialog">
@@ -533,7 +530,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <table class="squad table-hover squad-one main-manager-display" style="text-align: center; width: 100%">
+                                <table class="squad squad-player table-hover squad-one main-manager-display" style="text-align: center; width: 100%">
                                     <thead style="color: lightgray; background-color: #1c4d66">
                                         <tr>
                                             <th>Player<br />Name</th>
@@ -558,7 +555,7 @@
                             </div>
                             <div class="col-md-4">
                                 <p style="font-size: 85%; color: #336B87">Easter Egg!</p>
-                                <table class="squad table-hover squad-two main-manager-display" style="text-align: center; width: 100%">
+                                <table class="squad squad-team table-hover squad-two main-manager-display" style="text-align: center; width: 100%">
                                     <thead style="color: lightgray; background-color: #1c4d66">
                                         <tr>
                                             <th>PL<br />Team</th>

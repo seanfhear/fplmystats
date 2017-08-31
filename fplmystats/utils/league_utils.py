@@ -1,8 +1,8 @@
-import urllib.request
-import json
-from collections import namedtuple
 from fplmystats.utils import manager_utils
 from urllib.error import HTTPError
+from collections import namedtuple
+import urllib.request
+import json
 
 static_url = 'https://fantasy.premierleague.com/drf/bootstrap-static'
 classic_league_info_url = 'https://fantasy.premierleague.com/drf/leagues-classic-standings/'
