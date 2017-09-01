@@ -1,0 +1,5 @@
+NAME: Serge Aurier; TEAM: Spurs; POSITION: MID; PRICE: 6
+NAME: Grzegorz Krychowiak; TEAM: West Brom; POSITION: FWD; PRICE: 5
+NAME: Juan Foyth; TEAM: Spurs; POSITION: MID; PRICE: 4.5
+NAME: Renato Sanches; TEAM: Swansea; POSITION: FWD; PRICE: 5
+NAME: Orestis Karnezis; TEAM: Watford; POSITION: DEF; PRICE: 4.5
