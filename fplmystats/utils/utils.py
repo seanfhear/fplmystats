@@ -1,8 +1,10 @@
 import urllib.request
+import datetime
 import sqlite3
 import json
 
 static_url = 'https://fantasy.premierleague.com/drf/bootstrap-static'
+fixtures_url = 'https://fantasy.premierleague.com/drf/fixtures'
 
 with urllib.request.urlopen('{}'.format(static_url)) as static_json:
     static_data = json.loads(static_json.read().decode())
@@ -15,12 +17,20 @@ for entry in static_data['events']:
 with open('C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\current_season.txt') as file:
     for x in file:
         current_season = x
+
 # data_file = '/home/admin/fplmystats/FPLdb.sqlite'
 data_file = 'FPLdb.sqlite'
-changes_file = 'C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\daily_price_changes.txt'
+
+# changes_file = '/home/admin/fplmystats/fplmystats/utils/daily_changes.txt'
+changes_file = 'C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\daily_changes.txt'
+
+# fixtures_file = '/home/admin/fplmystats/fplmystats/utils/fixtures.txt'
+fixtures_file = 'C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\fixtures.txt'
 
 field_type_INT = 'INTEGER'
 field_type_TEXT = 'TEXT'
+
+HOURS = 4  # number of hours since kickoff to still update table
 
 
 def create_season_tables():
@@ -78,7 +88,8 @@ def create_season_tables():
 def update_player_id_table():
     """
     Update the player ID table to include new players that have been added in to the game.
-    To be run periodically over the season, once a week most likely.
+    Saves any changes to the database to a daily log file
+    To be run once a day automatically.
     """
     conn = sqlite3.connect(data_file)
     c = conn.cursor()
@@ -129,7 +140,7 @@ def update_player_id_table():
     with open(changes_file, 'r+') as changes:
         changes.truncate()
         for item in changed_ids:
-            changes.write(print_player(item))
+            changes.write(player_to_string(item))
 
 
 def create_weekly_tables():
@@ -155,7 +166,7 @@ def create_weekly_tables():
 def update_weekly_table():
     """
     Populate the weekly data table with the latest data for that week
-    To be run every day there is a game
+    To be run automatically multiple times per day where there is a game
     """
     conn = sqlite3.connect(data_file)
     c = conn.cursor()
@@ -197,7 +208,10 @@ def update_weekly_table():
     conn.close()
 
 
-def print_player(player_id):
+def player_to_string(player_id):
+    """
+    Returns a string containing player's name, team, position and price
+    """
     conn = sqlite3.connect(data_file)
     c = conn.cursor()
 
@@ -227,3 +241,47 @@ def print_player(player_id):
     price = player[6]
 
     return "NAME: {}; TEAM: {}; POSITION: {}; PRICE: {}\n".format(player_name, team_string, position_string, price)
+
+
+def get_all_fixtures():
+    """
+    Saves a list of every unique kickoff time in the year where a fixture takes place to a file
+    To be run every day since fixtures change over the season
+    """
+    with urllib.request.urlopen('{}'.format(fixtures_url)) as url:
+        data = json.loads(url.read().decode())
+
+    fixtures_list = []
+
+    for item in data:
+        kickoff_time = item['kickoff_time'][0:10] + '-' + item['kickoff_time_formatted'][-5:]
+        if kickoff_time not in fixtures_list:
+            fixtures_list.append(kickoff_time)
+
+    with open(fixtures_file, 'r+') as fixtures:
+        fixtures.truncate()
+        for item in fixtures_list:
+            fixtures.write(item + '\n')
+
+
+def check_for_fixture():
+    """
+    Updates the weekly table if there is a kickoff within the last 4 hours
+    Run automatically every 15 minutes
+    """
+
+    today = datetime.date.today()
+    now = datetime.datetime.now()
+    with open(fixtures_file, 'r') as fixtures:
+        for item in fixtures:
+            year = int(item[0:4])
+            month = int(item[5:7])
+            day = int(item[8:10])
+            hour = int(item[11:13])
+            minute = int(item[14:16])
+
+            date = datetime.date(year, month, day)
+            if date == today:
+                time = datetime.datetime(year, month, day, hour, minute)
+                if now > time and (now - time < datetime.timedelta(hours=HOURS)):
+                    update_weekly_table()

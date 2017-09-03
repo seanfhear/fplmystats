@@ -1,0 +1,5 @@
+NAME: Lee Chung-yong; TEAM: Crystal Palace; POSITION: FWD; PRICE: 4.4
+NAME: Rajiv van La Parra; TEAM: Huddersfield; POSITION: FWD; PRICE: 4.9
+NAME: Leroy Sané; TEAM: Man City; POSITION: FWD; PRICE: 8.2
+NAME: Moussa Sissoko; TEAM: Spurs; POSITION: FWD; PRICE: 5.4
+NAME: Phil Foden; TEAM: Man City; POSITION: FWD; PRICE: 4.9

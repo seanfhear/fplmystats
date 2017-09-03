@@ -98,12 +98,9 @@
                                                 <td style="border-bottom: none">Goals Conceded</td>
                                             </tr>
                                             <tr style="color: #c4dfe6; vertical-align: top">
-                                                <td style="border-top: none">{{ general_number_totals.1 }}</td>
-                                                <td style="border-top: none">{{ general_number_totals.2 }}</td>
-                                                <td style="border-top: none">{{ general_number_totals.3 }}</td>
-                                                <td style="border-top: none">{{ general_number_totals.4 }}</td>
-                                                <td style="border-top: none">{{ general_number_totals.5 }}</td>
-                                                <td style="border-top: none">{{ general_number_totals.6 }}</td>
+                                                {% for item in general_number_totals|slice:"1:7" %}
+                                                    <td style="border-top: none">{{ item }}</td>
+                                                {% endfor %}
                                             </tr>
                                             <tr style="vertical-align: bottom">
                                                 <td style="border-bottom: none">Penalties Saved</td>
@@ -114,12 +111,9 @@
                                                 <td style="border-bottom: none">Bonus Points</td>
                                             </tr>
                                             <tr style="color: #c4dfe6; vertical-align: top">
-                                                <td style="border-top: none">{{ general_number_totals.7 }}</td>
-                                                <td style="border-top: none">{{ general_number_totals.8 }}</td>
-                                                <td style="border-top: none">{{ general_number_totals.9 }}</td>
-                                                <td style="border-top: none">{{ general_number_totals.10 }}</td>
-                                                <td style="border-top: none">{{ general_number_totals.11 }}</td>
-                                                <td style="border-top: none">{{ general_number_totals.12 }}</td>
+                                                {% for item in general_number_totals|slice:"7:13" %}
+                                                    <td style="border-top: none">{{ item }}</td>
+                                                {% endfor %}
                                             </tr>
                                         </table>
                                     </div>
@@ -135,12 +129,9 @@
                                                 <td style="border-bottom: none">Goals Conceded</td>
                                             </tr>
                                             <tr style="color: #c4dfe6; vertical-align: top">
-                                                <td style="border-top: none">{{ general_points_totals.1 }}</td>
-                                                <td style="border-top: none">{{ general_points_totals.2 }}</td>
-                                                <td style="border-top: none">{{ general_points_totals.3 }}</td>
-                                                <td style="border-top: none">{{ general_points_totals.4 }}</td>
-                                                <td style="border-top: none">{{ general_points_totals.5 }}</td>
-                                                <td style="border-top: none">{{ general_points_totals.6 }}</td>
+                                                {% for item in general_points_totals|slice:"1:7" %}
+                                                    <td style="border-top: none">{{ item }}</td>
+                                                {% endfor %}
                                             </tr>
                                             <tr style="vertical-align: bottom">
                                                 <td style="border-bottom: none">Penalties Saved</td>
@@ -151,12 +142,9 @@
                                                 <td style="border-bottom: none">Bonus Points</td>
                                             </tr>
                                             <tr style="color: #c4dfe6; vertical-align: top">
-                                                <td style="border-top: none">{{ general_points_totals.7 }}</td>
-                                                <td style="border-top: none">{{ general_points_totals.8 }}</td>
-                                                <td style="border-top: none">{{ general_points_totals.9 }}</td>
-                                                <td style="border-top: none">{{ general_points_totals.10 }}</td>
-                                                <td style="border-top: none">{{ general_points_totals.11 }}</td>
-                                                <td style="border-top: none">{{ general_points_totals.12 }}</td>
+                                                {% for item in general_points_totals|slice:"7:13" %}
+                                                    <td style="border-top: none">{{ item }}</td>
+                                                {% endfor %}
                                             </tr>
                                         </table>
                                     </div>
@@ -173,15 +161,19 @@
                                     <table class="table-bordered top-manager-display" style="width: 100%; color: white; text-align: center; font-size: 120%">
                                         <tr style="vertical-align: bottom">
                                             <td style="border-bottom: none">Goalkeeper</td>
+                                            <td style="border-bottom: none">Average GK<br />Budget</td>
                                             <td style="border-bottom: none">Defence</td>
+                                            <td style="border-bottom: none">Average DEF<br />Budget</td>
                                             <td style="border-bottom: none">Midfield</td>
+                                            <td style="border-bottom: none">Average MID<br />Budget</td>
                                             <td style="border-bottom: none">Forwards</td>
+                                            <td style="border-bottom: none">Average FWD<br />Budget</td>
                                         </tr>
                                         <tr style="color: #c4dfe6; vertical-align: top">
-                                            <td style="border-top: none">{{ positions_totals.0 }}</td>
-                                            <td style="border-top: none">{{ positions_totals.1 }}</td>
-                                            <td style="border-top: none">{{ positions_totals.2 }}</td>
-                                            <td style="border-top: none">{{ positions_totals.3 }}</td>
+                                            {% for item in positions_totals %}
+                                                <td style="border-top: none">{{ item }}</td>
+                                            {% endfor %}
+                                        </tr>
                                     </table>
                                     <br>
                                 </div>
@@ -371,9 +363,13 @@
                                         <th>Week</th>
                                         <th>Formation</th>
                                         <th>Points<br />From GK</th>
+                                        <th>GK<br />Budget</th>
                                         <th>Points<br />From DEF</th>
+                                        <th>DEF<br />Budget</th>
                                         <th>Points<br />From MID</th>
+                                        <th>MID<br />Budget</th>
                                         <th>Points<br />From FWD</th>
+                                        <th>FWD<br />Budget</th>
                                     </tr>
                                 </thead>
                                 <tbody style="color: white">

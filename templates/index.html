@@ -35,13 +35,17 @@
                     {% if manager_error %}
                         <div id="manager-err-msg" class="col-md-12" style="color: #1c4d66; background-color: #c4dfe6; border: solid 2px red; border-radius: 10px">
                             <p></p>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <p><span class="glyphicon glyphicon-exclamation-sign pull-left" style="font-size: 150%"></span></p>
                             </div>
-                            <div class="col-md-6">
-                                <p><span class="glyphicon glyphicon-exclamation-sign pull-right" style="font-size: 150%"></span></p>
+                            <div class="col-md-4">
+                                <p style="font-size: 150%; text-align: center">An Error Occurred</p>
                             </div>
-                            <p style="text-align: center">The ID you entered was invalid. The Fantasy Premier League website may be updating or else there is no existing Manager corresponding to the ID you entered.</p>
+                            <div class="col-md-4">
+                                <p><span class="glyphicon glyphicon-exclamation-sign pull-right" style="font-size: 150%"></span></p>
+                                <p style="color: #c4dfe6">|</p>
+                            </div>
+                            <p style="text-align: center">The Fantasy Premier League website may be updating or else there is no existing Manager corresponding to the ID you entered.</p>
                         </div>
                     {% endif %}
                     <div style="color: white">
@@ -65,7 +69,7 @@
             <div class="col-md-6">
                 <div class="col-md-12" style="background-color: #763626">
                     <h1 style="text-align: center; color: white"><b>League Stats</b></h1>
-                    <form action="{% url 'league:detail' %}" method="post">
+                    <form action="{% url 'league:search' %}" method="post">
                         {% csrf_token %}
                         <div class="input">
                             <br>
@@ -77,13 +81,17 @@
                     {% if league_error %}
                         <div id="league-err-msg" class="col-md-12" style="color: #491a0d; background-color: #fbc2b2; border: solid 2px red; border-radius: 10px">
                             <p></p>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <p><span class="glyphicon glyphicon-exclamation-sign pull-left" style="font-size: 150%"></span></p>
                             </div>
-                            <div class="col-md-6">
-                                <p><span class="glyphicon glyphicon-exclamation-sign pull-right" style="font-size: 150%"></span></p>
+                            <div class="col-md-4">
+                                <p style="font-size: 150%; text-align: center">An Error Occurred</p>
                             </div>
-                            <p style="text-align: center">The ID you entered was invalid. The Fantasy Premier League website may be updating or else there is no existing League corresponding to the ID you entered.</p>
+                            <div class="col-md-4">
+                                <p><span class="glyphicon glyphicon-exclamation-sign pull-right" style="font-size: 150%"></span></p>
+                                <p style="color: #fbc2b2">|</p>
+                            </div>
+                            <p style="text-align: center">The Fantasy Premier League website may be updating or else there is no existing League corresponding to the ID you entered.</p>
                         </div>
                     {% endif %}
                     <div style="color: white">

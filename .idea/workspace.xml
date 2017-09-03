@@ -2,9 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f2eb8a34-f0d9-4332-ad47-8c7d4e494c44" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/fplmystats/utils/daily_price_changes.txt" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FPLdb.sqlite" afterPath="$PROJECT_DIR$/FPLdb.sqlite" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fplmystats/utils/manager_utils.py" afterPath="$PROJECT_DIR$/fplmystats/utils/manager_utils.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fplmystats/utils/utils.py" afterPath="$PROJECT_DIR$/fplmystats/utils/utils.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/league/urls.py" afterPath="$PROJECT_DIR$/league/urls.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/manager/templates/manager/detail.html" afterPath="$PROJECT_DIR$/manager/templates/manager/detail.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/manager/views.py" afterPath="$PROJECT_DIR$/manager/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/css/style.css" afterPath="$PROJECT_DIR$/static/css/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/index.html" afterPath="$PROJECT_DIR$/templates/index.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -43,19 +50,19 @@
       <file leaf-file-name="manager_utils.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/fplmystats/utils/manager_utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="196" column="31" lean-forward="true" selection-start-line="196" selection-start-column="31" selection-end-line="196" selection-end-column="31" />
+            <state relative-caret-position="225">
+              <caret line="499" column="45" lean-forward="true" selection-start-line="499" selection-start-column="45" selection-end-line="499" selection-end-column="45" />
               <folding>
                 <element signature="e#0#34#0" expanded="true" />
                 <element signature="e#1196#1643#0" expanded="false" />
-                <marker date="1504184795188" expanded="true" signature="3800:3828" ph="SELECT name missing_valueteamIDs" />
-                <marker date="1504184795188" expanded="true" signature="7549:7633" ph="SELECT webna... missing_value" />
-                <marker date="1504184795188" expanded="true" signature="7549:7635" ph="SELECT webna... {}" />
-                <marker date="1504184795188" expanded="true" signature="8579:8619" ph="SELECT name missing_valueteamIDs" />
-                <marker date="1504184795188" expanded="true" signature="8579:8621" ph="SELECT name {}teamIDs" />
-                <marker date="1504184795188" expanded="true" signature="8759:8789" ph="SELECT * FRO... missing_value" />
-                <marker date="1504184795188" expanded="true" signature="13615:13691" ph="SELECT webna... missing_value" />
-                <marker date="1504184795188" expanded="true" signature="14447:14477" ph="SELECT * FRO... missing_value" />
+                <marker date="1504289663169" expanded="true" signature="3800:3828" ph="SELECT name missing_valueteamIDs" />
+                <marker date="1504289663169" expanded="true" signature="7511:7595" ph="SELECT webna... missing_value" />
+                <marker date="1504289663169" expanded="true" signature="7511:7597" ph="SELECT webna... {}" />
+                <marker date="1504289663169" expanded="true" signature="8551:8591" ph="SELECT name missing_valueteamIDs" />
+                <marker date="1504289663169" expanded="true" signature="8551:8593" ph="SELECT name {}teamIDs" />
+                <marker date="1504289663169" expanded="true" signature="8731:8761" ph="SELECT * FRO... missing_value" />
+                <marker date="1504289663169" expanded="true" signature="14192:14268" ph="SELECT webna... missing_value" />
+                <marker date="1504289663169" expanded="true" signature="15024:15054" ph="SELECT * FRO... missing_value" />
               </folding>
             </state>
           </provider>
@@ -64,8 +71,18 @@
       <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/fplmystats/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="20" column="33" lean-forward="true" selection-start-line="20" selection-start-column="33" selection-end-line="20" selection-end-column="33" />
+            <state relative-caret-position="403">
+              <caret line="116" column="1" lean-forward="false" selection-start-line="116" selection-start-column="1" selection-end-line="116" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/css/style.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="378">
+              <caret line="18" column="4" lean-forward="true" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -74,38 +91,18 @@
       <file leaf-file-name="detail.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/manager/templates/manager/detail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="63">
-              <caret line="3" column="15" lean-forward="false" selection-start-line="3" selection-start-column="15" selection-end-line="3" selection-end-column="15" />
+            <state relative-caret-position="210">
+              <caret line="146" column="57" lean-forward="false" selection-start-line="146" selection-start-column="57" selection-end-line="146" selection-end-column="57" />
               <folding>
                 <element signature="n#style#0;n#h1#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#a#0;n#h1#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#h1#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#a#0;n#h1#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#td#0;n#tr#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#0;n#tr#1;n#table#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#0;n#tr#1;n#table#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#tr#1;n#table#0;n#div#1;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#td#0;n#tr#1;n#table#0;n#div#1;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/js/main.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="30" column="42" lean-forward="true" selection-start-line="30" selection-start-column="42" selection-end-line="30" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="league_utils.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fplmystats/utils/league_utils.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="84">
-              <caret line="4" column="11" lean-forward="true" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
-              <folding>
-                <element signature="e#0#42#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -114,8 +111,8 @@
       <file leaf-file-name="detail.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/league/templates/league/detail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-269">
-              <caret line="445" column="59" lean-forward="false" selection-start-line="445" selection-start-column="59" selection-end-line="445" selection-end-column="59" />
+            <state relative-caret-position="315">
+              <caret line="96" column="48" lean-forward="true" selection-start-line="96" selection-start-column="48" selection-end-line="96" selection-end-column="96" />
               <folding>
                 <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -135,20 +132,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/css/style.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="311">
-              <caret line="63" column="38" lean-forward="true" selection-start-line="63" selection-start-column="38" selection-end-line="63" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/league/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
+            <state relative-caret-position="-21">
               <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
@@ -157,44 +144,69 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/league/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="6" column="41" lean-forward="false" selection-start-line="6" selection-start-column="41" selection-end-line="6" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/manager/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="168">
+              <caret line="9" column="10" lean-forward="false" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="utils.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/fplmystats/utils/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="441">
-              <caret line="21" column="26" lean-forward="true" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
+            <state relative-caret-position="403">
+              <caret line="287" column="0" lean-forward="true" selection-start-line="287" selection-start-column="0" selection-end-line="287" selection-end-column="0" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
-                <element signature="e#874#2715#0" expanded="false" />
-                <element signature="e#2752#4709#0" expanded="false" />
-                <element signature="e#4744#5605#0" expanded="false" />
-                <element signature="e#5639#7427#0" expanded="false" />
-                <element signature="e#7463#8377#0" expanded="false" />
-                <marker date="1504188799384" expanded="true" signature="1455:1512" ph="CREATE TABLE... missing_value" />
-                <marker date="1504188799384" expanded="true" signature="1731:1772" ph="INSERT INTO &quot;missing_value&quot;... " />
-                <marker date="1504188799384" expanded="true" signature="2127:2267" ph="CREATE TABLE... missing_value" />
-                <marker date="1504188799384" expanded="true" signature="3059:3085" ph="SELECT id, p... {}" />
-                <marker date="1504188799384" expanded="true" signature="3150:3166" ph="DELETE FROM " />
-                <marker date="1504188799384" expanded="true" signature="3697:3778" ph="INSERT INTO &quot;missing_value&quot;... " />
-                <marker date="1504188799384" expanded="true" signature="4120:4146" ph="SELECT id, p... missing_value" />
-                <marker date="1504188799384" expanded="true" signature="5339:5516" ph="CREATE TABLE... missing_value" />
-                <marker date="1504188799384" expanded="true" signature="5918:5934" ph="DELETE FROM " />
-                <marker date="1504188799384" expanded="true" signature="6045:6063" ph="SELECT * fro... missing_value" />
-                <marker date="1504188799384" expanded="true" signature="7249:7331" ph="INSERT INTO &quot;missing_value&quot;... " />
-                <marker date="1504188799384" expanded="true" signature="7594:7624" ph="SELECT * FRO... missing_value" />
-                <marker date="1504188799384" expanded="true" signature="8139:8172" ph="SELECT name missing_value" />
-                <marker date="1504188799384" expanded="true" signature="8139:8174" ph="SELECT name {}" />
+                <element signature="e#1264#3105#0" expanded="false" />
+                <element signature="e#3142#5132#0" expanded="false" />
+                <element signature="e#5167#6028#0" expanded="false" />
+                <element signature="e#6062#7883#0" expanded="false" />
+                <element signature="e#7923#8925#0" expanded="false" />
+                <element signature="e#8956#9625#0" expanded="false" />
+                <element signature="e#9657#10384#0" expanded="false" />
+                <marker date="1504455607380" expanded="true" signature="1845:1902" ph="CREATE TABLE... missing_value" />
+                <marker date="1504455607380" expanded="true" signature="2121:2162" ph="INSERT INTO &quot;missing_value&quot;... " />
+                <marker date="1504455607380" expanded="true" signature="2517:2657" ph="CREATE TABLE... missing_value" />
+                <marker date="1504455607380" expanded="true" signature="3478:3504" ph="SELECT id, p... {}" />
+                <marker date="1504455607380" expanded="true" signature="3569:3585" ph="DELETE FROM " />
+                <marker date="1504455607380" expanded="true" signature="4116:4197" ph="INSERT INTO &quot;missing_value&quot;... " />
+                <marker date="1504455607380" expanded="true" signature="4539:4565" ph="SELECT id, p... missing_value" />
+                <marker date="1504455607380" expanded="true" signature="5762:5939" ph="CREATE TABLE... missing_value" />
+                <marker date="1504455607380" expanded="true" signature="6374:6390" ph="DELETE FROM " />
+                <marker date="1504455607380" expanded="true" signature="6501:6519" ph="SELECT * fro... missing_value" />
+                <marker date="1504455607380" expanded="true" signature="7705:7787" ph="INSERT INTO &quot;missing_value&quot;... " />
+                <marker date="1504455607380" expanded="true" signature="8142:8172" ph="SELECT * FRO... missing_value" />
+                <marker date="1504455607380" expanded="true" signature="8687:8720" ph="SELECT name missing_value" />
+                <marker date="1504455607380" expanded="true" signature="8687:8722" ph="SELECT name {}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/manager/views.py">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+            <state relative-caret-position="525">
+              <caret line="93" column="58" lean-forward="false" selection-start-line="93" selection-start-column="58" selection-end-line="93" selection-end-column="58" />
               <folding>
-                <element signature="e#0#45#0" expanded="true" />
+                <element signature="n#style#0;n#p#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#1;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#1;n#div#2;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -214,10 +226,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>general_number_total</find>
-      <find>squad_stats_team</find>
-      <find>team_selection_</find>
-      <find>headers</find>
       <find>test</find>
       <find>disabled</find>
       <find>d</find>
@@ -241,9 +249,13 @@
       <find>FPL</find>
       <find>team_selection</find>
       <find>mul</find>
-      <find>value</find>
       <find>border-left</find>
       <find>result</find>
+      <find>invali</find>
+      <find>round</find>
+      <find>max</find>
+      <find>lamb</find>
+      <find>value</find>
     </findStrings>
     <replaceStrings>
       <replace>main</replace>
@@ -285,22 +297,22 @@
         <option value="$PROJECT_DIR$/FPL_My_Stats/forms.py" />
         <option value="$PROJECT_DIR$/FPL_My_Stats/utils/utils.py" />
         <option value="$PROJECT_DIR$/manager/urls.py" />
-        <option value="$PROJECT_DIR$/league/urls.py" />
         <option value="$PROJECT_DIR$/FPL_My_Stats/utils/manager_utils.py" />
         <option value="$PROJECT_DIR$/FPL_My_Stats/utils/league_utils.py" />
-        <option value="$PROJECT_DIR$/static/css/style.css" />
         <option value="$PROJECT_DIR$/templates/error.html" />
         <option value="$PROJECT_DIR$/fplmystats/urls.py" />
-        <option value="$PROJECT_DIR$/manager/views.py" />
         <option value="$PROJECT_DIR$/fplmystats/views.py" />
-        <option value="$PROJECT_DIR$/templates/index.html" />
-        <option value="$PROJECT_DIR$/fplmystats/settings.py" />
         <option value="$PROJECT_DIR$/league/templates/league/detail.html" />
         <option value="$PROJECT_DIR$/static/js/main.js" />
         <option value="$PROJECT_DIR$/league/views.py" />
         <option value="$PROJECT_DIR$/fplmystats/utils/league_utils.py" />
+        <option value="$PROJECT_DIR$/manager/views.py" />
+        <option value="$PROJECT_DIR$/league/urls.py" />
+        <option value="$PROJECT_DIR$/templates/index.html" />
+        <option value="$PROJECT_DIR$/static/css/style.css" />
         <option value="$PROJECT_DIR$/manager/templates/manager/detail.html" />
         <option value="$PROJECT_DIR$/fplmystats/utils/manager_utils.py" />
+        <option value="$PROJECT_DIR$/fplmystats/settings.py" />
         <option value="$PROJECT_DIR$/fplmystats/utils/utils.py" />
       </list>
     </option>
@@ -841,7 +853,21 @@
       <option name="project" value="LOCAL" />
       <updated>1504185460389</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Added function to log player price changes and new players">
+      <created>1504188910840</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1504188910840</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Added function to log player price changes and new players">
+      <created>1504224993172</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1504224993172</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -919,7 +945,8 @@
     <MESSAGE value="All intended functionality in place" />
     <MESSAGE value="Added error checking for search and ability to view H2H leagues" />
     <MESSAGE value="Added league modals, changed current season method to make cron easier" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added league modals, changed current season method to make cron easier" />
+    <MESSAGE value="Added function to log player price changes and new players" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added function to log player price changes and new players" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1044,13 +1071,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/league/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/importlib/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-504">
@@ -1137,20 +1157,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/manager/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="9" column="10" lean-forward="false" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/fplmystats/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="231">
           <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding>
-            <element signature="e#0#41#0" expanded="true" />
+            <element signature="e#0#41#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1160,23 +1172,6 @@
         <state relative-caret-position="189">
           <caret line="9" column="54" lean-forward="false" selection-start-line="9" selection-start-column="54" selection-end-line="9" selection-end-column="54" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="43" column="169" lean-forward="false" selection-start-line="43" selection-start-column="169" selection-end-line="43" selection-end-column="169" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#p#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#p#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#p#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#p#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1196,10 +1191,77 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/fplmystats/utils/league_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="11" lean-forward="true" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#42#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/manager/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/league/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-21">
+          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/manager/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="9" column="10" lean-forward="false" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/league/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="6" column="41" lean-forward="false" selection-start-line="6" selection-start-column="41" selection-end-line="6" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="93" column="58" lean-forward="false" selection-start-line="93" selection-start-column="58" selection-end-line="93" selection-end-column="58" />
+          <folding>
+            <element signature="n#style#0;n#p#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#1;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#1;n#div#2;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="18" column="4" lean-forward="true" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/league/templates/league/detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-269">
-          <caret line="445" column="59" lean-forward="false" selection-start-line="445" selection-start-column="59" selection-end-line="445" selection-end-column="59" />
+        <state relative-caret-position="315">
+          <caret line="96" column="48" lean-forward="true" selection-start-line="96" selection-start-column="48" selection-end-line="96" selection-end-column="96" />
           <folding>
             <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -1218,112 +1280,78 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="63" column="38" lean-forward="true" selection-start-line="63" selection-start-column="38" selection-end-line="63" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/league/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/manager/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fplmystats/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="20" column="33" lean-forward="true" selection-start-line="20" selection-start-column="33" selection-end-line="20" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/manager/templates/manager/detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="3" column="15" lean-forward="false" selection-start-line="3" selection-start-column="15" selection-end-line="3" selection-end-column="15" />
+        <state relative-caret-position="210">
+          <caret line="146" column="57" lean-forward="false" selection-start-line="146" selection-start-column="57" selection-end-line="146" selection-end-column="57" />
           <folding>
             <element signature="n#style#0;n#h1#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#a#0;n#h1#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#h1#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#a#0;n#h1#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#td#0;n#tr#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#tr#1;n#table#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#tr#1;n#table#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#tr#1;n#table#0;n#div#1;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#td#0;n#tr#1;n#table#0;n#div#1;n#div#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fplmystats/utils/league_utils.py">
+    <entry file="file://$PROJECT_DIR$/fplmystats/utils/manager_utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="4" column="11" lean-forward="true" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
+        <state relative-caret-position="225">
+          <caret line="499" column="45" lean-forward="true" selection-start-line="499" selection-start-column="45" selection-end-line="499" selection-end-column="45" />
           <folding>
-            <element signature="e#0#42#0" expanded="true" />
+            <element signature="e#0#34#0" expanded="true" />
+            <element signature="e#1196#1643#0" expanded="false" />
+            <marker date="1504289663169" expanded="true" signature="3800:3828" ph="SELECT name missing_valueteamIDs" />
+            <marker date="1504289663169" expanded="true" signature="7511:7595" ph="SELECT webna... missing_value" />
+            <marker date="1504289663169" expanded="true" signature="7511:7597" ph="SELECT webna... {}" />
+            <marker date="1504289663169" expanded="true" signature="8551:8591" ph="SELECT name missing_valueteamIDs" />
+            <marker date="1504289663169" expanded="true" signature="8551:8593" ph="SELECT name {}teamIDs" />
+            <marker date="1504289663169" expanded="true" signature="8731:8761" ph="SELECT * FRO... missing_value" />
+            <marker date="1504289663169" expanded="true" signature="14192:14268" ph="SELECT webna... missing_value" />
+            <marker date="1504289663169" expanded="true" signature="15024:15054" ph="SELECT * FRO... missing_value" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fplmystats/utils/manager_utils.py">
+    <entry file="file://$PROJECT_DIR$/fplmystats/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="196" column="31" lean-forward="true" selection-start-line="196" selection-start-column="31" selection-end-line="196" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#34#0" expanded="true" />
-            <element signature="e#1196#1643#0" expanded="false" />
-            <marker date="1504184795188" expanded="true" signature="3800:3828" ph="SELECT name missing_valueteamIDs" />
-            <marker date="1504184795188" expanded="true" signature="7549:7633" ph="SELECT webna... missing_value" />
-            <marker date="1504184795188" expanded="true" signature="7549:7635" ph="SELECT webna... {}" />
-            <marker date="1504184795188" expanded="true" signature="8579:8619" ph="SELECT name missing_valueteamIDs" />
-            <marker date="1504184795188" expanded="true" signature="8579:8621" ph="SELECT name {}teamIDs" />
-            <marker date="1504184795188" expanded="true" signature="8759:8789" ph="SELECT * FRO... missing_value" />
-            <marker date="1504184795188" expanded="true" signature="13615:13691" ph="SELECT webna... missing_value" />
-            <marker date="1504184795188" expanded="true" signature="14447:14477" ph="SELECT * FRO... missing_value" />
-          </folding>
+        <state relative-caret-position="403">
+          <caret line="116" column="1" lean-forward="false" selection-start-line="116" selection-start-column="1" selection-end-line="116" selection-end-column="1" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/fplmystats/utils/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="21" column="26" lean-forward="true" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
+        <state relative-caret-position="403">
+          <caret line="287" column="0" lean-forward="true" selection-start-line="287" selection-start-column="0" selection-end-line="287" selection-end-column="0" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
-            <element signature="e#874#2715#0" expanded="false" />
-            <element signature="e#2752#4709#0" expanded="false" />
-            <element signature="e#4744#5605#0" expanded="false" />
-            <element signature="e#5639#7427#0" expanded="false" />
-            <element signature="e#7463#8377#0" expanded="false" />
-            <marker date="1504188799384" expanded="true" signature="1455:1512" ph="CREATE TABLE... missing_value" />
-            <marker date="1504188799384" expanded="true" signature="1731:1772" ph="INSERT INTO &quot;missing_value&quot;... " />
-            <marker date="1504188799384" expanded="true" signature="2127:2267" ph="CREATE TABLE... missing_value" />
-            <marker date="1504188799384" expanded="true" signature="3059:3085" ph="SELECT id, p... {}" />
-            <marker date="1504188799384" expanded="true" signature="3150:3166" ph="DELETE FROM " />
-            <marker date="1504188799384" expanded="true" signature="3697:3778" ph="INSERT INTO &quot;missing_value&quot;... " />
-            <marker date="1504188799384" expanded="true" signature="4120:4146" ph="SELECT id, p... missing_value" />
-            <marker date="1504188799384" expanded="true" signature="5339:5516" ph="CREATE TABLE... missing_value" />
-            <marker date="1504188799384" expanded="true" signature="5918:5934" ph="DELETE FROM " />
-            <marker date="1504188799384" expanded="true" signature="6045:6063" ph="SELECT * fro... missing_value" />
-            <marker date="1504188799384" expanded="true" signature="7249:7331" ph="INSERT INTO &quot;missing_value&quot;... " />
-            <marker date="1504188799384" expanded="true" signature="7594:7624" ph="SELECT * FRO... missing_value" />
-            <marker date="1504188799384" expanded="true" signature="8139:8172" ph="SELECT name missing_value" />
-            <marker date="1504188799384" expanded="true" signature="8139:8174" ph="SELECT name {}" />
+            <element signature="e#1264#3105#0" expanded="false" />
+            <element signature="e#3142#5132#0" expanded="false" />
+            <element signature="e#5167#6028#0" expanded="false" />
+            <element signature="e#6062#7883#0" expanded="false" />
+            <element signature="e#7923#8925#0" expanded="false" />
+            <element signature="e#8956#9625#0" expanded="false" />
+            <element signature="e#9657#10384#0" expanded="false" />
+            <marker date="1504455607380" expanded="true" signature="1845:1902" ph="CREATE TABLE... missing_value" />
+            <marker date="1504455607380" expanded="true" signature="2121:2162" ph="INSERT INTO &quot;missing_value&quot;... " />
+            <marker date="1504455607380" expanded="true" signature="2517:2657" ph="CREATE TABLE... missing_value" />
+            <marker date="1504455607380" expanded="true" signature="3478:3504" ph="SELECT id, p... {}" />
+            <marker date="1504455607380" expanded="true" signature="3569:3585" ph="DELETE FROM " />
+            <marker date="1504455607380" expanded="true" signature="4116:4197" ph="INSERT INTO &quot;missing_value&quot;... " />
+            <marker date="1504455607380" expanded="true" signature="4539:4565" ph="SELECT id, p... missing_value" />
+            <marker date="1504455607380" expanded="true" signature="5762:5939" ph="CREATE TABLE... missing_value" />
+            <marker date="1504455607380" expanded="true" signature="6374:6390" ph="DELETE FROM " />
+            <marker date="1504455607380" expanded="true" signature="6501:6519" ph="SELECT * fro... missing_value" />
+            <marker date="1504455607380" expanded="true" signature="7705:7787" ph="INSERT INTO &quot;missing_value&quot;... " />
+            <marker date="1504455607380" expanded="true" signature="8142:8172" ph="SELECT * FRO... missing_value" />
+            <marker date="1504455607380" expanded="true" signature="8687:8720" ph="SELECT name missing_value" />
+            <marker date="1504455607380" expanded="true" signature="8687:8722" ph="SELECT name {}" />
           </folding>
         </state>
       </provider>
