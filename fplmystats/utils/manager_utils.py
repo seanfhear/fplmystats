@@ -122,7 +122,7 @@ def get_stats(manager_id):
         # add empty lists to each section to be filled with the week's data
         table_data.general_number.append([0] * 14)
         table_data.general_points.append([0] * 14)
-        table_data.positions.append([0] * 10)
+        table_data.positions.append([0] * 11)
         table_data.team_selection.append([0] * 13)
         formation = [0, 0, 0]
 
@@ -184,7 +184,7 @@ def get_stats(manager_id):
         for player_id in pitch_ids:
             player_id_string = str(player_id[0])
 
-            c.execute('SELECT webname, firstname, secondname, position, teamID, price FROM "{}" WHERE id = {}'
+            c.execute('SELECT webname, firstname, secondname, position, teamID FROM "{}" WHERE id = {}'
                       .format(player_table, player_id_string))
             result = c.fetchone()
 
@@ -195,7 +195,6 @@ def get_stats(manager_id):
                 player_name = result[0]
             position = result[3]
             team_id = result[4]
-            price = round(result[5], 1)
 
             if player_name not in player_points_dict:
                 player_points_dict[player_name] = 0
@@ -206,9 +205,6 @@ def get_stats(manager_id):
             player_apps_xi_dict[player_name] += 1
             player_apps_xv_dict[player_name] += 1
 
-            if player_name not in price_dict:
-                price_dict[player_name] = price
-
             c.execute('SELECT name from "{}teamIDs" WHERE id = {}'.format(current_season, team_id))
             team_name = c.fetchone()[0]
             teams_dict[team_name] += 1
@@ -216,6 +212,13 @@ def get_stats(manager_id):
             c.execute('SELECT * FROM "{}" WHERE id = {}'.format(weekly_table, player_id_string))
             player_datum = c.fetchone()
             if player_datum is not None:
+                price = player_datum[14] / 1.0
+                if player_name not in price_dict:
+                    price_dict[player_name] = [price, 1]
+                else:
+                    price_dict[player_name][0] += price
+                    price_dict[player_name][1] += 1
+
                 if player_datum[2] > 0:  # if minutes > 0
                     points_list.append([player_datum[1], position, player_name])  # points, position, player_name
                 points_on_pitch += player_datum[1]
@@ -293,6 +296,7 @@ def get_stats(manager_id):
                     table_data.positions[week - 1][7] += price
                     formation[1] += 1
                 elif position == 4:
+                    print(price)
                     table_data.positions[week - 1][8] += player_datum[1]
                     table_data.positions[week - 1][9] += price
                     formation[2] += 1
@@ -305,7 +309,7 @@ def get_stats(manager_id):
         for player_id in bench_ids:
             player_id_string = str(player_id)
 
-            c.execute('SELECT webname, firstname, secondname, position, price FROM "{}" WHERE id = {}'
+            c.execute('SELECT webname, firstname, secondname, position FROM "{}" WHERE id = {}'
                       .format(player_table, player_id_string))
             result = c.fetchone()
 
@@ -315,7 +319,6 @@ def get_stats(manager_id):
             else:
                 player_name = result[0]
             position = result[3]
-            price = result[4]
 
             if player_name not in player_points_dict:
                 player_points_dict[player_name] = 0
@@ -323,13 +326,18 @@ def get_stats(manager_id):
 
             player_apps_xv_dict[player_name] += 1
 
-            if player_name not in price_dict:
-                price_dict[player_name] = price
-
             c.execute('SELECT * FROM "{}" WHERE id = {}'.format(weekly_table, player_id_string))
             player_datum = c.fetchone()
 
             if player_datum is not None:
+                price = player_datum[14] / 1.0
+                if player_name not in price_dict:
+                    price_dict[player_name] = [price, 1]
+                else:
+                    price_dict[player_name][0] += price
+                    price_dict[player_name][1] += 1
+                table_data.positions[week - 1][10] += price
+
                 if player_datum[0] == captain_id:
                     captain_name = player_name
                     captain_points = player_datum[1]
@@ -461,7 +469,7 @@ def get_stats(manager_id):
     table_data.general_points_totals = [n for n in zip(*table_data.general_points)][1:15]
     table_data.general_points_totals = [sum(n) for n in table_data.general_points_totals]
 
-    table_data.positions_totals = [0] * 8
+    table_data.positions_totals = [0] * 9
     table_data.positions_totals[0] = sum(entry[2] for entry in table_data.positions)
     table_data.positions_totals[1] = round(sum(entry[3] for entry in table_data.positions) / current_week, 1)
     table_data.positions_totals[2] = sum(entry[4] for entry in table_data.positions)
@@ -470,6 +478,7 @@ def get_stats(manager_id):
     table_data.positions_totals[5] = round(sum(entry[7] for entry in table_data.positions) / current_week, 1)
     table_data.positions_totals[6] = sum(entry[8] for entry in table_data.positions)
     table_data.positions_totals[7] = round(sum(entry[9] for entry in table_data.positions) / current_week, 1)
+    table_data.positions_totals[8] = round(sum(entry[10] for entry in table_data.positions) / current_week, 1)
 
     table_data.team_selection_totals = [0]*8
     table_data.team_selection_totals[0] = sum(entry[2] for entry in table_data.team_selection)    # transfer cost
@@ -488,7 +497,8 @@ def get_stats(manager_id):
         weeks_in_xv = player_apps_xv_dict[player]
         weeks_captain = 0
         points = 0
-        player_value = price_dict[player]
+        player_value = round(price_dict[player][0] / price_dict[player][1], 1)
+        print(name + '-' + str(player_value))
 
         if player in player_apps_xi_dict:
             weeks_in_xi = player_apps_xi_dict[player]

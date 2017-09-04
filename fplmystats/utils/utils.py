@@ -33,6 +33,40 @@ field_type_TEXT = 'TEXT'
 HOURS = 4  # number of hours since kickoff to still update table
 
 
+def player_to_string(player_id):
+    """
+    Returns a string containing player's name, team and position
+    """
+    conn = sqlite3.connect(data_file)
+    c = conn.cursor()
+
+    table_name = '{}playerIDs'.format(str(current_season))
+    c.execute('SELECT * FROM "{}" WHERE id = {}'.format(table_name, player_id))
+    player = c.fetchone()
+
+    if player[1] == player[3]:
+        player_name = player[2] + ' ' + player[3]
+    else:
+        player_name = player[1]
+
+    position = player[4]
+    if position == 0:
+        position_string = "GK"
+    elif position == 1:
+        position_string = "DEF"
+    elif position == 2:
+        position_string = "MID"
+    else:
+        position_string = "FWD"
+
+    team_id = player[5]
+    table_name = '{}teamIDs'.format(str(current_season))
+    c.execute('SELECT name FROM "{}" WHERE id = {}'.format(table_name, team_id))
+    team_string = c.fetchone()[0]
+
+    return "NAME: {}; TEAM: {}; POSITION: {}\n".format(player_name, team_string, position_string)
+
+
 def create_season_tables():
     """
     Create table which maps team IDs to team names, run once at start of season
@@ -67,10 +101,9 @@ def create_season_tables():
     second_name_field = 'secondname'
     position_field = 'position'
     team_id_field = 'teamID'
-    price_field = 'price'
 
     c.execute('CREATE TABLE "{tn}" ({idf} {fti} PRIMARY KEY,\
-                {wnf} {ftt}, {fnf} {ftt}, {snf} {ftt}, {psf} {fti}, {tmf} {fti}, {prf} {fti})'
+                {wnf} {ftt}, {fnf} {ftt}, {snf} {ftt}, {psf} {fti}, {tmf} {fti})'
               .format(tn=table_name,
                       idf=id_field,
                       wnf=web_name_field,
@@ -78,7 +111,6 @@ def create_season_tables():
                       snf=second_name_field,
                       psf=position_field,
                       tmf=team_id_field,
-                      prf=price_field,
                       fti=field_type_INT,
                       ftt=field_type_TEXT))
     conn.commit()
@@ -95,7 +127,7 @@ def update_player_id_table():
     c = conn.cursor()
 
     table_name = '{}playerIDs'.format(str(current_season))
-    c.execute('SELECT id, price FROM "{}"'.format(table_name))
+    c.execute('SELECT id FROM "{}"'.format(table_name))
     pre_list = c.fetchall()
     c.execute('DELETE FROM "{}"'.format(table_name))
 
@@ -109,30 +141,25 @@ def update_player_id_table():
         second_name = element['second_name'].replace("'", "''")
         position = element['element_type']
         team_id = element['team']
-        price = element['now_cost'] / 10.0
 
-        c.execute('INSERT INTO "{tn}" VALUES ({idv}, "{wnv}", "{fnv}", "{snv}", {psv}, {tmv}, {prv})'
+        c.execute('INSERT INTO "{tn}" VALUES ({idv}, "{wnv}", "{fnv}", "{snv}", {psv}, {tmv})'
                   .format(tn=table_name,
                           idv=player_id,
                           wnv=web_name,
                           fnv=first_name,
                           snv=second_name,
                           psv=position,
-                          tmv=team_id,
-                          prv=price))
+                          tmv=team_id))
 
-    c.execute('SELECT id, price FROM "{}"'.format(table_name))
+    c.execute('SELECT id FROM "{}"'.format(table_name))
     post_list = c.fetchall()
 
     conn.commit()
     conn.close()
 
-    num_new_players = len(post_list) - len(pre_list)
     changed_ids = []
-    for i in range(len(pre_list)):
-        if pre_list[i][1] != post_list[i][1]:
-            changed_ids.append(post_list[i][0])
 
+    num_new_players = len(post_list) - len(pre_list)
     while num_new_players > 0:
         changed_ids.append(post_list[-num_new_players][0])
         num_new_players -= 1
@@ -155,10 +182,10 @@ def create_weekly_tables():
     while week <= 38:
         table_name = '{}week{}'.format(str(current_season), str(week))
         fields = ['id', 'points', 'minutes', 'goals', 'assists', 'cleansheets', 'saves',
-                  'goalsconceded', 'pensaves', 'yellows', 'reds', 'penmisses', 'owngoals', 'bonus']
+                  'goalsconceded', 'pensaves', 'yellows', 'reds', 'penmisses', 'owngoals', 'bonus', 'price']
 
         c.execute('CREATE TABLE "{tn}" ({} {ft} PRIMARY KEY, {} {ft}, {} {ft}, {} {ft}, {} {ft},'
-                  '{} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft},{} {ft}, {} {ft}, {} {ft})'
+                  '{} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft},{} {ft}, {} {ft}, {} {ft}, {} {ft})'
                   .format(tn=table_name, ft=field_type_INT, *fields))
         week += 1
 
@@ -184,63 +211,29 @@ def update_weekly_table():
         with urllib.request.urlopen('{}'.format(player_url)) as url:
             data = json.loads(url.read().decode())
 
-        results = [0] * 14
+        results = [0] * 15
         results[0] = player_id
         for event in data['history']:
             if event['round'] == current_week:
-                results[1] += (event['total_points'])
-                results[2] += (event['minutes'])
-                results[3] += (event['goals_scored'])
-                results[4] += (event['assists'])
-                results[5] += (event['clean_sheets'])
-                results[6] += (event['saves'])
-                results[7] += (event['goals_conceded'])
-                results[8] += (event['penalties_saved'])
-                results[9] += (event['yellow_cards'])
-                results[10] += (event['red_cards'])
-                results[11] += (event['penalties_missed'])
-                results[12] += (event['own_goals'])
-                results[13] += (event['bonus'])
-        c.execute('INSERT INTO "{tn}" VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {})'
+                results[1] += event['total_points']
+                results[2] += event['minutes']
+                results[3] += event['goals_scored']
+                results[4] += event['assists']
+                results[5] += event['clean_sheets']
+                results[6] += event['saves']
+                results[7] += event['goals_conceded']
+                results[8] += event['penalties_saved']
+                results[9] += event['yellow_cards']
+                results[10] += event['red_cards']
+                results[11] += event['penalties_missed']
+                results[12] += event['own_goals']
+                results[13] += event['bonus']
+                results[14] = event['value'] / 10.0
+        c.execute('INSERT INTO "{tn}" VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {})'
                   .format(tn=weekly_table_name, *results))
 
     conn.commit()
     conn.close()
-
-
-def player_to_string(player_id):
-    """
-    Returns a string containing player's name, team, position and price
-    """
-    conn = sqlite3.connect(data_file)
-    c = conn.cursor()
-
-    table_name = '{}playerIDs'.format(str(current_season))
-    c.execute('SELECT * FROM "{}" WHERE id = {}'.format(table_name, player_id))
-    player = c.fetchone()
-
-    if player[1] == player[3]:
-        player_name = player[2] + ' ' + player[3]
-    else:
-        player_name = player[1]
-
-    position = player[4]
-    if position == 0:
-        position_string = "GK"
-    elif position == 1:
-        position_string = "DEF"
-    elif position == 2:
-        position_string = "MID"
-    else:
-        position_string = "FWD"
-
-    team_id = player[5]
-    table_name = '{}teamIDs'.format(str(current_season))
-    c.execute('SELECT name FROM "{}" WHERE id = {}'.format(table_name, team_id))
-    team_string = c.fetchone()[0]
-    price = player[6]
-
-    return "NAME: {}; TEAM: {}; POSITION: {}; PRICE: {}\n".format(player_name, team_string, position_string, price)
 
 
 def get_all_fixtures():
@@ -280,8 +273,9 @@ def check_for_fixture():
             hour = int(item[11:13])
             minute = int(item[14:16])
 
-            date = datetime.date(year, month, day)
-            if date == today:
-                time = datetime.datetime(year, month, day, hour, minute)
-                if now > time and (now - time < datetime.timedelta(hours=HOURS)):
+            kickoff_date = datetime.date(year, month, day)
+            if kickoff_date == today:
+                kickoff_time = datetime.datetime(year, month, day, hour, minute)
+                if now > kickoff_time and (now - kickoff_time < datetime.timedelta(hours=HOURS)):
                     update_weekly_table()
+                    return
