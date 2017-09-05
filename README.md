@@ -1,4 +1,4 @@
-# [fplmystats.com](fplmystats.com)
+# www.fplmystats.com
 Fantasy Premier League tool.
 
 A website that displays in depth statistics relating to users in FPL.
