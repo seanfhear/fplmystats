@@ -5,7 +5,6 @@ from urllib.error import HTTPError
 from json import JSONDecodeError
 
 # TODO scroll headers with window
-# TODO budget for positions
 
 
 def search(request):
