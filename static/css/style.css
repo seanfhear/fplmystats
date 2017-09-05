@@ -44,31 +44,41 @@ th {
     padding: 4px;
     border-color: #a95f4c;
 }
+.main-manager-display thead tr th {
+    color: lightgrey;
+    background-color: #003854;
+}
+.main-manager-display tbody tr td {
+    color: white;
+    background-color: #1A526E;
+    border-left: solid #003854 1px;
+    border-right: solid #003854 1px;
+}
 .main-manager-display tbody tr:hover td {
-    background-color: #5085a0;
-    border-left: solid #336B87 0.5px;
-    border-right: solid #336B87 0.5px;
+    background-color: #336B87;
+}
+.main-league-display thead tr th {
+    color: lightgrey;
+    background-color: #430300;
+}
+.main-league-display tbody tr td {
+    color: white;
+    background-color: #5D1D1A;
+    border-left: solid #430300 1px;
+    border-right: solid #430300 1px;
 }
 .main-league-display tbody tr:hover td {
-    background-color: #a95f4c;
+    background-color: #773734;
 }
 table thead th {
     vertical-align: middle;
-}
-table.weekly tbody tr td {
-    border-left: solid #5085a0 0.5px;
-    border-right: solid #5085a0 0.5px;
-}
-table.squad tbody tr td {
-    border-left: solid #5085a0 0.5px;
-    border-right: solid #5085a0 0.5px;
 }
 .general table thead tr th, .general table tbody tr td {
     width: 7.14%;
     vertical-align: middle;
 }
 .positions table thead tr th, .positions table tbody tr td {
-    width: 9.09%;
+    width: 8.33%;
     vertical-align: middle;
 }
 .team-selection table thead tr th, .team-selection table tbody tr td {

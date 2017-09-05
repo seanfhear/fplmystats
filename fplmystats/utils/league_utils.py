@@ -51,7 +51,7 @@ def get_stats(league_id):
     table_data.positions_max = []
     table_data.team_selection_max = []
 
-    table_data.headers = [0] * 6
+    table_data.headers = [0] * 12
 
     # max_number = [[0, '-']] * 12    doesn't work???
     max_number = [[0, '-'], [0, '-'], [0, '-'], [0, '-'], [0, '-'], [0, '-'], [0, '-'], [0, '-'], [0, '-'], [0, '-'],
@@ -70,8 +70,11 @@ def get_stats(league_id):
     #  9 - penalties missed
     # 10 - own goals
     # 11 - bonus points
-    max_positions = [[0, '-'], [0, '-'], [0, '-'], [0, '-']]
+    max_positions = [[0, '-'], [0, '-'], [0, '-'], [0, '-'], [0, '-'], [0, '-'], [0, '-'], [0, '-'], [0, '-'], [0, '-']]
     max_team_selection = [[0, '-'], [0, '-'], [0, '-'], [0, '-'], [0, '-'], [0, '-'], [0, '-']]
+    max_team_value = [0, '']
+    max_captains = [0, '']
+    max_num_players = [0, '']
 
     have_leader = False
 
@@ -92,6 +95,7 @@ def get_stats(league_id):
 
         if not have_leader:
             table_data.headers[0] = manager_id[1]
+            table_data.headers[1] = data.headers[0]
             have_leader = True
 
         # general number
@@ -128,16 +132,24 @@ def get_stats(league_id):
                     max_points[i][1] = manager_id[1]
 
         # positions
-        manager_positions_totals = ([0] * 7)
+        manager_positions_totals = ([0] * 13)
         manager_positions_totals[0] = manager_id[0]    # manager id
         manager_positions_totals[1] = manager_id[1]    # manager name
-        manager_positions_totals[2] = data.headers[6]  # prreferred formation
+        manager_positions_totals[2] = data.headers[6]  # preferred formation
 
-        for i in range(3, 7):
+        team_value = data.positions[-1][2]  # team value at latest gameweek
+        if team_value > max_team_value[0]:
+            max_team_value[0] = team_value
+            max_team_value[1] = manager_id[1]
+        manager_positions_totals[3] = team_value
+        max_positions[0][0] = max_team_value[0]
+        max_positions[0][1] = max_team_value[1]
+
+        for i in range(4, 13):
             manager_positions_totals[i] = data.positions_totals[i-3]
         table_data.positions_totals.append(manager_positions_totals)
 
-        for i in range(4):
+        for i in range(1, 10):
             if data.positions_totals[i] > max_positions[i][0]:
                 max_positions[i][0] = data.positions_totals[i]
                 max_positions[i][1] = manager_id[1]
@@ -187,12 +199,31 @@ def get_stats(league_id):
 
         table_data.team_selection_totals.append(manager_team_selection_totals)
 
+        # headers
+        captain_points = data.team_selection_totals[1]
+        if captain_points > max_captains[0]:
+            max_captains[0] = captain_points
+            max_captains[1] = manager_id[1]
+
+        num_players = len(data.squad_stats_players)
+        if num_players > max_num_players[0]:
+            max_num_players[0] = num_players
+            max_num_players[1] = manager_id[1]
+
     table_data.general_number_max = max_number
     table_data.general_points_max = max_points
     table_data.positions_max = max_positions
     table_data.team_selection_max = max_team_selection
 
-    table_data.headers[1] = max_number[1][1]
-    table_data.headers[2] = max_number[3][1]
+    table_data.headers[2] = max_number[1][1]     # most goals
+    table_data.headers[3] = max_number[1][0]
+    table_data.headers[4] = max_number[3][1]     # most clean sheets
+    table_data.headers[5] = max_number[3][0]
+    table_data.headers[6] = max_captains[1]      # best captains
+    table_data.headers[7] = max_captains[0]
+    table_data.headers[8] = max_team_value[1]    # highest team value
+    table_data.headers[9] = max_team_value[0]
+    table_data.headers[10] = max_num_players[1]  # most unique players
+    table_data.headers[11] = max_num_players[0]
 
     return table_data
