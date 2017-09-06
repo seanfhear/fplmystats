@@ -13,19 +13,19 @@ for entry in static_data['events']:
     if entry['is_current']:
         current_week = entry['id']
 
-# with open('/home/admin/fplmystats/fplmystats/utils/current_season.txt') as file:
-with open('C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\current_season.txt') as file:
+with open('/home/admin/fplmystats/fplmystats/utils/current_season.txt') as file:
+# with open('C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\current_season.txt') as file:
     for x in file:
         current_season = x
 
-# data_file = '/home/admin/fplmystats/FPLdb.sqlite'
-data_file = 'FPLdb.sqlite'
+data_file = '/home/admin/fplmystats/FPLdb.sqlite'
+# data_file = 'FPLdb.sqlite'
 
-# changes_file = '/home/admin/fplmystats/fplmystats/utils/daily_changes.txt'
-changes_file = 'C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\daily_changes.txt'
+changes_file = '/home/admin/fplmystats/fplmystats/utils/daily_changes.txt'
+# changes_file = 'C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\daily_changes.txt'
 
-# fixtures_file = '/home/admin/fplmystats/fplmystats/utils/fixtures.txt'
-fixtures_file = 'C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\fixtures.txt'
+fixtures_file = '/home/admin/fplmystats/fplmystats/utils/fixtures.txt'
+# fixtures_file = 'C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\fixtures.txt'
 
 field_type_INT = 'INTEGER'
 field_type_TEXT = 'TEXT'
@@ -238,7 +238,7 @@ def update_weekly_table():
 
 def get_all_fixtures():
     """
-    Saves a list of every unique kickoff time in the year where a fixture takes place to a file
+    Saves a list of every unique kickoff time in the year to a file
     To be run every day since fixtures change over the season
     """
     with urllib.request.urlopen('{}'.format(fixtures_url)) as url:
