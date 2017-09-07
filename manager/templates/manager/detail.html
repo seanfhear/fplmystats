@@ -18,7 +18,7 @@
 </head>
 
 <body style="background-color: #c4dfe6">
-    <div class="container-fluid">
+    <div class="container-fluid grad">
         <div class="row">
             <a href={% url 'index' %}><img src="{% static 'images/header.png' %}" alt="header_img" class="img-responsive"></a>
         </div>
@@ -462,7 +462,7 @@
                                             <h4>MVP Points</h4>
                                             <ul><li>How many points the MVP scored.<br />Note that the Total figure for MVP points shown is the cumulative figure of the MVP of each week. The number of points that the Season MVP has scored can be seen on the Squad Statistics page.</li></ul>
                                             <h4>Captain Points Lost</h4>
-                                            <ul><li>How many points the team lost due to not selecting the highest scoring player as Captain. This is the difference between the MVP Points and the Captain Points, or double that if the Triple Captain chip was played.</li></ul>
+                                            <ul><li>How many points the team lost due to not selecting the highest scoring player as Captain. This is equal to the MVP's base points minus the Captain's base points, or double that if the Triple Captain chip was in effect.</li></ul>
                                             <h4>Points on Bench</h4>
                                             <ul><li>Total number of points scored by the players on the bench.</li></ul>
                                             <h4>Bench Points Lost</h4>
@@ -504,46 +504,50 @@
                                             {% for item in week|slice:":11" %}
                                                 <td>{{ item }}</td>
                                             {% endfor %}
-                                            <td><a data-toggle="modal" href="#maxModal" style="color: white">{{ week.11 }}</a></td>
+                                            <td><a data-toggle="modal" href="#maxModal{{ week.0 }}" style="color: white">{{ week.11 }}</a></td>
                                             <td>{{ week.12 }}</td>
                                         </tr>
-                                        <!--
-                                        <div class="modal fade" id="maxModal" role="dialog">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content" style="background-color: #c4dfe6">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                        <h4 class="modal-title" style="text-align: center; color: #1c4d66">Week {{ week.0 }} Best Possible Team</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <table class="table modal-table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Position</th>
-                                                                    <th>Player</th>
-                                                                    <th>Points</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>Test1</td>
-                                                                    <td>Test1</td>
-                                                                    <td>Test1</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn" data-dismiss="modal" style="background-color: #c4dfe6; color: #1c4d66">Close</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        -->
                                     {% endfor %}
                                 </tbody>
                             </table>
                             <br>
+                            {% for team in max_teams %}
+                            <div class="modal fade" id="maxModal{{ team.0 }}" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content" style="background-color: #c4dfe6">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h3 class="modal-title" style="text-align: center; color: #1c4d66">Week {{ team.0 }} Best Possible Team</h3>
+                                        </div>
+                                        <div class="modal-body">
+                                            <table class="modal-table" style="width: 100%; color: #1c4d66; text-align: center">
+                                                <tr style="font-size: 140%">
+                                                    <td>Position</td>
+                                                    <td>Player</td>
+                                                    <td>Points</td>
+                                                </tr>
+                                                {% for points, position, player in team|slice:"1:12" %}
+                                                    <tr style="font-size: 120%">
+                                                        <td>{{ position }}</td>
+                                                        <td>{{ player }}</td>
+                                                        <td>{{ points }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                <tr style="font-size: 140%">
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td style="border-top: solid #1c4d66 1px">{{ team.12 }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn" data-dismiss="modal" style="background-color: #c4dfe6; color: #1c4d66">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+
                         </div>
                         <div class="squad-stats hide">
                             <div class="col-md-8">

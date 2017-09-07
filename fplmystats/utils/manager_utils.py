@@ -70,7 +70,7 @@ def get_stats(manager_id):
     table_data.general_points = []     # contains the number of points obtained via goals, assists etc. for each week
     table_data.positions = []          # contains the number of points obtained via DEFs, MIDs etc. for each week
     table_data.team_selection = []     # contains the captain, MVP, bench information etc.
-    table_data.max_teams = [[]]        # contains the best team lineup for each week
+    table_data.max_teams = []          # contains the best team lineup for each week
 
     formation_dict = {'5-4-1': 0,      # used for counting occurrences of each formation
                       '5-3-2': 0,
@@ -440,7 +440,6 @@ def get_stats(manager_id):
                     player[1] = 'MID'
                 else:
                     player[1] = 'FWD'
-            table_data.max_teams.append(max_points_team)
 
         if captain_played or not vice_captain_played:
             table_data.team_selection[week - 1][3] = captain_name
@@ -457,7 +456,7 @@ def get_stats(manager_id):
 
         table_data.team_selection[week - 1][5] = mvp_name
         table_data.team_selection[week - 1][6] = mvp_points
-        table_data.team_selection[week - 1][7] = (mvp_points - captain_points) * captain_multiplier
+        table_data.team_selection[week - 1][7] = (mvp_points - captain_points) * (captain_multiplier - 1)
         table_data.team_selection[week - 1][8] = bench_points
         table_data.team_selection[week - 1][9] = bench_potential_lost
         table_data.team_selection[week - 1][10] = int(table_data.general_points[week - 1][1] +
@@ -467,6 +466,9 @@ def get_stats(manager_id):
             table_data.team_selection[week - 1][9]
         table_data.team_selection[week - 1][11] = table_data.team_selection[week - 1][10] +\
             table_data.team_selection[week - 1][12]
+
+        max_points_team.append(table_data.team_selection[week - 1][11])
+        table_data.max_teams.append([week] + max_points_team)
 
         week += 1
 

@@ -1,3 +1,10 @@
+.grad {
+    background: #c4dfe6; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#1c4d66, #c4dfe6); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#1c4d66, #c4dfe6); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#1c4d66, #c4dfe6); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#1c4d66, #c4dfe6); /* Standard syntax (must be last) */
+}
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button
 {
@@ -93,7 +100,7 @@ table thead th {
     width: 50%;
     vertical-align: middle;
 }
-.modal-table thead tr th {
+.modal-table thead tr th, .modal-table tbody tr td {
+    padding: 6px;
     width: 33%;
-    vertical-align: middle;
 }
