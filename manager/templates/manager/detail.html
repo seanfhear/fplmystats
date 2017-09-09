@@ -28,10 +28,10 @@
                 <div class="col-md-12" style="background-color: #336B87; border-bottom: solid #1A526E 1px">
                     <br>
                     <div class="col-md-4">
-                        <h1 style="margin-top: auto"><a href="https://fantasy.premierleague.com/a/team/{{ manager_id }}" id="manager-link"><b>{{ manager_name }}</b></a></h1>
+                        <h1 style="margin-top: auto"><a href="https://fantasy.premierleague.com/a/team/{{ manager_id }}" class="manager-link"><b>{{ manager_name }}</b></a></h1>
                         <h1 style="margin-top: auto; color: white"><i>{{ team_name }}</i></h1>
                         <br>
-                        <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#headerModal" style="color: white">here</a> for an explanation of each category.</p>
+                        <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#headerModal" class="manager-link">here</a> for an explanation of each category.</p>
                         <div class="modal fade" id="headerModal" role="dialog">
                             <div class="modal-dialog">
                                 <div class="modal-content" style="background-color: #c4dfe6">
@@ -240,7 +240,7 @@
                     <div class="col-md-12 table-view">
                         <div class="general hide overflow-display">
                             <div id="buttons" class="btn-group" data-toggle="buttons" style="color: lightgray">
-                                <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#generalModal" style="color: white">here</a> for an explanation of each column.</p>
+                                <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#generalModal" class="manager-link">here</a> for an explanation of each column.</p>
                                 <div class="modal fade" id="generalModal" role="dialog">
                                     <div class="modal-dialog">
                                         <div class="modal-content" style="background-color: #c4dfe6">
@@ -497,7 +497,7 @@
                                             {% for item in week|slice:":11" %}
                                                 <td>{{ item }}</td>
                                             {% endfor %}
-                                            <td><a data-toggle="modal" href="#maxModal{{ week.0 }}" style="color: #c4dfe6"><u>{{ week.11 }}</u></a></td>
+                                            <td><a data-toggle="modal" href="#maxModal{{ week.0 }}" class="manager-link">{{ week.11 }}</a></td>
                                             <td>{{ week.12 }}</td>
                                         </tr>
                                     {% endfor %}
@@ -526,7 +526,7 @@
                                                         <td>{{ points }}</td>
                                                     </tr>
                                                 {% endfor %}
-                                                <tr style="font-size: 140%">
+                                                <tr style="font-size: 120%">
                                                     <td></td>
                                                     <td></td>
                                                     <td style="border-top: solid #1c4d66 1px">{{ team.12 }}</td>
@@ -611,7 +611,7 @@
                                 <br>
                             </div>
                             <div class="col-md-4">
-                                <p style="font-size: 85%; color: #336B87">Easter Egg!</p>
+                                <p style="font-size: 85%; color: #336B87">;)</p>
                                 <table class="squad squad-team table-hover squad-two main-manager-display" style="text-align: center; width: 100%">
                                     <thead>
                                         <tr>

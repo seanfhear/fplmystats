@@ -29,14 +29,18 @@ li {
 th {
     text-align: center;
 }
-#manager-link {
+.manager-link {
     color: white;
 }
-#manager-link:hover {
+.manager-link:hover {
     color: #c4dfe6;
     text-decoration: none;
 }
-#manager-link:visited {
+.manager-link:active {
+    color: white;
+    text-decoration: none;
+}
+.manager-link:focus {
     color: white;
     text-decoration: none;
 }
@@ -45,6 +49,14 @@ th {
 }
 .league-link:hover {
     color: #fbc2b2;
+    text-decoration: none;
+}
+.league-link:active {
+    color: white;
+    text-decoration: none;
+}
+.league-link:focus {
+    color: white;
     text-decoration: none;
 }
 .btn-manager {

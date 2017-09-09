@@ -3,13 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="f2eb8a34-f0d9-4332-ad47-8c7d4e494c44" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fplmystats/utils/daily_changes.txt" afterPath="$PROJECT_DIR$/fplmystats/utils/daily_changes.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fplmystats/utils/manager_utils.py" afterPath="$PROJECT_DIR$/fplmystats/utils/manager_utils.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/league/templates/league/detail.html" afterPath="$PROJECT_DIR$/league/templates/league/detail.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/manager/templates/manager/detail.html" afterPath="$PROJECT_DIR$/manager/templates/manager/detail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/manager/views.py" afterPath="$PROJECT_DIR$/manager/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/css/style.css" afterPath="$PROJECT_DIR$/static/css/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/index.html" afterPath="$PROJECT_DIR$/templates/index.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -80,8 +77,8 @@
       <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/css/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="69" column="11" lean-forward="false" selection-start-line="69" selection-start-column="11" selection-end-line="69" selection-end-column="11" />
+            <state relative-caret-position="477">
+              <caret line="57" column="12" lean-forward="false" selection-start-line="57" selection-start-column="12" selection-end-line="57" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -99,10 +96,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="utils.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/fplmystats/utils/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="393">
+            <state relative-caret-position="336">
               <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
@@ -112,19 +109,19 @@
                 <element signature="e#5854#6733#0" expanded="false" />
                 <element signature="e#6767#8618#0" expanded="false" />
                 <element signature="e#9322#10116#0" expanded="false" />
-                <marker date="1504961970239" expanded="true" signature="1481:1511" ph="SELECT * FRO... missing_value" />
-                <marker date="1504961970239" expanded="true" signature="2026:2059" ph="SELECT name missing_value" />
-                <marker date="1504961970239" expanded="true" signature="2840:2897" ph="CREATE TABLE... missing_value" />
-                <marker date="1504961970239" expanded="true" signature="3116:3157" ph="INSERT INTO &quot;missing_value&quot;... " />
-                <marker date="1504961970239" expanded="true" signature="3486:3613" ph="CREATE TABLE... missing_value" />
-                <marker date="1504961970239" expanded="true" signature="4395:4414" ph="SELECT id, p... {}" />
-                <marker date="1504961970239" expanded="true" signature="4479:4495" ph="DELETE FROM " />
-                <marker date="1504961970239" expanded="true" signature="4983:5057" ph="INSERT INTO &quot;missing_value&quot;... " />
-                <marker date="1504961970239" expanded="true" signature="5362:5381" ph="SELECT id, p... missing_value" />
-                <marker date="1504961970239" expanded="true" signature="6458:6644" ph="CREATE TABLE... missing_value" />
-                <marker date="1504961970239" expanded="true" signature="7079:7095" ph="DELETE FROM " />
-                <marker date="1504961970239" expanded="true" signature="7206:7224" ph="SELECT * fro... missing_value" />
-                <marker date="1504961970239" expanded="true" signature="8436:8522" ph="INSERT INTO &quot;missing_value&quot;... " />
+                <marker date="1504996212054" expanded="true" signature="1481:1511" ph="SELECT * FRO... missing_value" />
+                <marker date="1504996212054" expanded="true" signature="2026:2059" ph="SELECT name missing_value" />
+                <marker date="1504996212054" expanded="true" signature="2840:2897" ph="CREATE TABLE... missing_value" />
+                <marker date="1504996212054" expanded="true" signature="3116:3157" ph="INSERT INTO &quot;missing_value&quot;... " />
+                <marker date="1504996212054" expanded="true" signature="3486:3613" ph="CREATE TABLE... missing_value" />
+                <marker date="1504996212054" expanded="true" signature="4395:4414" ph="SELECT id, p... {}" />
+                <marker date="1504996212054" expanded="true" signature="4479:4495" ph="DELETE FROM " />
+                <marker date="1504996212054" expanded="true" signature="4983:5057" ph="INSERT INTO &quot;missing_value&quot;... " />
+                <marker date="1504996212054" expanded="true" signature="5362:5381" ph="SELECT id, p... missing_value" />
+                <marker date="1504996212054" expanded="true" signature="6458:6644" ph="CREATE TABLE... missing_value" />
+                <marker date="1504996212054" expanded="true" signature="7079:7095" ph="DELETE FROM " />
+                <marker date="1504996212054" expanded="true" signature="7206:7224" ph="SELECT * fro... missing_value" />
+                <marker date="1504996212054" expanded="true" signature="8436:8522" ph="INSERT INTO &quot;missing_value&quot;... " />
               </folding>
             </state>
           </provider>
@@ -140,22 +137,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="manager_utils.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="manager_utils.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/fplmystats/utils/manager_utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21">
-              <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+            <state relative-caret-position="336">
+              <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding>
+                <element signature="e#0#34#0" expanded="true" />
                 <element signature="e#1196#1643#0" expanded="false" />
-                <marker date="1504961974668" expanded="true" signature="3800:3828" ph="SELECT name missing_valueteamIDs" />
-                <marker date="1504961974668" expanded="true" signature="7631:7708" ph="SELECT webna... missing_value" />
-                <marker date="1504961974668" expanded="true" signature="7631:7710" ph="SELECT webna... {}" />
-                <marker date="1504961974668" expanded="true" signature="8529:8569" ph="SELECT name missing_valueteamIDs" />
-                <marker date="1504961974668" expanded="true" signature="8529:8571" ph="SELECT name {}teamIDs" />
-                <marker date="1504961974668" expanded="true" signature="8709:8739" ph="SELECT * FRO... missing_value" />
-                <marker date="1504961974668" expanded="true" signature="14568:14637" ph="SELECT webna... missing_value" />
-                <marker date="1504961974668" expanded="true" signature="14568:14639" ph="SELECT webna... {}" />
-                <marker date="1504961974668" expanded="true" signature="15268:15298" ph="SELECT * FRO... missing_value" />
+                <marker date="1504996266894" expanded="true" signature="3800:3828" ph="SELECT name missing_valueteamIDs" />
+                <marker date="1504996266894" expanded="true" signature="7631:7708" ph="SELECT webna... missing_value" />
+                <marker date="1504996266894" expanded="true" signature="7631:7710" ph="SELECT webna... {}" />
+                <marker date="1504996266894" expanded="true" signature="8529:8569" ph="SELECT name missing_valueteamIDs" />
+                <marker date="1504996266894" expanded="true" signature="8529:8571" ph="SELECT name {}teamIDs" />
+                <marker date="1504996266894" expanded="true" signature="8709:8739" ph="SELECT * FRO... missing_value" />
+                <marker date="1504996266894" expanded="true" signature="14568:14637" ph="SELECT webna... missing_value" />
+                <marker date="1504996266894" expanded="true" signature="14568:14639" ph="SELECT webna... {}" />
+                <marker date="1504996266894" expanded="true" signature="15268:15298" ph="SELECT * FRO... missing_value" />
               </folding>
             </state>
           </provider>
@@ -164,13 +162,13 @@
       <file leaf-file-name="detail.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/manager/templates/manager/detail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="434">
-              <caret line="335" column="74" lean-forward="true" selection-start-line="335" selection-start-column="74" selection-end-line="335" selection-end-column="74" />
+            <state relative-caret-position="262">
+              <caret line="244" column="62" lean-forward="true" selection-start-line="244" selection-start-column="62" selection-end-line="244" selection-end-column="62" />
               <folding>
                 <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#table#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#td#1;n#tr#0;n#tbody#0;n#table#0;n#div#2;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#tr#2;n#table#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#2;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#td#2;n#tr#2;n#table#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#2;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#tr#3;n#table#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#2;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#td#2;n#tr#4;n#table#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#2;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -182,8 +180,8 @@
       <file leaf-file-name="detail.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/league/templates/league/detail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="81">
-              <caret line="539" column="112" lean-forward="false" selection-start-line="539" selection-start-column="112" selection-end-line="539" selection-end-column="112" />
+            <state relative-caret-position="-977">
+              <caret line="481" column="58" lean-forward="true" selection-start-line="481" selection-start-column="58" selection-end-line="481" selection-end-column="58" />
               <folding>
                 <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -205,10 +203,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>number</find>
-      <find>fpl</find>
-      <find>FPL</find>
-      <find>team_selection</find>
       <find>mul</find>
       <find>border-left</find>
       <find>result</find>
@@ -220,7 +214,6 @@
       <find>http</find>
       <find>ba</find>
       <find>vap</find>
-      <find>click</find>
       <find>team_value</find>
       <find>sli</find>
       <find>team_va</find>
@@ -235,6 +228,11 @@
       <find>print</find>
       <find>prin</find>
       <find>general-num</find>
+      <find>eas</find>
+      <find>manager-link</find>
+      <find>click</find>
+      <find>mvp</find>
+      <find>shado</find>
     </findStrings>
     <replaceStrings>
       <replace>main</replace>
@@ -293,8 +291,8 @@
         <option value="$PROJECT_DIR$/league/templates/league/detail.html" />
         <option value="$PROJECT_DIR$/manager/templates/manager/detail.html" />
         <option value="$PROJECT_DIR$/static/css/style.css" />
-        <option value="$PROJECT_DIR$/fplmystats/utils/manager_utils.py" />
         <option value="$PROJECT_DIR$/fplmystats/utils/utils.py" />
+        <option value="$PROJECT_DIR$/fplmystats/utils/manager_utils.py" />
       </list>
     </option>
   </component>
@@ -892,7 +890,14 @@
       <option name="project" value="LOCAL" />
       <updated>1504800416762</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Fixed issue with best possible team when less than 11 players have played">
+      <created>1504962009372</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1504962009372</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -936,8 +941,8 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27107063" sideWeight="0.49570355" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32915717" sideWeight="0.49570355" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33143508" sideWeight="0.4076262" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27107063" sideWeight="0.5042965" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33143508" sideWeight="0.4076262" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27107063" sideWeight="0.5042965" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24973147" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2813212" sideWeight="0.48925886" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -978,7 +983,8 @@
     <MESSAGE value="Some search engine optimisation" />
     <MESSAGE value="Finished up remaining modal descriptions" />
     <MESSAGE value="Added the functionality to view the best team lineup each week. Gradient at top of page now handled in CSS, header image smaller to accommodate smaller displays." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added the functionality to view the best team lineup each week. Gradient at top of page now handled in CSS, header image smaller to accommodate smaller displays." />
+    <MESSAGE value="Fixed issue with best possible team when less than 11 players have played" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed issue with best possible team when less than 11 players have played" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1258,16 +1264,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/league/templates/league/detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="539" column="112" lean-forward="false" selection-start-line="539" selection-start-column="112" selection-end-line="539" selection-end-column="112" />
-          <folding>
-            <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/manager/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1056">
@@ -1278,23 +1274,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/style.css">
+    <entry file="file://$PROJECT_DIR$/league/templates/league/detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="69" column="11" lean-forward="false" selection-start-line="69" selection-start-column="11" selection-end-line="69" selection-end-column="11" />
-          <folding />
+        <state relative-caret-position="-977">
+          <caret line="481" column="58" lean-forward="true" selection-start-line="481" selection-start-column="58" selection-end-line="481" selection-end-column="58" />
+          <folding>
+            <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/manager/templates/manager/detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="434">
-          <caret line="335" column="74" lean-forward="true" selection-start-line="335" selection-start-column="74" selection-end-line="335" selection-end-column="74" />
+        <state relative-caret-position="262">
+          <caret line="244" column="62" lean-forward="true" selection-start-line="244" selection-start-column="62" selection-end-line="244" selection-end-column="62" />
           <folding>
             <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#table#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#td#1;n#tr#0;n#tbody#0;n#table#0;n#div#2;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#tr#2;n#table#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#2;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#td#2;n#tr#2;n#table#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#2;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#tr#3;n#table#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#2;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#td#2;n#tr#4;n#table#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#2;n#div#2;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -1302,28 +1300,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fplmystats/utils/manager_utils.py">
+    <entry file="file://$PROJECT_DIR$/static/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding>
-            <element signature="e#1196#1643#0" expanded="false" />
-            <marker date="1504961974668" expanded="true" signature="3800:3828" ph="SELECT name missing_valueteamIDs" />
-            <marker date="1504961974668" expanded="true" signature="7631:7708" ph="SELECT webna... missing_value" />
-            <marker date="1504961974668" expanded="true" signature="7631:7710" ph="SELECT webna... {}" />
-            <marker date="1504961974668" expanded="true" signature="8529:8569" ph="SELECT name missing_valueteamIDs" />
-            <marker date="1504961974668" expanded="true" signature="8529:8571" ph="SELECT name {}teamIDs" />
-            <marker date="1504961974668" expanded="true" signature="8709:8739" ph="SELECT * FRO... missing_value" />
-            <marker date="1504961974668" expanded="true" signature="14568:14637" ph="SELECT webna... missing_value" />
-            <marker date="1504961974668" expanded="true" signature="14568:14639" ph="SELECT webna... {}" />
-            <marker date="1504961974668" expanded="true" signature="15268:15298" ph="SELECT * FRO... missing_value" />
-          </folding>
+        <state relative-caret-position="477">
+          <caret line="57" column="12" lean-forward="false" selection-start-line="57" selection-start-column="12" selection-end-line="57" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/fplmystats/utils/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
+        <state relative-caret-position="336">
           <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
@@ -1333,19 +1320,39 @@
             <element signature="e#5854#6733#0" expanded="false" />
             <element signature="e#6767#8618#0" expanded="false" />
             <element signature="e#9322#10116#0" expanded="false" />
-            <marker date="1504961970239" expanded="true" signature="1481:1511" ph="SELECT * FRO... missing_value" />
-            <marker date="1504961970239" expanded="true" signature="2026:2059" ph="SELECT name missing_value" />
-            <marker date="1504961970239" expanded="true" signature="2840:2897" ph="CREATE TABLE... missing_value" />
-            <marker date="1504961970239" expanded="true" signature="3116:3157" ph="INSERT INTO &quot;missing_value&quot;... " />
-            <marker date="1504961970239" expanded="true" signature="3486:3613" ph="CREATE TABLE... missing_value" />
-            <marker date="1504961970239" expanded="true" signature="4395:4414" ph="SELECT id, p... {}" />
-            <marker date="1504961970239" expanded="true" signature="4479:4495" ph="DELETE FROM " />
-            <marker date="1504961970239" expanded="true" signature="4983:5057" ph="INSERT INTO &quot;missing_value&quot;... " />
-            <marker date="1504961970239" expanded="true" signature="5362:5381" ph="SELECT id, p... missing_value" />
-            <marker date="1504961970239" expanded="true" signature="6458:6644" ph="CREATE TABLE... missing_value" />
-            <marker date="1504961970239" expanded="true" signature="7079:7095" ph="DELETE FROM " />
-            <marker date="1504961970239" expanded="true" signature="7206:7224" ph="SELECT * fro... missing_value" />
-            <marker date="1504961970239" expanded="true" signature="8436:8522" ph="INSERT INTO &quot;missing_value&quot;... " />
+            <marker date="1504996212054" expanded="true" signature="1481:1511" ph="SELECT * FRO... missing_value" />
+            <marker date="1504996212054" expanded="true" signature="2026:2059" ph="SELECT name missing_value" />
+            <marker date="1504996212054" expanded="true" signature="2840:2897" ph="CREATE TABLE... missing_value" />
+            <marker date="1504996212054" expanded="true" signature="3116:3157" ph="INSERT INTO &quot;missing_value&quot;... " />
+            <marker date="1504996212054" expanded="true" signature="3486:3613" ph="CREATE TABLE... missing_value" />
+            <marker date="1504996212054" expanded="true" signature="4395:4414" ph="SELECT id, p... {}" />
+            <marker date="1504996212054" expanded="true" signature="4479:4495" ph="DELETE FROM " />
+            <marker date="1504996212054" expanded="true" signature="4983:5057" ph="INSERT INTO &quot;missing_value&quot;... " />
+            <marker date="1504996212054" expanded="true" signature="5362:5381" ph="SELECT id, p... missing_value" />
+            <marker date="1504996212054" expanded="true" signature="6458:6644" ph="CREATE TABLE... missing_value" />
+            <marker date="1504996212054" expanded="true" signature="7079:7095" ph="DELETE FROM " />
+            <marker date="1504996212054" expanded="true" signature="7206:7224" ph="SELECT * fro... missing_value" />
+            <marker date="1504996212054" expanded="true" signature="8436:8522" ph="INSERT INTO &quot;missing_value&quot;... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fplmystats/utils/manager_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#34#0" expanded="true" />
+            <element signature="e#1196#1643#0" expanded="false" />
+            <marker date="1504996266894" expanded="true" signature="3800:3828" ph="SELECT name missing_valueteamIDs" />
+            <marker date="1504996266894" expanded="true" signature="7631:7708" ph="SELECT webna... missing_value" />
+            <marker date="1504996266894" expanded="true" signature="7631:7710" ph="SELECT webna... {}" />
+            <marker date="1504996266894" expanded="true" signature="8529:8569" ph="SELECT name missing_valueteamIDs" />
+            <marker date="1504996266894" expanded="true" signature="8529:8571" ph="SELECT name {}teamIDs" />
+            <marker date="1504996266894" expanded="true" signature="8709:8739" ph="SELECT * FRO... missing_value" />
+            <marker date="1504996266894" expanded="true" signature="14568:14637" ph="SELECT webna... missing_value" />
+            <marker date="1504996266894" expanded="true" signature="14568:14639" ph="SELECT webna... {}" />
+            <marker date="1504996266894" expanded="true" signature="15268:15298" ph="SELECT * FRO... missing_value" />
           </folding>
         </state>
       </provider>

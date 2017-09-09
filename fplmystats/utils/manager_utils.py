@@ -353,6 +353,10 @@ def get_stats(manager_id):
                     if player_datum[2] > 0:
                         vice_captain_played = True
 
+                if player_datum[1] > mvp_points:
+                    mvp_points = player_datum[1]
+                    mvp_name = player_name
+
                 if player_datum[2] > 0:
                     points_list.append([player_datum[1], position, player_name])  # points, position, player_name
                 bench_points += player_datum[1]
@@ -462,6 +466,9 @@ def get_stats(manager_id):
         else:
             bench_potential_lost = 0
 
+        if bench_potential_lost < 0:
+            bench_potential_lost = 0
+
         # assign the captain in max team and then sort by position
         if max_points_team:
             max_points_team.sort()
@@ -505,7 +512,7 @@ def get_stats(manager_id):
         table_data.team_selection[week - 1][11] = table_data.team_selection[week - 1][10] +\
             table_data.team_selection[week - 1][12]
 
-        max_points_team.append(table_data.team_selection[week - 1][10] + table_data.team_selection[week - 1][2])
+        max_points_team.append(table_data.team_selection[week - 1][11] + table_data.team_selection[week - 1][2])
         max_points_team.append(table_data.team_selection[week - 1][2] * -1)
         max_points_team.append(table_data.team_selection[week - 1][11])
         table_data.max_teams.append([week] + max_points_team)
