@@ -5,7 +5,7 @@ from urllib.error import HTTPError
 from json import JSONDecodeError
 
 # TODO scroll headers with window
-# TODO fill in modal information
+# TODO highlight differences in best possible lineup vs actual lineup
 
 
 def search(request):

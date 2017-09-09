@@ -29,6 +29,24 @@ li {
 th {
     text-align: center;
 }
+#manager-link {
+    color: white;
+}
+#manager-link:hover {
+    color: #c4dfe6;
+    text-decoration: none;
+}
+#manager-link:visited {
+    color: white;
+    text-decoration: none;
+}
+.league-link {
+    color: white;
+}
+.league-link:hover {
+    color: #fbc2b2;
+    text-decoration: none;
+}
 .btn-manager {
     background-color: #5085a0;
 }
@@ -43,10 +61,16 @@ th {
     border-color: #a95f4c !important;
     vertical-align: middle;
 }
+/*
+.overflow-display {
+    overflow: auto;
+}
+*/
 .main-manager-display thead tr th, .main-manager-display tbody tr td {
     padding: 4px;
     border-color: #5085a0;
 }
+
 .main-league-display thead tr th, .main-league-display tbody tr td {
     padding: 4px;
     border-color: #a95f4c;

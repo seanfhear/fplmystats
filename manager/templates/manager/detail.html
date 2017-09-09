@@ -16,21 +16,19 @@
     <script src="{% static 'js/main.js' %}"></script>
     <link rel="icon" href="{% static 'images/favicon.png' %}"/>
 </head>
-
 <body style="background-color: #c4dfe6">
     <div class="container-fluid grad">
         <div class="row">
             <a href={% url 'index' %}><img src="{% static 'images/header.png' %}" alt="header_img" class="img-responsive"></a>
         </div>
     </div>
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
                 <div class="col-md-12" style="background-color: #336B87; border-bottom: solid #1A526E 1px">
                     <br>
                     <div class="col-md-4">
-                        <h1 style="margin-top: auto"><a href="https://fantasy.premierleague.com/a/team/{{ manager_id }}" style="color: white"><b>{{ manager_name }}</b></a></h1>
+                        <h1 style="margin-top: auto"><a href="https://fantasy.premierleague.com/a/team/{{ manager_id }}" id="manager-link"><b>{{ manager_name }}</b></a></h1>
                         <h1 style="margin-top: auto; color: white"><i>{{ team_name }}</i></h1>
                         <br>
                         <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#headerModal" style="color: white">here</a> for an explanation of each category.</p>
@@ -62,7 +60,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8" style="color: white; text-align: center">
+                    <div class="col-md-8 overflow-display" style="color: white; text-align: center">
                         <table class="table-condensed" style="margin: auto; font-size: 150%">
                             <tr>
                                 <td>Total Points:</td>
@@ -87,7 +85,6 @@
             </div>
         </div>
     </div>
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -105,7 +102,6 @@
                         </form>
                         <br>
                     </div>
-
                     <div class="table-view">
                         <div class="general hide">
                             <div class="row">
@@ -241,9 +237,8 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-md-12 table-view">
-                        <div class="general hide">
+                        <div class="general hide overflow-display">
                             <div id="buttons" class="btn-group" data-toggle="buttons" style="color: lightgray">
                                 <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#generalModal" style="color: white">here</a> for an explanation of each column.</p>
                                 <div class="modal fade" id="generalModal" role="dialog">
@@ -297,7 +292,6 @@
                                 <label for="points-btn" class="btn btn-manager" onClick="toggleToPoints()">
                                     <input type="radio" id="points-btn"><b>Points</b>
                                 </label>
-
                                 <div id="general-number" style="display: block">
                                     <table class="weekly table-hover main-manager-display" style="text-align: center; width: 100%">
                                         <thead>
@@ -330,7 +324,6 @@
                                     </table>
                                     <br>
                                 </div>
-
                                 <div id="general-points" style="display: none">
                                     <table class="weekly general table-hover main-manager-display" style="text-align: center; width: 100%">
                                         <thead>
@@ -365,7 +358,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="positions hide">
+                        <div class="positions hide overflow-display">
                             <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#positionModal" style="color: white">here</a> for an explanation of each column.</p>
                             <div class="modal fade" id="positionModal" role="dialog">
                                 <div class="modal-dialog">
@@ -437,7 +430,7 @@
                             </table>
                             <br>
                         </div>
-                        <div class="team-selection hide">
+                        <div class="team-selection hide overflow-display">
                             <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#teamModal" style="color: white">here</a> for an explanation of each column.</p>
                             <div class="modal fade" id="teamModal" role="dialog">
                                 <div class="modal-dialog">
@@ -504,7 +497,7 @@
                                             {% for item in week|slice:":11" %}
                                                 <td>{{ item }}</td>
                                             {% endfor %}
-                                            <td><a data-toggle="modal" href="#maxModal{{ week.0 }}" style="color: white">{{ week.11 }}</a></td>
+                                            <td><a data-toggle="modal" href="#maxModal{{ week.0 }}" style="color: #c4dfe6"><u>{{ week.11 }}</u></a></td>
                                             <td>{{ week.12 }}</td>
                                         </tr>
                                     {% endfor %}
@@ -538,6 +531,15 @@
                                                     <td></td>
                                                     <td style="border-top: solid #1c4d66 1px">{{ team.12 }}</td>
                                                 </tr>
+                                                <tr style="font-size: 120%">
+                                                    <td></td>
+                                                    <td>Transfer Cost</td>
+                                                    <td>{{ team.13 }}</td>
+                                                </tr><tr style="font-size: 140%">
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td style="border-top: solid #1c4d66 1px">{{ team.14 }}</td>
+                                                </tr>
                                             </table>
                                         </div>
                                         <div class="modal-footer">
@@ -547,9 +549,8 @@
                                 </div>
                             </div>
                             {% endfor %}
-
                         </div>
-                        <div class="squad-stats hide">
+                        <div class="squad-stats hide overflow-display">
                             <div class="col-md-8">
                                 <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#squadModal" style="color: white">here</a> for an explanation of each column.</p>
                                 <div class="modal fade" id="squadModal" role="dialog">

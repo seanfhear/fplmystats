@@ -30,7 +30,7 @@
                 <div class="col-md-12" style="background-color: #773734; border-bottom: solid #5D1D1A 1px">
                     <br>
                     <div class="col-md-4">
-                        <h1 style="margin-top: auto"><a href="https://fantasy.premierleague.com/a/leagues/standings/{{ league_id }}/classic" style="color: white"><b><i>{{ league_name }}</i></b></a></h1>
+                        <h1 style="margin-top: auto"><a href="https://fantasy.premierleague.com/a/leagues/standings/{{ league_id }}/classic" class="league-link"><b><i>{{ league_name }}</i></b></a></h1>
                         <br>
                         <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#headerModal" style="color: white">here</a> for an explanation of each category.</p>
                         <div class="modal fade" id="headerModal" role="dialog">
@@ -336,7 +336,7 @@
                                     <input type="radio" id="points-btn">
                                 </label>
 
-                                <div id="general-number" class="general" style="display: block">
+                                <div id="general-number" class="general overflow-display" style="display: block">
                                     <table class="league-general table-hover main-league-display" style="text-align: center; width: 100%">
                                         <thead>
                                             <tr>
@@ -359,7 +359,7 @@
                                         <tbody>
                                             {% for manager in general_number %}
                                             <tr>
-                                                <td><a href="{% url 'manager:detail' manager.0%}" style="color: white">{{ manager.1 }}</a></td>
+                                                <td><a href="{% url 'manager:detail' manager.0%}" class="league-link">{{ manager.1 }}</a></td>
                                                 {% for item in manager|slice:"2:15" %}
                                                     <td>{{ item }}</td>
                                                 {% endfor %}
@@ -370,7 +370,7 @@
                                     <br>
                                 </div>
 
-                                <div id="general-points" class="general" style="display: none">
+                                <div id="general-points" class="general overflow-display" style="display: none">
                                     <table class="league-general table-hover main-league-display" style="text-align: center; width: 100%">
                                         <thead>
                                             <tr>
@@ -393,7 +393,7 @@
                                         <tbody>
                                             {% for manager in general_points %}
                                             <tr>
-                                                <td><a href="{% url 'manager:detail' manager.0%}" style="color: white">{{ manager.1 }}</a></td>
+                                                <td><a href="{% url 'manager:detail' manager.0%}" class="league-link">{{ manager.1 }}</a></td>
                                                 {% for item in manager|slice:"2:15" %}
                                                     <td>{{ item }}</td>
                                                 {% endfor %}
@@ -405,7 +405,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="positions hide">
+                        <div class="positions hide overflow-display">
                             <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#positionModal" style="color: white">here</a> for an explanation of each column.</p>
                             <div class="modal fade" id="positionModal" role="dialog">
                                 <div class="modal-dialog">
@@ -466,7 +466,7 @@
                                 <tbody>
                                     {% for manager in positions %}
                                         <tr>
-                                            <td><a href="{% url 'manager:detail' manager.0%}" style="color: white">{{ manager.1 }}</a></td>
+                                            <td><a href="{% url 'manager:detail' manager.0%}" class="league-link">{{ manager.1 }}</a></td>
                                             {% for item in manager|slice:"2:13" %}
                                                 <td>{{ item }}</td>
                                             {% endfor %}
@@ -476,7 +476,7 @@
                             </table>
                             <br>
                         </div>
-                        <div class="team-selection hide">
+                        <div class="team-selection hide overflow-display">
                             <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#teamModal" style="color: white">here</a> for an explanation of each column.</p>
                             <div class="modal fade" id="teamModal" role="dialog">
                                 <div class="modal-dialog">
@@ -537,7 +537,7 @@
                                 <tbody>
                                     {% for manager in team_selection %}
                                         <tr>
-                                            <td><a href="{% url 'manager:detail' manager.0%}" style="color: white">{{ manager.1 }}</a></td>
+                                            <td><a href="{% url 'manager:detail' manager.0%}" class="league-link">{{ manager.1 }}</a></td>
                                             {% for item in manager|slice:"2:13" %}
                                                 <td>{{ item }}</td>
                                             {% endfor %}
