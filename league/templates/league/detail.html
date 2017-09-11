@@ -21,13 +21,67 @@
     <div class="container-fluid grad">
         <div class="row">
             <div class="col-md-10">
-                <a href={% url 'index' %}><img src="{% static 'images/header.png' %}" alt="header_img" class="img-responsive"></a>
+                <p></p>
+                <a href={% url 'index' %}><img src="{% static 'images/header.png' %}" alt="header_img" class="img-responsive" style="display: inline-block"></a>
+                <p></p>
             </div>
             <div class="col-md-2">
                 <br><br>
-                <a data-toggle="modal" href="#infoModal">
-                    <p><span class="glyphicon glyphicon-question-sign pull-right info-link" style="font-size: 150%; margin-right: 10px"></span></p>
-                </a>
+                <div style="display: inline">
+                    <a data-toggle="modal" href="#donateModal">
+                        <p><span class="glyphicon glyphicon-gbp pull-right info-link" style="font-size: 150%; margin-right: 10px"></span></p>
+                    </a>
+                </div>
+                <div style="display: inline">
+                    <a data-toggle="modal" href="#feedbackModal">
+                        <p><span class="glyphicon glyphicon-comment pull-right info-link" style="font-size: 150%; margin-right: 10px"></span></p>
+                    </a>
+                </div>
+                <div style="display: inline">
+                    <a data-toggle="modal" href="#infoModal">
+                        <p><span class="glyphicon glyphicon-question-sign pull-right info-link" style="font-size: 150%; margin-right: 10px"></span></p>
+                    </a>
+                </div>
+            </div>
+            <div class="modal fade" id="donateModal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="background-color: #c5c5c5">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h3 class="modal-title" style="text-align: center; color: #222222">Donate</h3>
+                        </div>
+                        <div class="modal-body" style="color: #222222; text-align: center">
+                            <h4>This website is completely free to use and will remain so for the foreseeable future.<br /><br />However, if you enjoy using the site and wish to make a contribution to its continued maintenance, you can use the button below.<br /><br />All donations are greatly appreciated.</h4><br>
+                            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                                <input type="hidden" name="cmd" value="_s-xclick">
+                                <input type="hidden" name="hosted_button_id" value="WWJVTH7TLMXCY">
+                                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                                <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn" data-dismiss="modal" style="background-color: #c5c5c5; color: #222222">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="feedbackModal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="background-color: #c5c5c5">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h3 class="modal-title" style="text-align: center; color: #222222">Leave a Comment</h3>
+                        </div>
+                        <div class="modal-body" style="color: #222222; text-align: center">
+                            <h4>A feedback form is coming soon.</h4><br>
+                            <h4>For now, all enquiries or comments can be directed to<br/>info@fplmystats.com</h4><br>
+                            <h4>All feedback is much appreciated.</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn" data-dismiss="modal" style="background-color: #c5c5c5; color: #222222">Close</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal fade" id="infoModal" role="dialog">
                 <div class="modal-dialog">
@@ -446,7 +500,7 @@
                             </div>
                         </div>
                         <div class="positions hide overflow-display">
-                            <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#positionModal" style="color: white">here</a> for an explanation of each column.</p>
+                            <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#positionModal" class="league-link">here</a> for an explanation of each column.</p>
                             <div class="modal fade" id="positionModal" role="dialog">
                                 <div class="modal-dialog">
                                     <div class="modal-content" style="background-color: #ffb9a6">
@@ -517,7 +571,7 @@
                             <br>
                         </div>
                         <div class="team-selection hide overflow-display">
-                            <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#teamModal" style="color: white">here</a> for an explanation of each column.</p>
+                            <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#teamModal" class="league-link">here</a> for an explanation of each column.</p>
                             <div class="modal fade" id="teamModal" role="dialog">
                                 <div class="modal-dialog">
                                     <div class="modal-content" style="background-color: #ffb9a6">
