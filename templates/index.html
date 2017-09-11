@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google-site-verification" content="lcs6aSfGYa_m529Ez6DsYXr7yYReg0L4J4zx5EaoMFI" />
-    <meta name="description" content="View the stats that make up your season, from goals and assists, to Captains, benches, transfers and more">
-    <meta name="keywords" content="Fantasy Football, Fantasy Premier League, FPL, Football, Stats, Analysis">
+    <meta name="description" content="View the stats that define your season, from goals, assists and clean sheets, to Captains, benches, transfers and more">
+    <meta name="keywords" content="Fantasy Football, Fantasy Premier League, FPL, Football, Statistics, Stats, My, Analysis">
     {% load staticfiles %}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
@@ -15,10 +15,51 @@
     <link rel="icon" href="{% static 'images/favicon.png' %}"/>
 </head>
 
-<body style="background-color: #c4dfe6">
+<body class="home">
     <div class="container-fluid grad">
         <div class="row">
-            <a href={% url 'index' %}><img src="{% static 'images/header.png' %}" alt="header_img" class="img-responsive"></a>
+            <div class="col-md-10">
+                <a href={% url 'index' %}><img src="{% static 'images/header.png' %}" alt="header_img" class="img-responsive"></a>
+            </div>
+            <div class="col-md-2">
+                <br><br>
+                <a data-toggle="modal" href="#infoModal">
+                    <p><span class="glyphicon glyphicon-question-sign pull-right info-link" style="font-size: 150%; margin-right: 10px; vertical-align: bottom"></span></p>
+                </a>
+            </div>
+            <div class="modal fade" id="infoModal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="background-color: #c5c5c5">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h3 class="modal-title" style="text-align: center; color: #222222">Tips & Info</h3>
+                        </div>
+                        <div class="modal-body info-list" style="color: #222222">
+                            <h4>General</h4>
+                            <ul>
+                                <li>Click the banner at the top of the screen to return to the home page</li>
+                                <li>Every column in the main tables can be sorted to quickly find the highest/lowest values for any category</li>
+                                <li>You can search for a Classic or a Head-to-Head league but only the top 50 players will be shown</li>
+                                <li>Bookmark the search result so you don't need to re-enter your Manager or League ID in future. You can also share that link with your friends so that they can bypass the search and go straight to the results page</li>
+                                <li>The site is best viewed in horizontal orientation. If you are on mobile, it can also help to select 'Request Desktop View' in your browser's options</li>
+                            </ul>
+                            <h4 style="color: #336B87">Manager Stats</h4>
+                            <ul>
+                                <li>Under 'Team Selection' you can click on the number in the Max Points column to see the optimal team lineup for that week</li>
+                                <li>Click on the Manager's name in the top left corner to go to that manager's team page on the main FPL website</li>
+                            </ul>
+                            <h4 style="color: #922a0e">League Stats</h4>
+                            <ul>
+                                <li>You can click on a Manager's name in any of the the main tables to go to the Manager Stats view for that person</li>
+                                <li>Click on the League name in the top left corner to go to that league's page on the main FPL website</li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn" data-dismiss="modal" style="background-color: #c5c5c5; color: #222222">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="container-fluid">
@@ -55,12 +96,12 @@
                         <br>
                         <p>Enter a manager's ID number to view in-depth statistics relating to their team including:</p>
                         <ul>
-                            <li>How many goals, assists, clean sheets, bonus points etc. have been obtained in the season</li>
-                            <li>How many points have been obtained from each position.</li>
-                            <li>Their favourite choice for captain</li>
-                            <li>Which players have featured in the team the most often</li>
-                            <li>Which players have earned the team the most points</li>
-                            <li>How much money is spent on each position</li>
+                            <li>How many goals, assists, clean sheets, bonus points etc. have been scored each week</li>
+                            <li>How many points have been obtained from each position</li>
+                            <li>How much money is invested in each position</li>
+                            <li>Which player has been captain most often</li>
+                            <li>How many points have been lost due to inoptimal team selection</li>
+                            <li>Which players have been in the team and how they have performed</li>
                         </ul>
                         <br><br>
                         <p>To find out a manager's ID, click on <u>'View Gameweek history'</u> and see the ID in the URL</p>
@@ -70,7 +111,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="col-md-12" style="background-color: #773734">
+                <div class="col-md-12" style="background-color: #922a0e">
                     <h1 style="text-align: center; color: white"><b>League Stats</b></h1>
                     <form action="{% url 'league:search' %}" method="post">
                         {% csrf_token %}
@@ -103,10 +144,10 @@
                         <ul>
                             <li>Who has the most goals, assists, clean sheets, bonus points etc.</li>
                             <li>Who has the highest scoring defense, midfield etc.</li>
-                            <li>Who is the best at picking their captain</li>
-                            <li>Who is each team's MVP</li>
+                            <li>Which formation each member prefers</li>
+                            <li>Who gains the most points from their captains</li>
+                            <li>Which player is each team's top performer</li>
                             <li>Who leaves the most points on the bench</li>
-                            <li>The favourite formation of each member</li>
                         </ul>
                         <br><br>
                         <p>To find out a league's ID, click on the league and see the ID in the URL</p>
@@ -117,25 +158,5 @@
             </div>
         </div>
     </div>
-    <br>
-    <div class="row" style="width: 100%">
-        <div class="col-md-12">
-            <div class="col-md-2"></div>
-            <div class="col-md-8" style="color: #1c4d66; border: solid #1c4d66 1px; border-radius: 20px">
-                <p></p>
-                <h4 style="text-align: center">Tips</h4>
-                <ol>
-                    <li>Click the banner at the top of the screen to return to the home screen</li>
-                    <li>Every column in the main tables can be sorted to quickly find the highest/lowest values</li>
-                    <li>Under 'Team Selection' you can click on the number in the Max Points column to see the optimal team lineup for that week</li>
-                    <li>Click on the Manager or League name in the top left corner of each view to go to that manager's team or that league's page on the main FPL website</li>
-                    <li>When looking at a League, you can click on a Manager's name in any of the the main tables to go to the Manager View for that person</li>
-                    <li>Bookmark the search result so you don't need to re-enter your Manager or League ID in future. You can also share the link with your friends so that they can bypass the search and be brought straight to the results page</li>
-                </ol>
-            </div>
-            <div class="col-md-2"></div>
-        </div>
-    </div>
-    <p style="color: #c4dfe6">`</p>
 </body>
 </html>

@@ -6,6 +6,7 @@ from json import JSONDecodeError
 
 # TODO Min & Max view switch for totals in league view
 # TODO Squad Statistics view for league view
+# TODO drop down menu to compare every manager for each week instead of only totals
 
 
 def search(request):

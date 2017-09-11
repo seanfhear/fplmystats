@@ -1,9 +1,14 @@
+/*
 .grad {
-    background: #c4dfe6; /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(#1c4d66, #c4dfe6); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(#1c4d66, #c4dfe6); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(#1c4d66, #c4dfe6); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(#1c4d66, #c4dfe6); /* Standard syntax (must be last) */
+    background: #BBFB87;
+    background: -webkit-linear-gradient(#4d840d, #BBFB87);
+    background: -o-linear-gradient(#4d840d, #BBFB87);
+    background: -moz-linear-gradient(#4d840d, #BBFB87);
+    background: linear-gradient(#4d840d, #BBFB87);
+}
+*/
+body {
+    background: #2e2e2e url('/static/images/background.png') repeat;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button
@@ -11,11 +16,11 @@ input::-webkit-inner-spin-button
     -webkit-appearance: none;
     margin: 0;
 }
-.hide {
-    display: none;
-}
 input[type=number] {
     -moz-appearance:textfield;
+}
+.hide {
+    display: none;
 }
 * {
     font-family: Arimo, sans-serif;
@@ -28,6 +33,15 @@ li {
 }
 th {
     text-align: center;
+}
+.info-link {
+    color: #999999
+}
+.info-link:hover {
+    color: #c5c5c5
+}
+.info-list ul li {
+    margin-bottom: 10px;
 }
 .manager-link {
     color: white;
@@ -48,7 +62,7 @@ th {
     color: white;
 }
 .league-link:hover {
-    color: #fbc2b2;
+    color: #ffb9a6;
     text-decoration: none;
 }
 .league-link:active {
@@ -62,15 +76,21 @@ th {
 .btn-manager {
     background-color: #5085a0;
 }
+.btn-manager:hover {
+    color: #b3d1df;
+}
 .btn-league {
-    background-color: #a95f4c;
+    background-color: #B24528;
+}
+.btn-league:hover {
+    color: #ffb9a6;
 }
 .top-manager-display tr td {
     border-color: #5085a0 !important;
     vertical-align: middle;
 }
 .top-league-display tr td {
-    border-color: #a95f4c !important;
+    border-color: #d4674a !important;
     vertical-align: middle;
 }
 /*
@@ -85,7 +105,7 @@ th {
 
 .main-league-display thead tr th, .main-league-display tbody tr td {
     padding: 4px;
-    border-color: #a95f4c;
+    border-color: #d4674a;
 }
 .main-manager-display thead tr th {
     color: lightgrey;
@@ -102,16 +122,16 @@ th {
 }
 .main-league-display thead tr th {
     color: lightgrey;
-    background-color: #430300;
+    background-color: #430e00;
 }
 .main-league-display tbody tr td {
     color: white;
-    background-color: #5D1D1A;
-    border-left: solid #430300 1px;
-    border-right: solid #430300 1px;
+    background-color: #6c1700;
+    border-left: solid #430e00 1px;
+    border-right: solid #430e00 1px;
 }
 .main-league-display tbody tr:hover td {
-    background-color: #773734;
+    background-color: #922a0e;
 }
 table thead th {
     vertical-align: middle;
