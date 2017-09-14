@@ -145,8 +145,11 @@ def get_stats(league_id):
         max_positions[0][0] = max_team_value[0]
         max_positions[0][1] = max_team_value[1]
 
-        for i in range(4, 13):
-            manager_positions_totals[i] = data.positions_totals[i-3]
+        for i in range(4, 8):
+            manager_positions_totals[i] = data.positions_totals[i - 3]
+        for i in range(8, 12):
+            manager_positions_totals[i] = data.positions_totals[i - 2]
+        manager_positions_totals[12] = data.positions_totals[5]
         table_data.positions_totals.append(manager_positions_totals)
 
         for i in range(1, 10):

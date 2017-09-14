@@ -18,11 +18,11 @@
 </head>
 
 <body>
-    <div class="container-fluid grad">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-10">
                 <p></p>
-                <a href={% url 'index' %}><img src="{% static 'images/header.png' %}" alt="header_img" class="img-responsive" style="display: inline-block"></a>
+                <a href={% url 'index' %}><img src="{% static 'images/header.png' %}" alt="header_img" class="img-responsive" style="display: inline-block"/></a>
                 <p></p>
             </div>
             <div class="col-md-2">
@@ -51,7 +51,7 @@
                             <h3 class="modal-title" style="text-align: center; color: #222222">Donate</h3>
                         </div>
                         <div class="modal-body" style="color: #222222; text-align: center">
-                            <h4>This website is completely free to use and will remain so for the foreseeable future.<br /><br />However, if you enjoy using the site and wish to make a contribution to its continued maintenance, you can use the button below.<br /><br />All donations are greatly appreciated.</h4><br>
+                            <p>This website is completely free to use and will remain so for the foreseeable future.<br /><br />However, it does cost a small amount to keep it running. If you enjoy using the site and wish to make a contribution to its continued maintenance and development, you can use the button below.</p><br>
                             <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                                 <input type="hidden" name="cmd" value="_s-xclick">
                                 <input type="hidden" name="hosted_button_id" value="WWJVTH7TLMXCY">
@@ -73,9 +73,9 @@
                             <h3 class="modal-title" style="text-align: center; color: #222222">Leave a Comment</h3>
                         </div>
                         <div class="modal-body" style="color: #222222; text-align: center">
-                            <h4>A feedback form is coming soon.</h4><br>
-                            <h4>For now, all enquiries or comments can be directed to<br/>info@fplmystats.com</h4><br>
-                            <h4>All feedback is much appreciated.</h4>
+                            <p>A proper feedback form is in the works, for now if you would like to leave a comment you can contact this email address:</p>
+                            <p style="font-size: 120%"><a href="mailto:info@fplmystats.com?Subject=Feedback" target="_top">info@fplmystats.com</a></p>
+                            <p>All suggestions, bug reports or general feedback are appreciated.</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn" data-dismiss="modal" style="background-color: #c5c5c5; color: #222222">Close</button>
@@ -101,13 +101,14 @@
                             </ul>
                             <h4 style="color: #336B87">Manager Stats</h4>
                             <ul>
-                                <li>Under 'Team Selection' you can click on the number in the Max Points column to see the optimal team lineup for that week</li>
                                 <li>Click on the Manager's name in the top left corner to go to that manager's team page on the main FPL website</li>
+                                <li>Click on the week number in any of the main tables to see the manager's team for that week on the main FPL website</li>
+                                <li>Under 'Team Selection' you can click on the number in the Max Points column to see the optimal team lineup for that week</li>
                             </ul>
                             <h4 style="color: #922a0e">League Stats</h4>
                             <ul>
-                                <li>You can click on a Manager's name in any of the the main tables to go to the Manager Stats view for that person</li>
                                 <li>Click on the League name in the top left corner to go to that league's page on the main FPL website</li>
+                                <li>You can click on a Manager's name in any of the the main tables to go to the Manager Stats view for that person</li>
                             </ul>
                         </div>
                         <div class="modal-footer">
@@ -305,10 +306,10 @@
                                     <table class="table-bordered top-league-display" style="width: 100%; color: white; text-align: center; font-size: 120%">
                                         <tr style="vertical-align: bottom">
                                             <td style="border-bottom: none">Total Budget</td>
+                                            <td style="border-bottom: none">Avg GK Budget</td>
                                             <td style="border-bottom: none">GK Points</td>
-                                            <td style="border-bottom: none">GK Budget</td>
+                                            <td style="border-bottom: none">Avg DEF Budget</td>
                                             <td style="border-bottom: none">DEF Points</td>
-                                            <td style="border-bottom: none">DEF Budget</td>
                                         </tr>
                                             <tr style="color: #ffb9a6">
                                             {% for item in positions_max|slice:"0:5" %}
@@ -321,11 +322,11 @@
                                                 {% endfor %}
                                             </tr>
                                         <tr>
+                                            <td style="border-bottom: none">Avg Bench Budget</td>
+                                            <td style="border-bottom: none">Avg MID Budget</td>
                                             <td style="border-bottom: none">MID Points</td>
-                                            <td style="border-bottom: none">MID Budget</td>
+                                            <td style="border-bottom: none">Avg FWD Budget</td>
                                             <td style="border-bottom: none">FWD Points</td>
-                                            <td style="border-bottom: none">FWD Budget</td>
-                                            <td style="border-bottom: none">Bench Budget</td>
                                         </tr>
                                         <tr style="color: #ffb9a6">
                                             {% for item in positions_max|slice:"5:10" %}
@@ -454,7 +455,7 @@
                                             {% for manager in general_number %}
                                             <tr>
                                                 <td><a href="{% url 'manager:detail' manager.0%}" class="league-link">{{ manager.1 }}</a></td>
-                                                {% for item in manager|slice:"2:15" %}
+                                                {% for item in manager|slice:"2:" %}
                                                     <td>{{ item }}</td>
                                                 {% endfor %}
                                             </tr>
@@ -488,7 +489,7 @@
                                             {% for manager in general_points %}
                                             <tr>
                                                 <td><a href="{% url 'manager:detail' manager.0%}" class="league-link">{{ manager.1 }}</a></td>
-                                                {% for item in manager|slice:"2:15" %}
+                                                {% for item in manager|slice:"2:" %}
                                                     <td>{{ item }}</td>
                                                 {% endfor %}
                                             </tr>
@@ -546,14 +547,14 @@
                                         <th>Manager</th>
                                         <th>Preferred<br />Formation</th>
                                         <th>Total<br />Budget</th>
-                                        <th>Points<br />From GK</th>
                                         <th>Avg GK<br />Budget</th>
-                                        <th>Points<br />From DEF</th>
+                                        <th>Points<br />From GK</th>
                                         <th>Avg DEF<br />Budget</th>
-                                        <th>Points<br />From MID</th>
+                                        <th>Points<br />From DEF</th>
                                         <th>Avg MID<br />Budget</th>
-                                        <th>Points<br />From FWD</th>
+                                        <th>Points<br />From MID</th>
                                         <th>Avg FWD<br />Budget</th>
+                                        <th>Points<br />From FWD</th>
                                         <th>Avg Bench<br />Budget</th>
                                     </tr>
                                 </thead>
@@ -561,7 +562,7 @@
                                     {% for manager in positions %}
                                         <tr>
                                             <td><a href="{% url 'manager:detail' manager.0%}" class="league-link">{{ manager.1 }}</a></td>
-                                            {% for item in manager|slice:"2:13" %}
+                                            {% for item in manager|slice:"2:" %}
                                                 <td>{{ item }}</td>
                                             {% endfor %}
                                         </tr>
@@ -632,7 +633,7 @@
                                     {% for manager in team_selection %}
                                         <tr>
                                             <td><a href="{% url 'manager:detail' manager.0%}" class="league-link">{{ manager.1 }}</a></td>
-                                            {% for item in manager|slice:"2:13" %}
+                                            {% for item in manager|slice:"2:" %}
                                                 <td>{{ item }}</td>
                                             {% endfor %}
                                         </tr>

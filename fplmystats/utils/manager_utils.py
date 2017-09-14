@@ -121,17 +121,24 @@ def get_stats(manager_id):
         mvp_points = 0
 
         # add empty lists to each section to be filled with the week's data
-        table_data.general_number.append([0] * 14)
-        table_data.general_points.append([0] * 14)
-        table_data.positions.append([0] * 12)
-        table_data.team_selection.append([0] * 13)
+        table_data.general_number.append([0] * 15)
+        table_data.general_points.append([0] * 15)
+        table_data.positions.append([0] * 13)
+        table_data.team_selection.append([0] * 14)
         formation = [0, 0, 0]
 
+        # add links for each week
+        link_address = 'https://fantasy.premierleague.com/a/team/{}/event/{}'.format(manager_id, week)
+        table_data.general_number[week - 1][0] = link_address
+        table_data.general_points[week - 1][0] = link_address
+        table_data.positions[week - 1][0] = link_address
+        table_data.team_selection[week - 1][0] = link_address
+
         # set first element of each section to the current working week
-        table_data.general_number[week - 1][0] = week
-        table_data.general_points[week - 1][0] = week
-        table_data.positions[week - 1][0] = week
-        table_data.team_selection[week - 1][0] = week
+        table_data.general_number[week - 1][1] = week
+        table_data.general_points[week - 1][1] = week
+        table_data.positions[week - 1][1] = week
+        table_data.team_selection[week - 1][1] = week
 
         with urllib.request.urlopen('{}'.format(picks_url)) as url:
             data = json.loads(url.read().decode())
@@ -140,18 +147,18 @@ def get_stats(manager_id):
         bench_boost = False
         chip = data['active_chip']
         if chip == '3xc':
-            table_data.team_selection[week - 1][1] = 'Triple Captain'
+            table_data.team_selection[week - 1][2] = 'Triple Captain'
             captain_multiplier = 3
         elif chip == 'bboost':
-            table_data.team_selection[week - 1][1] = 'Bench Boost'
+            table_data.team_selection[week - 1][2] = 'Bench Boost'
             bench_boost = True
         elif chip == 'freehit':
-            table_data.team_selection[week - 1][1] = 'Free Hit'
+            table_data.team_selection[week - 1][2] = 'Free Hit'
         elif chip == 'wildcard':
-            table_data.team_selection[week - 1][1] = 'Wildcard'
+            table_data.team_selection[week - 1][2] = 'Wildcard'
         else:
-            table_data.team_selection[week - 1][1] = '-'
-        table_data.team_selection[week - 1][2] = data['entry_history']['event_transfers_cost']
+            table_data.team_selection[week - 1][2] = '-'
+        table_data.team_selection[week - 1][3] = data['entry_history']['event_transfers_cost']
 
         week_points = data['entry_history']['points']
         if week_points > highest_points:
@@ -191,7 +198,7 @@ def get_stats(manager_id):
                       .format(player_table, player_id_string))
             result = c.fetchone()
 
-            # set name equal to first second + second name or webname if webname different to second name
+            # set name equal to first name + second name or webname if webname different to second name
             if result[0] == result[2]:
                 player_name = result[1] + ' ' + result[2]
             else:
@@ -241,47 +248,48 @@ def get_stats(manager_id):
 
                 # subtract clean sheets from MID's and FWD's for general_number and ignore goals conceded
                 if position == 3 or position == 4:
-                    table_data.general_number[week - 1][5] -= player_datum[5]
-                    table_data.general_number[week - 1][7] -= player_datum[7]
+                    table_data.general_number[week - 1][6] -= player_datum[5]
+                    table_data.general_number[week - 1][8] -= player_datum[7]
 
                 # Populate general number table
-                table_data.general_number[week - 1][1:14] = [sum(n) for n in zip(
-                    table_data.general_number[week - 1][1:14], player_datum[1:14])]
+                table_data.general_number[week - 1][2:15] = [sum(n) for n in zip(
+                    table_data.general_number[week - 1][2:15], player_datum[1:14])]
 
                 # Populate general points table
-                table_data.general_points[week - 1][1] += player_datum[1]                               # points
+                table_data.general_points[week - 1][2] += player_datum[1]                               # points
                 if player_datum[2] == 0:                                                                # minutes
-                    table_data.general_points[week - 1][2] += 0
+                    table_data.general_points[week - 1][3] += 0
                 elif player_datum[2] < 60:
-                    table_data.general_points[week - 1][2] += MINUTES_LESS_THAN_SIXTY_VALUE
+                    table_data.general_points[week - 1][3] += MINUTES_LESS_THAN_SIXTY_VALUE
                 else:
-                    table_data.general_points[week - 1][2] += MINUTES_SIXTY_PLUS_VALUE
+                    table_data.general_points[week - 1][3] += MINUTES_SIXTY_PLUS_VALUE
 
                 if position == 1 or position == 2:                                                    # goals
-                    table_data.general_points[week - 1][3] += player_datum[3] * GOAL_GK_DEF_VALUE
+                    table_data.general_points[week - 1][4] += player_datum[3] * GOAL_GK_DEF_VALUE
                 elif position == 3:
-                    table_data.general_points[week - 1][3] += player_datum[3] * GOAL_MID_VALUE
+                    table_data.general_points[week - 1][4] += player_datum[3] * GOAL_MID_VALUE
                 else:
-                    table_data.general_points[week - 1][3] += player_datum[3] * GOAL_FWD_VALUE
+                    table_data.general_points[week - 1][4] += player_datum[3] * GOAL_FWD_VALUE
 
-                table_data.general_points[week - 1][4] += player_datum[4] * ASSIST_VALUE              # assists
+                table_data.general_points[week - 1][5] += player_datum[4] * ASSIST_VALUE              # assists
 
                 if position == 1 or position == 2:                                                    # clean sheets
-                    table_data.general_points[week - 1][5] += player_datum[5] * CLEAN_SHEET_GK_DEF_VALUE
+                    table_data.general_points[week - 1][6] += player_datum[5] * CLEAN_SHEET_GK_DEF_VALUE
+                    table_data.general_points[week - 1][6] += player_datum[5] * CLEAN_SHEET_GK_DEF_VALUE
                 elif position == 3:
-                    table_data.general_points[week - 1][5] += player_datum[5] * CLEAN_SHEET_MID_VALUE
+                    table_data.general_points[week - 1][6] += player_datum[5] * CLEAN_SHEET_MID_VALUE
 
-                table_data.general_points[week - 1][6] += math.floor(player_datum[6] / SAVES_DIVIDER)  # saves
+                table_data.general_points[week - 1][7] += math.floor(player_datum[6] / SAVES_DIVIDER)  # saves
 
                 if position == 1 or position == 2:                                                    # goals conceded
-                    table_data.general_points[week - 1][7] += math.ceil(player_datum[7] / GOALS_CONCEDED_DIVIDER)
+                    table_data.general_points[week - 1][8] += math.ceil(player_datum[7] / GOALS_CONCEDED_DIVIDER)
 
-                table_data.general_points[week - 1][8] += player_datum[8] * PENALTIES_SAVED_VALUE     # penalties saved
-                table_data.general_points[week - 1][9] += player_datum[9] * YELLOW_CARDS_VALUE        # yellow cards
-                table_data.general_points[week - 1][10] += player_datum[10] * RED_CARDS_VALUE         # red cards
-                table_data.general_points[week - 1][11] += player_datum[11] * PENALTIES_MISSED_VALUE  # penalties missed
-                table_data.general_points[week - 1][12] += player_datum[12] * OWN_GOALS_VALUE         # own goals
-                table_data.general_points[week - 1][13] += player_datum[13]                           # bonus points
+                table_data.general_points[week - 1][9] += player_datum[8] * PENALTIES_SAVED_VALUE     # penalties saved
+                table_data.general_points[week - 1][10] += player_datum[9] * YELLOW_CARDS_VALUE        # yellow cards
+                table_data.general_points[week - 1][11] += player_datum[10] * RED_CARDS_VALUE         # red cards
+                table_data.general_points[week - 1][12] += player_datum[11] * PENALTIES_MISSED_VALUE  # penalties missed
+                table_data.general_points[week - 1][13] += player_datum[12] * OWN_GOALS_VALUE         # own goals
+                table_data.general_points[week - 1][14] += player_datum[13]                           # bonus points
 
                 player_points_dict[player_name] += player_datum[1] * player_id[1]
 
@@ -290,19 +298,19 @@ def get_stats(manager_id):
                     mvp_name = player_name
 
                 if position == 1:
-                    table_data.positions[week - 1][3] += player_datum[1]
                     table_data.positions[week - 1][4] += price
-                elif position == 2:
                     table_data.positions[week - 1][5] += player_datum[1]
+                elif position == 2:
                     table_data.positions[week - 1][6] += price
+                    table_data.positions[week - 1][7] += player_datum[1]
                     formation[0] += 1
                 elif position == 3:
-                    table_data.positions[week - 1][7] += player_datum[1]
                     table_data.positions[week - 1][8] += price
+                    table_data.positions[week - 1][9] += player_datum[1]
                     formation[1] += 1
                 elif position == 4:
-                    table_data.positions[week - 1][9] += player_datum[1]
                     table_data.positions[week - 1][10] += price
+                    table_data.positions[week - 1][11] += player_datum[1]
                     formation[2] += 1
 
         table_data.positions[week - 1][4] = round(table_data.positions[week - 1][4], 1)
@@ -340,7 +348,7 @@ def get_stats(manager_id):
                 else:
                     price_dict[player_name][0] += price
                     price_dict[player_name][1] += 1
-                table_data.positions[week - 1][11] += price
+                table_data.positions[week - 1][12] += price
 
                 if player_datum[0] == captain_id:
                     captain_name = player_name
@@ -380,11 +388,11 @@ def get_stats(manager_id):
             string_formation = '3-4-3'
 
         formation_dict[string_formation] += 1
-        table_data.positions[week - 1][1] = string_formation
+        table_data.positions[week - 1][2] = string_formation
 
         team_value = round(table_data.positions[week - 1][4] + table_data.positions[week - 1][6]
                            + table_data.positions[week - 1][8] + table_data.positions[week - 1][10]
-                           + table_data.positions[week - 1][11] + bank, 1)
+                           + table_data.positions[week - 1][12] + bank, 1)
         table_data.positions[week - 1][2] = team_value
 
         max_points_on_pitch = 0
@@ -464,10 +472,23 @@ def get_stats(manager_id):
 
             bench_potential_lost = max_points_on_pitch - points_on_pitch
         else:
+            for i in range(len(points_list)):
+                try:
+                    max_points_team.append(next(item for item in points_list))
+                    points_list.remove(next(item for item in points_list))
+                except StopIteration:
+                    ''
+            for i in range(len(second_points_list)):
+                try:
+                    max_points_team.append(next(item for item in second_points_list))
+                    points_list.remove(next(item for item in second_points_list))
+                except StopIteration:
+                    ''
             bench_potential_lost = 0
 
         if bench_potential_lost < 0:
             bench_potential_lost = 0
+
 
         # assign the captain in max team and then sort by position
         if max_points_team:
@@ -486,65 +507,68 @@ def get_stats(manager_id):
                     player[1] = 'FWD'
 
         if captain_played or not vice_captain_played:
-            table_data.team_selection[week - 1][3] = captain_name
-            table_data.team_selection[week - 1][4] = captain_points * captain_multiplier
+            table_data.team_selection[week - 1][4] = captain_name
+            table_data.team_selection[week - 1][5] = captain_points * captain_multiplier
             if captain_name not in player_captain_dict:
                 player_captain_dict[captain_name] = 0
             player_captain_dict[captain_name] += 1
         else:
-            table_data.team_selection[week - 1][3] = vice_captain_name
-            table_data.team_selection[week - 1][4] = vice_captain_points * captain_multiplier
+            table_data.team_selection[week - 1][4] = vice_captain_name
+            table_data.team_selection[week - 1][5] = vice_captain_points * captain_multiplier
             captain_points = vice_captain_points
             if vice_captain_name not in player_captain_dict:
                 player_captain_dict[vice_captain_name] = 0
             player_captain_dict[vice_captain_name] += 1
 
-        table_data.team_selection[week - 1][5] = mvp_name
-        table_data.team_selection[week - 1][6] = mvp_points
-        table_data.team_selection[week - 1][7] = (mvp_points - captain_points) * (captain_multiplier - 1)
-        table_data.team_selection[week - 1][8] = bench_points
-        table_data.team_selection[week - 1][9] = bench_potential_lost
-        table_data.team_selection[week - 1][10] = int(table_data.general_points[week - 1][1] +
-                                                      (table_data.team_selection[week - 1][4] / captain_multiplier) -
-                                                      table_data.team_selection[week - 1][2])
-        table_data.team_selection[week - 1][12] = table_data.team_selection[week - 1][7] +\
-            table_data.team_selection[week - 1][9]
-        table_data.team_selection[week - 1][11] = table_data.team_selection[week - 1][10] +\
-            table_data.team_selection[week - 1][12]
+        table_data.team_selection[week - 1][6] = mvp_name
+        table_data.team_selection[week - 1][7] = mvp_points
+        table_data.team_selection[week - 1][8] = (mvp_points - captain_points) * (captain_multiplier - 1)
+        table_data.team_selection[week - 1][9] = bench_points
+        table_data.team_selection[week - 1][10] = bench_potential_lost
+        table_data.team_selection[week - 1][11] = int(table_data.general_points[week - 1][2] +
+                                                      (table_data.team_selection[week - 1][5] / captain_multiplier) -
+                                                      table_data.team_selection[week - 1][3])
+        table_data.team_selection[week - 1][13] = table_data.team_selection[week - 1][8] +\
+            table_data.team_selection[week - 1][10]
+        table_data.team_selection[week - 1][12] = table_data.team_selection[week - 1][11] +\
+            table_data.team_selection[week - 1][13]
 
-        max_points_team.append(table_data.team_selection[week - 1][11] + table_data.team_selection[week - 1][2])
-        max_points_team.append(table_data.team_selection[week - 1][2] * -1)
-        max_points_team.append(table_data.team_selection[week - 1][11])
-        table_data.max_teams.append([week] + max_points_team)
+        max_points_team = [table_data.team_selection[week - 1][12]] + max_points_team      # total points
+        max_points_team = [table_data.team_selection[week - 1][3] * -1] + max_points_team  # transfer cost
+        max_points_team = [table_data.team_selection[week - 1][12]                         # total points - tc
+                           + table_data.team_selection[week - 1][3]] + max_points_team
+        max_points_team = [week] + max_points_team
+
+        table_data.max_teams.append(max_points_team)
 
         week += 1
 
-    table_data.general_number_totals = [n for n in zip(*table_data.general_number)][1:15]
+    table_data.general_number_totals = [n for n in zip(*table_data.general_number)][2:16]
     table_data.general_number_totals = [sum(n) for n in table_data.general_number_totals]
-    table_data.general_points_totals = [n for n in zip(*table_data.general_points)][1:15]
+    table_data.general_points_totals = [n for n in zip(*table_data.general_points)][2:16]
     table_data.general_points_totals = [sum(n) for n in table_data.general_points_totals]
 
     table_data.positions_totals = [0] * 10
-    table_data.positions_totals[0] = round(sum(entry[2] for entry in table_data.positions) / current_week, 1)
-    table_data.positions_totals[1] = sum(entry[3] for entry in table_data.positions)
-    table_data.positions_totals[2] = round(sum(entry[4] for entry in table_data.positions) / current_week, 1)
-    table_data.positions_totals[3] = sum(entry[5] for entry in table_data.positions)
-    table_data.positions_totals[4] = round(sum(entry[6] for entry in table_data.positions) / current_week, 1)
-    table_data.positions_totals[5] = sum(entry[7] for entry in table_data.positions)
+    table_data.positions_totals[0] = round(sum(entry[3] for entry in table_data.positions) / current_week, 1)
+    table_data.positions_totals[1] = round(sum(entry[4] for entry in table_data.positions) / current_week, 1)
+    table_data.positions_totals[2] = sum(entry[5] for entry in table_data.positions)
+    table_data.positions_totals[3] = round(sum(entry[6] for entry in table_data.positions) / current_week, 1)
+    table_data.positions_totals[4] = sum(entry[7] for entry in table_data.positions)
+    table_data.positions_totals[5] = round(sum(entry[12] for entry in table_data.positions) / current_week, 1)
     table_data.positions_totals[6] = round(sum(entry[8] for entry in table_data.positions) / current_week, 1)
     table_data.positions_totals[7] = sum(entry[9] for entry in table_data.positions)
     table_data.positions_totals[8] = round(sum(entry[10] for entry in table_data.positions) / current_week, 1)
-    table_data.positions_totals[9] = round(sum(entry[11] for entry in table_data.positions) / current_week, 1)
+    table_data.positions_totals[9] = sum(entry[11] for entry in table_data.positions)
 
     table_data.team_selection_totals = [0]*8
-    table_data.team_selection_totals[0] = sum(entry[2] for entry in table_data.team_selection)    # transfer cost
-    table_data.team_selection_totals[1] = sum(entry[4] for entry in table_data.team_selection)    # captain points
-    table_data.team_selection_totals[2] = sum(entry[6] for entry in table_data.team_selection)    # mvp total
-    table_data.team_selection_totals[3] += sum(entry[7] for entry in table_data.team_selection)    # captain lost
-    table_data.team_selection_totals[4] = sum(entry[8] for entry in table_data.team_selection)   # bench points
-    table_data.team_selection_totals[5] = sum(entry[9] for entry in table_data.team_selection)    # bench lost
-    table_data.team_selection_totals[6] = sum(entry[11] for entry in table_data.team_selection)   # max possible
-    table_data.team_selection_totals[7] = sum(entry[12] for entry in table_data.team_selection)   # all lost
+    table_data.team_selection_totals[0] = sum(entry[3] for entry in table_data.team_selection)    # transfer cost
+    table_data.team_selection_totals[1] = sum(entry[5] for entry in table_data.team_selection)    # captain points
+    table_data.team_selection_totals[2] = sum(entry[7] for entry in table_data.team_selection)    # mvp total
+    table_data.team_selection_totals[3] = sum(entry[8] for entry in table_data.team_selection)    # captain lost
+    table_data.team_selection_totals[4] = sum(entry[9] for entry in table_data.team_selection)   # bench points
+    table_data.team_selection_totals[5] = sum(entry[10] for entry in table_data.team_selection)    # bench lost
+    table_data.team_selection_totals[6] = sum(entry[12] for entry in table_data.team_selection)   # max possible
+    table_data.team_selection_totals[7] = sum(entry[13] for entry in table_data.team_selection)   # all lost
 
     table_data.squad_stats_players = []
     for player in player_apps_xv_dict:
@@ -579,7 +603,7 @@ def get_stats(manager_id):
         table_data.squad_stats_teams.append([team, teams_dict[team]])
 
     table_data.headers = [0] * 7
-    table_data.headers[0] = sum(entry[10] for entry in table_data.team_selection)
+    table_data.headers[0] = sum(entry[11] for entry in table_data.team_selection)
     table_data.headers[1] = highest_points
     table_data.headers[2] = highest_rank
     table_data.headers[3] = max(player_captain_dict, key=player_captain_dict.get)

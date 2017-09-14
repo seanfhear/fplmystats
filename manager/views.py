@@ -6,6 +6,8 @@ from json import JSONDecodeError
 
 # TODO scroll headers with window
 # TODO highlight differences in best possible lineup vs actual lineup
+# TODO fix header button modals on all 3 views
+# TODO fix best possible team with bench boost
 
 
 def search(request):

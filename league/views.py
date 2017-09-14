@@ -5,7 +5,7 @@ from urllib.error import HTTPError
 from json import JSONDecodeError
 
 # TODO Min & Max view switch for totals in league view
-# TODO Squad Statistics view for league view
+# TODO Squad Statistics view for league view, every player & how many members own them
 # TODO drop down menu to compare every manager for each week instead of only totals
 
 
@@ -18,7 +18,6 @@ def search(request):
 
 
 def detail(request, league_id):
-
     try:
         name = league_utils.get_league_name(league_id)
         stats = league_utils.get_stats(league_id)
