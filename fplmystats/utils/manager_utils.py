@@ -393,7 +393,7 @@ def get_stats(manager_id):
         team_value = round(table_data.positions[week - 1][4] + table_data.positions[week - 1][6]
                            + table_data.positions[week - 1][8] + table_data.positions[week - 1][10]
                            + table_data.positions[week - 1][12] + bank, 1)
-        table_data.positions[week - 1][2] = team_value
+        table_data.positions[week - 1][3] = team_value
 
         max_points_on_pitch = 0
         points_list.sort()
