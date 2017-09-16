@@ -1,5 +1,6 @@
 from collections import namedtuple
 from fplmystats.utils import utils
+from urllib.error import HTTPError
 import urllib.request
 import sqlite3
 import json
@@ -8,13 +9,13 @@ import math
 static_url = 'https://fantasy.premierleague.com/drf/bootstrap-static'
 manager_info_url = 'https://fantasy.premierleague.com/drf/entry/'
 
-with open('/home/admin/fplmystats/fplmystats/utils/current_season.txt') as file:
-# with open('C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\current_season.txt') as file:
+# with open('/home/admin/fplmystats/fplmystats/utils/current_season.txt') as file:
+with open('C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\current_season.txt') as file:
     for x in file:
         current_season = x
 
-data_file = '/home/admin/fplmystats/FPLdb.sqlite'
-# data_file = 'FPLdb.sqlite'
+# data_file = '/home/admin/fplmystats/FPLdb.sqlite'
+data_file = 'FPLdb.sqlite'
 
 MINUTES_LESS_THAN_SIXTY_VALUE = 1
 MINUTES_SIXTY_PLUS_VALUE = 2
@@ -142,410 +143,412 @@ def get_stats(manager_id):
         table_data.positions[week - 1][1] = week
         table_data.team_selection[week - 1][1] = week
 
-        with urllib.request.urlopen('{}'.format(picks_url)) as url:
-            data = json.loads(url.read().decode())
+        try:
+            with urllib.request.urlopen('{}'.format(picks_url)) as url:
+                data = json.loads(url.read().decode())
 
-        captain_multiplier = 2
-        bench_boost = False
-        chip = data['active_chip']
-        if chip == '3xc':
-            table_data.team_selection[week - 1][2] = 'Triple Captain'
-            captain_multiplier = 3
-        elif chip == 'bboost':
-            table_data.team_selection[week - 1][2] = 'Bench Boost'
-            bench_boost = True
-        elif chip == 'freehit':
-            table_data.team_selection[week - 1][2] = 'Free Hit'
-        elif chip == 'wildcard':
-            table_data.team_selection[week - 1][2] = 'Wildcard'
-        else:
-            table_data.team_selection[week - 1][2] = '-'
-        table_data.team_selection[week - 1][3] = data['entry_history']['event_transfers_cost']
-
-        week_points = data['entry_history']['points']
-        if week_points > highest_points:
-            highest_points = week_points
-        week_rank = data['entry_history']['rank']
-        if week_rank is not None:
-            if week == 1:
-                highest_rank = week_rank
+            captain_multiplier = 2
+            bench_boost = False
+            chip = data['active_chip']
+            if chip == '3xc':
+                table_data.team_selection[week - 1][2] = 'Triple Captain'
+                captain_multiplier = 3
+            elif chip == 'bboost':
+                table_data.team_selection[week - 1][2] = 'Bench Boost'
+                bench_boost = True
+            elif chip == 'freehit':
+                table_data.team_selection[week - 1][2] = 'Free Hit'
+            elif chip == 'wildcard':
+                table_data.team_selection[week - 1][2] = 'Wildcard'
             else:
-                if week_rank < highest_rank:
+                table_data.team_selection[week - 1][2] = '-'
+            table_data.team_selection[week - 1][3] = data['entry_history']['event_transfers_cost']
+
+            week_points = data['entry_history']['points']
+            if week_points > highest_points:
+                highest_points = week_points
+            week_rank = data['entry_history']['rank']
+            if week_rank is not None:
+                if week == 1:
                     highest_rank = week_rank
-        total_points += week_points
+                else:
+                    if week_rank < highest_rank:
+                        highest_rank = week_rank
+            total_points += week_points
 
-        bank = data['entry_history']['bank'] / 10.0
+            bank = data['entry_history']['bank'] / 10.0
 
-        for pick in data['picks']:
-            if bench_boost:
-                pitch_ids.append([pick['element'], pick['multiplier']])
-                if pick['is_captain']:
-                    captain_id = pick['element']
-                if pick['is_vice_captain']:
-                    vice_captain_id = pick['element']
-            else:
-                if pick['position'] <= 11:
+            for pick in data['picks']:
+                if bench_boost:
                     pitch_ids.append([pick['element'], pick['multiplier']])
+                    if pick['is_captain']:
+                        captain_id = pick['element']
+                    if pick['is_vice_captain']:
+                        vice_captain_id = pick['element']
                 else:
-                    bench_ids.append(pick['element'])
-                if pick['is_captain']:
-                    captain_id = pick['element']
-                if pick['is_vice_captain']:
-                    vice_captain_id = pick['element']
+                    if pick['position'] <= 11:
+                        pitch_ids.append([pick['element'], pick['multiplier']])
+                    else:
+                        bench_ids.append(pick['element'])
+                    if pick['is_captain']:
+                        captain_id = pick['element']
+                    if pick['is_vice_captain']:
+                        vice_captain_id = pick['element']
 
-        for player_id in pitch_ids:
-            player_id_string = str(player_id[0])
+            for player_id in pitch_ids:
+                player_id_string = str(player_id[0])
 
-            c.execute('SELECT webname, firstname, secondname, position, teamID FROM "{}" WHERE id = {}'
-                      .format(player_table, player_id_string))
-            result = c.fetchone()
+                c.execute('SELECT webname, firstname, secondname, position, teamID FROM "{}" WHERE id = {}'
+                          .format(player_table, player_id_string))
+                result = c.fetchone()
 
-            # set name equal to first name + second name or webname if webname different to second name
-            if result[0] == result[2]:
-                player_name = result[1] + ' ' + result[2]
+                # set name equal to first name + second name or webname if webname different to second name
+                if result[0] == result[2]:
+                    player_name = result[1] + ' ' + result[2]
+                else:
+                    player_name = result[0]
+                position = result[3]
+                team_id = result[4]
+
+                if player_name not in player_points_dict:
+                    player_points_dict[player_name] = 0
+                    player_apps_xv_dict[player_name] = 0
+                if player_name not in player_apps_xi_dict:
+                    player_apps_xi_dict[player_name] = 0
+
+                player_apps_xi_dict[player_name] += 1
+                player_apps_xv_dict[player_name] += 1
+
+                c.execute('SELECT name from "{}teamIDs" WHERE id = {}'.format(current_season, team_id))
+                team_name = c.fetchone()[0]
+                teams_dict[team_name] += 1
+
+                c.execute('SELECT * FROM "{}" WHERE id = {}'.format(weekly_table, player_id_string))
+                player_datum = c.fetchone()
+                if player_datum is not None:
+                    price = player_datum[14] / 1.0
+                    if player_name not in price_dict:
+                        price_dict[player_name] = [price, 1]
+                    else:
+                        price_dict[player_name][0] += price
+                        price_dict[player_name][1] += 1
+
+                    if player_datum[2] > 0:  # if minutes > 0
+                        points_list.append([player_datum[1], position, player_name])  # points, position, player_name
+                    else:
+                        second_points_list.append([player_datum[1], position, player_name])
+                    points_on_pitch += player_datum[1]
+
+                    if player_datum[0] == captain_id:
+                        captain_name = player_name
+                        captain_points = player_datum[1]
+                        if player_datum[2] > 0:
+                            captain_played = True
+                    elif player_datum[0] == vice_captain_id:
+                        vice_captain_name = player_name
+                        vice_captain_points = player_datum[1]
+                        if player_datum[2] > 0:
+                            vice_captain_played = True
+
+                    # subtract clean sheets from MID's and FWD's for general_number and ignore goals conceded
+                    if position == 3 or position == 4:
+                        table_data.general_number[week - 1][6] -= player_datum[5]
+                        table_data.general_number[week - 1][8] -= player_datum[7]
+
+                    # Populate general number table
+                    table_data.general_number[week - 1][2:15] = [sum(n) for n in zip(
+                        table_data.general_number[week - 1][2:15], player_datum[1:14])]
+
+                    # Populate general points table
+                    table_data.general_points[week - 1][2] += player_datum[1]                               # points
+                    if player_datum[2] == 0:                                                                # minutes
+                        table_data.general_points[week - 1][3] += 0
+                    elif player_datum[2] < 60:
+                        table_data.general_points[week - 1][3] += MINUTES_LESS_THAN_SIXTY_VALUE
+                    else:
+                        table_data.general_points[week - 1][3] += MINUTES_SIXTY_PLUS_VALUE
+
+                    if position == 1 or position == 2:                                                    # goals
+                        table_data.general_points[week - 1][4] += player_datum[3] * GOAL_GK_DEF_VALUE
+                    elif position == 3:
+                        table_data.general_points[week - 1][4] += player_datum[3] * GOAL_MID_VALUE
+                    else:
+                        table_data.general_points[week - 1][4] += player_datum[3] * GOAL_FWD_VALUE
+
+                    table_data.general_points[week - 1][5] += player_datum[4] * ASSIST_VALUE              # assists
+
+                    if position == 1 or position == 2:                                                    # clean sheets
+                        table_data.general_points[week - 1][6] += player_datum[5] * CLEAN_SHEET_GK_DEF_VALUE
+                    elif position == 3:
+                        table_data.general_points[week - 1][6] += player_datum[5] * CLEAN_SHEET_MID_VALUE
+
+                    table_data.general_points[week - 1][7] += math.floor(player_datum[6] / SAVES_DIVIDER)  # saves
+
+                    if position == 1 or position == 2:                                                    # goals conceded
+                        table_data.general_points[week - 1][8] += math.ceil(player_datum[7] / GOALS_CONCEDED_DIVIDER)
+
+                    table_data.general_points[week - 1][9] += player_datum[8] * PENALTIES_SAVED_VALUE     # penalties saved
+                    table_data.general_points[week - 1][10] += player_datum[9] * YELLOW_CARDS_VALUE        # yellow cards
+                    table_data.general_points[week - 1][11] += player_datum[10] * RED_CARDS_VALUE         # red cards
+                    table_data.general_points[week - 1][12] += player_datum[11] * PENALTIES_MISSED_VALUE  # penalties missed
+                    table_data.general_points[week - 1][13] += player_datum[12] * OWN_GOALS_VALUE         # own goals
+                    table_data.general_points[week - 1][14] += player_datum[13]                           # bonus points
+
+                    player_points_dict[player_name] += player_datum[1] * player_id[1]
+
+                    if player_datum[1] > mvp_points:
+                        mvp_points = player_datum[1]
+                        mvp_name = player_name
+
+                    if position == 1:
+                        table_data.positions[week - 1][4] += price
+                        table_data.positions[week - 1][5] += player_datum[1]
+                    elif position == 2:
+                        table_data.positions[week - 1][6] += price
+                        table_data.positions[week - 1][7] += player_datum[1]
+                        formation[0] += 1
+                    elif position == 3:
+                        table_data.positions[week - 1][8] += price
+                        table_data.positions[week - 1][9] += player_datum[1]
+                        formation[1] += 1
+                    elif position == 4:
+                        table_data.positions[week - 1][10] += price
+                        table_data.positions[week - 1][11] += player_datum[1]
+                        formation[2] += 1
+                else:
+                    utils.update_weekly_table()
+                    get_stats(manager_id)
+
+            table_data.positions[week - 1][4] = round(table_data.positions[week - 1][4], 1)
+            table_data.positions[week - 1][6] = round(table_data.positions[week - 1][6], 1)
+            table_data.positions[week - 1][8] = round(table_data.positions[week - 1][8], 1)
+            table_data.positions[week - 1][10] = round(table_data.positions[week - 1][10], 1)
+
+            for player_id in bench_ids:
+                player_id_string = str(player_id)
+
+                c.execute('SELECT webname, firstname, secondname, position FROM "{}" WHERE id = {}'
+                          .format(player_table, player_id_string))
+                result = c.fetchone()
+
+                # set name equal to first second + second name or webname if webname different to second name
+                if result[0] == result[2]:
+                    player_name = result[1] + ' ' + result[2]
+                else:
+                    player_name = result[0]
+                position = result[3]
+
+                if player_name not in player_points_dict:
+                    player_points_dict[player_name] = 0
+                    player_apps_xv_dict[player_name] = 0
+
+                player_apps_xv_dict[player_name] += 1
+
+                c.execute('SELECT * FROM "{}" WHERE id = {}'.format(weekly_table, player_id_string))
+                player_datum = c.fetchone()
+
+                if player_datum is not None:
+                    price = player_datum[14] / 1.0
+                    if player_name not in price_dict:
+                        price_dict[player_name] = [price, 1]
+                    else:
+                        price_dict[player_name][0] += price
+                        price_dict[player_name][1] += 1
+                    table_data.positions[week - 1][12] += price
+
+                    if player_datum[0] == captain_id:
+                        captain_name = player_name
+                        captain_points = player_datum[1]
+                        if player_datum[2] > 0:
+                            captain_played = True
+                    elif player_datum[0] == vice_captain_id:
+                        vice_captain_name = player_name
+                        vice_captain_points = player_datum[1]
+                        if player_datum[2] > 0:
+                            vice_captain_played = True
+
+                    if player_datum[1] > mvp_points:
+                        mvp_points = player_datum[1]
+                        mvp_name = player_name
+
+                    if player_datum[2] > 0:
+                        points_list.append([player_datum[1], position, player_name])  # points, position, player_name
+                    bench_points += player_datum[1]
+
+            string_formation = '4-4-2'  # default formation if db not updated
+            if formation == [5, 4, 1]:
+                string_formation = '5-4-1'
+            elif formation == [5, 3, 2]:
+                string_formation = '5-3-2'
+            elif formation == [5, 2, 3]:
+                string_formation = '5-2-3'
+            elif formation == [4, 5, 1]:
+                string_formation = '4-5-1'
+            elif formation == [4, 4, 2]:
+                string_formation = '4-4-2'
+            elif formation == [4, 3, 3]:
+                string_formation = '4-3-3'
+            elif formation == [3, 5, 2]:
+                string_formation = '3-5-2'
+            elif formation == [3, 4, 3]:
+                string_formation = '3-4-3'
+
+            formation_dict[string_formation] += 1
+            table_data.positions[week - 1][2] = string_formation
+
+            team_value = round(table_data.positions[week - 1][4] + table_data.positions[week - 1][6]
+                               + table_data.positions[week - 1][8] + table_data.positions[week - 1][10]
+                               + table_data.positions[week - 1][12] + bank, 1)
+            table_data.positions[week - 1][3] = team_value
+
+            max_points_on_pitch = 0
+            points_list.sort()
+            points_list = points_list[::-1]
+            max_points_team = []
+
+            if not bench_boost:
+                try:
+                    max_points_on_pitch += next(item[0] for item in points_list if item[1] == 1)      # 1 goalkeeper
+                    max_points_team.append(next(item for item in points_list if item[1] == 1))
+                    points_list.remove(next(item for item in points_list if item[1] == 1))
+                    points_list.remove(next(item for item in points_list if item[1] == 1))
+                except StopIteration:
+                    ''
+                if len(max_points_team) < 1:
+                    try:
+                        max_points_team.append(next(item for item in second_points_list if item[1] == 1))
+                        second_points_list.remove(next(item for item in second_points_list if item[1] == 1))
+                    except StopIteration:
+                        ''
+
+                for i in range(3):                                                                    # 3 defenders
+                    try:
+                        max_points_on_pitch += next(item[0] for item in points_list if item[1] == 2)
+                        max_points_team.append(next(item for item in points_list if item[1] == 2))
+                        points_list.remove(next(item for item in points_list if item[1] == 2))
+                    except StopIteration:
+                        ''
+                while len(max_points_team) < 4:
+                    try:
+                        max_points_team.append(next(item for item in second_points_list if item[1] == 2))
+                        second_points_list.remove(next(item for item in second_points_list if item[1] == 2))
+                    except StopIteration:
+                        ''
+
+                for i in range(2):                                                                    # 2 midfielders
+                    try:
+                        max_points_on_pitch += next(item[0] for item in points_list if item[1] == 3)
+                        max_points_team.append(next(item for item in points_list if item[1] == 3))
+                        points_list.remove(next(item for item in points_list if item[1] == 3))
+                    except StopIteration:
+                        ''
+                while len(max_points_team) < 6:
+                    try:
+                        max_points_team.append(next(item for item in second_points_list if item[1] == 3))
+                        second_points_list.remove(next(item for item in second_points_list if item[1] == 3))
+                    except StopIteration:
+                        ''
+
+                try:
+                    max_points_on_pitch += next(item[0] for item in points_list if item[1] == 4)      # 1 forward
+                    max_points_team.append(next(item for item in points_list if item[1] == 4))
+                    points_list.remove(next(item for item in points_list if item[1] == 4))
+                except StopIteration:
+                    ''
+                while len(max_points_team) < 7:
+                    try:
+                        max_points_team.append(next(item for item in second_points_list if item[1] == 4))
+                        second_points_list.remove(next(item for item in second_points_list if item[1] == 4))
+                    except StopIteration:
+                        ''
+
+                for i in range(4):                                                                    # 4 remaining players
+                    try:
+                        max_points_on_pitch += next(item[0] for item in points_list)
+                        max_points_team.append(next(item for item in points_list))
+                        points_list.remove(next(item for item in points_list))
+                    except StopIteration:
+                        ''
+                while len(max_points_team) < 11:
+                    try:
+                        max_points_team.append(next(item for item in second_points_list))
+                        second_points_list.remove(next(item for item in second_points_list))
+                    except StopIteration:
+                        ''
+
+                bench_potential_lost = max_points_on_pitch - points_on_pitch
             else:
-                player_name = result[0]
-            position = result[3]
-            team_id = result[4]
+                while len(points_list) > 0:
+                    try:
+                        max_points_team.append(next(item for item in points_list))
+                        points_list.remove(next(item for item in points_list))
+                    except StopIteration:
+                        ''
+                while len(second_points_list) > 0:
+                    try:
+                        max_points_team.append(next(item for item in second_points_list))
+                        second_points_list.remove(next(item for item in second_points_list))
+                    except StopIteration:
+                        ''
+                bench_potential_lost = 0
 
-            if player_name not in player_points_dict:
-                player_points_dict[player_name] = 0
-                player_apps_xv_dict[player_name] = 0
-            if player_name not in player_apps_xi_dict:
-                player_apps_xi_dict[player_name] = 0
+            if bench_potential_lost < 0:
+                bench_potential_lost = 0
 
-            player_apps_xi_dict[player_name] += 1
-            player_apps_xv_dict[player_name] += 1
+            # assign the captain in max team and then sort by position
+            if max_points_team:
+                max_points_team.sort()
+                max_points_team[-1][2] = max_points_team[-1][2] + ' (C)'
+                max_points_team[-1][0] = max_points_team[-1][0] * 2
+                max_points_team = sorted(max_points_team, key=lambda l: l[1])
+                for player in max_points_team:
+                    if player[1] == 1:
+                        player[1] = 'GK'
+                    elif player[1] == 2:
+                        player[1] = 'DEF'
+                    elif player[1] == 3:
+                        player[1] = 'MID'
+                    else:
+                        player[1] = 'FWD'
 
-            c.execute('SELECT name from "{}teamIDs" WHERE id = {}'.format(current_season, team_id))
-            team_name = c.fetchone()[0]
-            teams_dict[team_name] += 1
-
-            c.execute('SELECT * FROM "{}" WHERE id = {}'.format(weekly_table, player_id_string))
-            player_datum = c.fetchone()
-            if player_datum is not None:
-                price = player_datum[14] / 1.0
-                if player_name not in price_dict:
-                    price_dict[player_name] = [price, 1]
-                else:
-                    price_dict[player_name][0] += price
-                    price_dict[player_name][1] += 1
-
-                if player_datum[2] > 0:  # if minutes > 0
-                    points_list.append([player_datum[1], position, player_name])  # points, position, player_name
-                else:
-                    second_points_list.append([player_datum[1], position, player_name])
-                points_on_pitch += player_datum[1]
-
-                if player_datum[0] == captain_id:
-                    captain_name = player_name
-                    captain_points = player_datum[1]
-                    if player_datum[2] > 0:
-                        captain_played = True
-                elif player_datum[0] == vice_captain_id:
-                    vice_captain_name = player_name
-                    vice_captain_points = player_datum[1]
-                    if player_datum[2] > 0:
-                        vice_captain_played = True
-
-                # subtract clean sheets from MID's and FWD's for general_number and ignore goals conceded
-                if position == 3 or position == 4:
-                    table_data.general_number[week - 1][6] -= player_datum[5]
-                    table_data.general_number[week - 1][8] -= player_datum[7]
-
-                # Populate general number table
-                table_data.general_number[week - 1][2:15] = [sum(n) for n in zip(
-                    table_data.general_number[week - 1][2:15], player_datum[1:14])]
-
-                # Populate general points table
-                table_data.general_points[week - 1][2] += player_datum[1]                               # points
-                if player_datum[2] == 0:                                                                # minutes
-                    table_data.general_points[week - 1][3] += 0
-                elif player_datum[2] < 60:
-                    table_data.general_points[week - 1][3] += MINUTES_LESS_THAN_SIXTY_VALUE
-                else:
-                    table_data.general_points[week - 1][3] += MINUTES_SIXTY_PLUS_VALUE
-
-                if position == 1 or position == 2:                                                    # goals
-                    table_data.general_points[week - 1][4] += player_datum[3] * GOAL_GK_DEF_VALUE
-                elif position == 3:
-                    table_data.general_points[week - 1][4] += player_datum[3] * GOAL_MID_VALUE
-                else:
-                    table_data.general_points[week - 1][4] += player_datum[3] * GOAL_FWD_VALUE
-
-                table_data.general_points[week - 1][5] += player_datum[4] * ASSIST_VALUE              # assists
-
-                if position == 1 or position == 2:                                                    # clean sheets
-                    table_data.general_points[week - 1][6] += player_datum[5] * CLEAN_SHEET_GK_DEF_VALUE
-                    table_data.general_points[week - 1][6] += player_datum[5] * CLEAN_SHEET_GK_DEF_VALUE
-                elif position == 3:
-                    table_data.general_points[week - 1][6] += player_datum[5] * CLEAN_SHEET_MID_VALUE
-
-                table_data.general_points[week - 1][7] += math.floor(player_datum[6] / SAVES_DIVIDER)  # saves
-
-                if position == 1 or position == 2:                                                    # goals conceded
-                    table_data.general_points[week - 1][8] += math.ceil(player_datum[7] / GOALS_CONCEDED_DIVIDER)
-
-                table_data.general_points[week - 1][9] += player_datum[8] * PENALTIES_SAVED_VALUE     # penalties saved
-                table_data.general_points[week - 1][10] += player_datum[9] * YELLOW_CARDS_VALUE        # yellow cards
-                table_data.general_points[week - 1][11] += player_datum[10] * RED_CARDS_VALUE         # red cards
-                table_data.general_points[week - 1][12] += player_datum[11] * PENALTIES_MISSED_VALUE  # penalties missed
-                table_data.general_points[week - 1][13] += player_datum[12] * OWN_GOALS_VALUE         # own goals
-                table_data.general_points[week - 1][14] += player_datum[13]                           # bonus points
-
-                player_points_dict[player_name] += player_datum[1] * player_id[1]
-
-                if player_datum[1] > mvp_points:
-                    mvp_points = player_datum[1]
-                    mvp_name = player_name
-
-                if position == 1:
-                    table_data.positions[week - 1][4] += price
-                    table_data.positions[week - 1][5] += player_datum[1]
-                elif position == 2:
-                    table_data.positions[week - 1][6] += price
-                    table_data.positions[week - 1][7] += player_datum[1]
-                    formation[0] += 1
-                elif position == 3:
-                    table_data.positions[week - 1][8] += price
-                    table_data.positions[week - 1][9] += player_datum[1]
-                    formation[1] += 1
-                elif position == 4:
-                    table_data.positions[week - 1][10] += price
-                    table_data.positions[week - 1][11] += player_datum[1]
-                    formation[2] += 1
+            if captain_played or not vice_captain_played:
+                table_data.team_selection[week - 1][4] = captain_name
+                table_data.team_selection[week - 1][5] = captain_points * captain_multiplier
+                if captain_name not in player_captain_dict:
+                    player_captain_dict[captain_name] = 0
+                player_captain_dict[captain_name] += 1
             else:
-                utils.update_weekly_table()
-                get_stats(manager_id)
+                table_data.team_selection[week - 1][4] = vice_captain_name
+                table_data.team_selection[week - 1][5] = vice_captain_points * captain_multiplier
+                captain_points = vice_captain_points
+                if vice_captain_name not in player_captain_dict:
+                    player_captain_dict[vice_captain_name] = 0
+                player_captain_dict[vice_captain_name] += 1
 
-        table_data.positions[week - 1][4] = round(table_data.positions[week - 1][4], 1)
-        table_data.positions[week - 1][6] = round(table_data.positions[week - 1][6], 1)
-        table_data.positions[week - 1][8] = round(table_data.positions[week - 1][8], 1)
-        table_data.positions[week - 1][10] = round(table_data.positions[week - 1][10], 1)
+            table_data.team_selection[week - 1][6] = mvp_name
+            table_data.team_selection[week - 1][7] = mvp_points
+            table_data.team_selection[week - 1][8] = (mvp_points - captain_points) * (captain_multiplier - 1)
+            table_data.team_selection[week - 1][9] = bench_points
+            table_data.team_selection[week - 1][10] = bench_potential_lost
+            table_data.team_selection[week - 1][11] = int(table_data.general_points[week - 1][2] +
+                                                          (table_data.team_selection[week - 1][5] / captain_multiplier) -
+                                                          table_data.team_selection[week - 1][3])
+            table_data.team_selection[week - 1][13] = table_data.team_selection[week - 1][8] +\
+                table_data.team_selection[week - 1][10]
+            table_data.team_selection[week - 1][12] = table_data.team_selection[week - 1][11] +\
+                table_data.team_selection[week - 1][13]
 
-        for player_id in bench_ids:
-            player_id_string = str(player_id)
+            max_points_team = [table_data.team_selection[week - 1][12]] + max_points_team      # total points
+            max_points_team = [table_data.team_selection[week - 1][3] * -1] + max_points_team  # transfer cost
+            max_points_team = [table_data.team_selection[week - 1][12]                         # total points - tc
+                               + table_data.team_selection[week - 1][3]] + max_points_team
+            max_points_team = [week] + max_points_team
 
-            c.execute('SELECT webname, firstname, secondname, position FROM "{}" WHERE id = {}'
-                      .format(player_table, player_id_string))
-            result = c.fetchone()
+            table_data.max_teams.append(max_points_team)
 
-            # set name equal to first second + second name or webname if webname different to second name
-            if result[0] == result[2]:
-                player_name = result[1] + ' ' + result[2]
-            else:
-                player_name = result[0]
-            position = result[3]
-
-            if player_name not in player_points_dict:
-                player_points_dict[player_name] = 0
-                player_apps_xv_dict[player_name] = 0
-
-            player_apps_xv_dict[player_name] += 1
-
-            c.execute('SELECT * FROM "{}" WHERE id = {}'.format(weekly_table, player_id_string))
-            player_datum = c.fetchone()
-
-            if player_datum is not None:
-                price = player_datum[14] / 1.0
-                if player_name not in price_dict:
-                    price_dict[player_name] = [price, 1]
-                else:
-                    price_dict[player_name][0] += price
-                    price_dict[player_name][1] += 1
-                table_data.positions[week - 1][12] += price
-
-                if player_datum[0] == captain_id:
-                    captain_name = player_name
-                    captain_points = player_datum[1]
-                    if player_datum[2] > 0:
-                        captain_played = True
-                elif player_datum[0] == vice_captain_id:
-                    vice_captain_name = player_name
-                    vice_captain_points = player_datum[1]
-                    if player_datum[2] > 0:
-                        vice_captain_played = True
-
-                if player_datum[1] > mvp_points:
-                    mvp_points = player_datum[1]
-                    mvp_name = player_name
-
-                if player_datum[2] > 0:
-                    points_list.append([player_datum[1], position, player_name])  # points, position, player_name
-                bench_points += player_datum[1]
-
-        string_formation = '4-4-2'  # default formation if db not updated
-        if formation == [5, 4, 1]:
-            string_formation = '5-4-1'
-        elif formation == [5, 3, 2]:
-            string_formation = '5-3-2'
-        elif formation == [5, 2, 3]:
-            string_formation = '5-2-3'
-        elif formation == [4, 5, 1]:
-            string_formation = '4-5-1'
-        elif formation == [4, 4, 2]:
-            string_formation = '4-4-2'
-        elif formation == [4, 3, 3]:
-            string_formation = '4-3-3'
-        elif formation == [3, 5, 2]:
-            string_formation = '3-5-2'
-        elif formation == [3, 4, 3]:
-            string_formation = '3-4-3'
-
-        formation_dict[string_formation] += 1
-        table_data.positions[week - 1][2] = string_formation
-
-        team_value = round(table_data.positions[week - 1][4] + table_data.positions[week - 1][6]
-                           + table_data.positions[week - 1][8] + table_data.positions[week - 1][10]
-                           + table_data.positions[week - 1][12] + bank, 1)
-        table_data.positions[week - 1][3] = team_value
-
-        max_points_on_pitch = 0
-        points_list.sort()
-        points_list = points_list[::-1]
-        max_points_team = []
-
-        if not bench_boost:
-            try:
-                max_points_on_pitch += next(item[0] for item in points_list if item[1] == 1)      # 1 goalkeeper
-                max_points_team.append(next(item for item in points_list if item[1] == 1))
-                points_list.remove(next(item for item in points_list if item[1] == 1))
-                points_list.remove(next(item for item in points_list if item[1] == 1))
-            except StopIteration:
-                ''
-            if len(max_points_team) < 1:
-                try:
-                    max_points_team.append(next(item for item in second_points_list if item[1] == 1))
-                    second_points_list.remove(next(item for item in second_points_list if item[1] == 1))
-                except StopIteration:
-                    ''
-
-            for i in range(3):                                                                    # 3 defenders
-                try:
-                    max_points_on_pitch += next(item[0] for item in points_list if item[1] == 2)
-                    max_points_team.append(next(item for item in points_list if item[1] == 2))
-                    points_list.remove(next(item for item in points_list if item[1] == 2))
-                except StopIteration:
-                    ''
-            while len(max_points_team) < 4:
-                try:
-                    max_points_team.append(next(item for item in second_points_list if item[1] == 2))
-                    second_points_list.remove(next(item for item in second_points_list if item[1] == 2))
-                except StopIteration:
-                    ''
-
-            for i in range(2):                                                                    # 2 midfielders
-                try:
-                    max_points_on_pitch += next(item[0] for item in points_list if item[1] == 3)
-                    max_points_team.append(next(item for item in points_list if item[1] == 3))
-                    points_list.remove(next(item for item in points_list if item[1] == 3))
-                except StopIteration:
-                    ''
-            while len(max_points_team) < 6:
-                try:
-                    max_points_team.append(next(item for item in second_points_list if item[1] == 3))
-                    second_points_list.remove(next(item for item in second_points_list if item[1] == 3))
-                except StopIteration:
-                    ''
-
-            try:
-                max_points_on_pitch += next(item[0] for item in points_list if item[1] == 4)      # 1 forward
-                max_points_team.append(next(item for item in points_list if item[1] == 4))
-                points_list.remove(next(item for item in points_list if item[1] == 4))
-            except StopIteration:
-                ''
-            while len(max_points_team) < 7:
-                try:
-                    max_points_team.append(next(item for item in second_points_list if item[1] == 4))
-                    second_points_list.remove(next(item for item in second_points_list if item[1] == 4))
-                except StopIteration:
-                    ''
-
-            for i in range(4):                                                                    # 4 remaining players
-                try:
-                    max_points_on_pitch += next(item[0] for item in points_list)
-                    max_points_team.append(next(item for item in points_list))
-                    points_list.remove(next(item for item in points_list))
-                except StopIteration:
-                    ''
-            while len(max_points_team) < 11:
-                try:
-                    max_points_team.append(next(item for item in second_points_list))
-                    second_points_list.remove(next(item for item in second_points_list))
-                except StopIteration:
-                    ''
-
-            bench_potential_lost = max_points_on_pitch - points_on_pitch
-        else:
-            for i in range(len(points_list)):
-                try:
-                    max_points_team.append(next(item for item in points_list))
-                    points_list.remove(next(item for item in points_list))
-                except StopIteration:
-                    ''
-            for i in range(len(second_points_list)):
-                try:
-                    max_points_team.append(next(item for item in second_points_list))
-                    points_list.remove(next(item for item in second_points_list))
-                except StopIteration:
-                    ''
-            bench_potential_lost = 0
-
-        if bench_potential_lost < 0:
-            bench_potential_lost = 0
-
-        # assign the captain in max team and then sort by position
-        if max_points_team:
-            max_points_team.sort()
-            max_points_team[-1][2] = max_points_team[-1][2] + ' (C)'
-            max_points_team[-1][0] = max_points_team[-1][0] * 2
-            max_points_team = sorted(max_points_team, key=lambda l: l[1])
-            for player in max_points_team:
-                if player[1] == 1:
-                    player[1] = 'GK'
-                elif player[1] == 2:
-                    player[1] = 'DEF'
-                elif player[1] == 3:
-                    player[1] = 'MID'
-                else:
-                    player[1] = 'FWD'
-
-        if captain_played or not vice_captain_played:
-            table_data.team_selection[week - 1][4] = captain_name
-            table_data.team_selection[week - 1][5] = captain_points * captain_multiplier
-            if captain_name not in player_captain_dict:
-                player_captain_dict[captain_name] = 0
-            player_captain_dict[captain_name] += 1
-        else:
-            table_data.team_selection[week - 1][4] = vice_captain_name
-            table_data.team_selection[week - 1][5] = vice_captain_points * captain_multiplier
-            captain_points = vice_captain_points
-            if vice_captain_name not in player_captain_dict:
-                player_captain_dict[vice_captain_name] = 0
-            player_captain_dict[vice_captain_name] += 1
-
-        table_data.team_selection[week - 1][6] = mvp_name
-        table_data.team_selection[week - 1][7] = mvp_points
-        table_data.team_selection[week - 1][8] = (mvp_points - captain_points) * (captain_multiplier - 1)
-        table_data.team_selection[week - 1][9] = bench_points
-        table_data.team_selection[week - 1][10] = bench_potential_lost
-        table_data.team_selection[week - 1][11] = int(table_data.general_points[week - 1][2] +
-                                                      (table_data.team_selection[week - 1][5] / captain_multiplier) -
-                                                      table_data.team_selection[week - 1][3])
-        table_data.team_selection[week - 1][13] = table_data.team_selection[week - 1][8] +\
-            table_data.team_selection[week - 1][10]
-        table_data.team_selection[week - 1][12] = table_data.team_selection[week - 1][11] +\
-            table_data.team_selection[week - 1][13]
-
-        max_points_team = [table_data.team_selection[week - 1][12]] + max_points_team      # total points
-        max_points_team = [table_data.team_selection[week - 1][3] * -1] + max_points_team  # transfer cost
-        max_points_team = [table_data.team_selection[week - 1][12]                         # total points - tc
-                           + table_data.team_selection[week - 1][3]] + max_points_team
-        max_points_team = [week] + max_points_team
-
-        table_data.max_teams.append(max_points_team)
-
-        week += 1
+            week += 1
+        except HTTPError:
+            week += 1
 
     table_data.general_number_totals = [n for n in zip(*table_data.general_number)][2:16]
     table_data.general_number_totals = [sum(n) for n in table_data.general_number_totals]

@@ -6,19 +6,19 @@ import json
 static_url = 'https://fantasy.premierleague.com/drf/bootstrap-static'
 fixtures_url = 'https://fantasy.premierleague.com/drf/fixtures'
 
-with open('/home/admin/fplmystats/fplmystats/utils/current_season.txt') as file:
-# with open('C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\current_season.txt') as file:
+# with open('/home/admin/fplmystats/fplmystats/utils/current_season.txt') as file:
+with open('C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\current_season.txt') as file:
     for x in file:
         current_season = x
 
-data_file = '/home/admin/fplmystats/FPLdb.sqlite'
-# data_file = 'FPLdb.sqlite'
+# data_file = '/home/admin/fplmystats/FPLdb.sqlite'
+data_file = 'FPLdb.sqlite'
 
-changes_file = '/home/admin/fplmystats/fplmystats/utils/daily_changes.txt'
-# changes_file = 'C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\daily_changes.txt'
+# changes_file = '/home/admin/fplmystats/fplmystats/utils/daily_changes.txt'
+changes_file = 'C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\daily_changes.txt'
 
-fixtures_file = '/home/admin/fplmystats/fplmystats/utils/fixtures.txt'
-# fixtures_file = 'C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\fixtures.txt'
+# fixtures_file = '/home/admin/fplmystats/fplmystats/utils/fixtures.txt'
+fixtures_file = 'C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\fixtures.txt'
 
 field_type_INT = 'INTEGER'
 field_type_TEXT = 'TEXT'
