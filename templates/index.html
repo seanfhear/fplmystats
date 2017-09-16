@@ -121,6 +121,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="col-md-12" style="background-color: #336B87">
+                    <br>
                     <h1 style="text-align: center; color: white"><b>Manager Stats</b></h1>
                     <form action="{% url 'manager:search' %}" method="post">
                         {% csrf_token %}
@@ -167,6 +168,7 @@
             </div>
             <div class="col-md-6">
                 <div class="col-md-12" style="background-color: #922a0e">
+                    <br>
                     <h1 style="text-align: center; color: white"><b>League Stats</b></h1>
                     <form action="{% url 'league:search' %}" method="post">
                         {% csrf_token %}

@@ -1,4 +1,5 @@
 from collections import namedtuple
+from fplmystats.utils import utils
 import urllib.request
 import sqlite3
 import json
@@ -7,17 +8,11 @@ import math
 static_url = 'https://fantasy.premierleague.com/drf/bootstrap-static'
 manager_info_url = 'https://fantasy.premierleague.com/drf/entry/'
 
-with urllib.request.urlopen('{}'.format(static_url)) as static_json:
-    static_data = json.loads(static_json.read().decode())
-current_week = 0
-for event in static_data['events']:
-    if event['is_current']:
-        current_week = event['id']
-
 with open('/home/admin/fplmystats/fplmystats/utils/current_season.txt') as file:
 # with open('C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\current_season.txt') as file:
     for x in file:
         current_season = x
+
 data_file = '/home/admin/fplmystats/FPLdb.sqlite'
 # data_file = 'FPLdb.sqlite'
 
@@ -60,6 +55,13 @@ def get_stats(manager_id):
                                            'general_points_totals', 'positions', 'positions_totals', 'team_selection',
                                            'team_selection_totals', 'max_teams', 'squad_stats_players',
                                            'squad_stats_teams'))
+
+    with urllib.request.urlopen('{}'.format(static_url)) as static_json:
+        static_data = json.loads(static_json.read().decode())
+    current_week = 0
+    for event in static_data['events']:
+        if event['is_current']:
+            current_week = event['id']
 
     conn = sqlite3.connect(data_file)
     c = conn.cursor()
@@ -312,6 +314,9 @@ def get_stats(manager_id):
                     table_data.positions[week - 1][10] += price
                     table_data.positions[week - 1][11] += player_datum[1]
                     formation[2] += 1
+            else:
+                utils.update_weekly_table()
+                get_stats(manager_id)
 
         table_data.positions[week - 1][4] = round(table_data.positions[week - 1][4], 1)
         table_data.positions[week - 1][6] = round(table_data.positions[week - 1][6], 1)
@@ -488,7 +493,6 @@ def get_stats(manager_id):
 
         if bench_potential_lost < 0:
             bench_potential_lost = 0
-
 
         # assign the captain in max team and then sort by position
         if max_points_team:

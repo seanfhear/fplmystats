@@ -6,13 +6,6 @@ import json
 static_url = 'https://fantasy.premierleague.com/drf/bootstrap-static'
 fixtures_url = 'https://fantasy.premierleague.com/drf/fixtures'
 
-with urllib.request.urlopen('{}'.format(static_url)) as static_json:
-    static_data = json.loads(static_json.read().decode())
-current_week = 0
-for entry in static_data['events']:
-    if entry['is_current']:
-        current_week = entry['id']
-
 with open('/home/admin/fplmystats/fplmystats/utils/current_season.txt') as file:
 # with open('C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\current_season.txt') as file:
     for x in file:
@@ -195,6 +188,13 @@ def update_weekly_table():
     Populate the weekly data table with the latest data for that week
     To be run automatically multiple times per day where there is a game
     """
+    with urllib.request.urlopen('{}'.format(static_url)) as static_json:
+        static_data = json.loads(static_json.read().decode())
+    current_week = 0
+    for entry in static_data['events']:
+        if entry['is_current']:
+            current_week = entry['id']
+
     conn = sqlite3.connect(data_file)
     c = conn.cursor()
     weekly_table_name = '{}week{}'.format(str(current_season), str(current_week))

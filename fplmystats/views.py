@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+# TODO fix search boxes on mobile
+
 
 def index(request):
     context = {'manager_error': False,

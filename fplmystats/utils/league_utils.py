@@ -137,7 +137,7 @@ def get_stats(league_id):
         manager_positions_totals[1] = manager_id[1]    # manager name
         manager_positions_totals[2] = data.headers[6]  # preferred formation
 
-        team_value = data.positions[-1][2]  # team value at latest gameweek
+        team_value = data.positions[-1][3]  # team value at latest gameweek
         if team_value > max_team_value[0]:
             max_team_value[0] = team_value
             max_team_value[1] = manager_id[1]
