@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>FPL: My Stats | Every element of your Fantasy Premier League season broken down</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-site-verification" content="lcs6aSfGYa_m529Ez6DsYXr7yYReg0L4J4zx5EaoMFI" />
+    <meta name="description" content="View the stats that define your season, from goals, assists and clean sheets, to Captains, benches, transfers and more">
+    <meta name="keywords" content="Fantasy Football, Fantasy Premier League, FPL, Football, Statistics, Stats, My, Analysis">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link rel="icon" href="{% static 'images/favicon.png' %}"/>
+</head>
+
+<body class="home">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10">
+                <p></p>
+                <a href={% url 'index' %}><img src="{% static 'images/header.png' %}" alt="header_img" class="img-responsive" style="display: inline-block"/></a>
+                <p></p>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <div class="col-md-3"></div>
+    <div class="col-md-6" style="border: solid 1px; border-radius: 10px; background-color: #c5c5c5">
+        <br>
+        <h3 style="text-align: center">Feedback Sent!</h3>
+        <br>
+        <p>Thanks for leaving a message. If you left your email address we will try to reply to you as soon as possible.</p>
+        <br>
+        <p></p>
+        <br>
+        <div style="text-align: center">
+            <input class="btn btn-grey" type=button value="Return" onClick="window.history.back();return false;">
+        </div>
+        <br><p></p>
+    </div>
+    <div class="col-md-3"></div>
+</body>
+</html>

@@ -17,6 +17,7 @@
     <link rel="icon" href="{% static 'images/favicon.png' %}"/>
 </head>
 <body>
+    <body class="home">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-10">
@@ -72,9 +73,16 @@
                             <h3 class="modal-title" style="text-align: center; color: #222222">Leave a Comment</h3>
                         </div>
                         <div class="modal-body" style="color: #222222; text-align: center">
-                            <p>A proper feedback form is in the works, for now if you would like to leave a comment you can contact this email address:</p>
-                            <p style="font-size: 120%"><a href="mailto:info@fplmystats.com?Subject=Feedback" target="_top">info@fplmystats.com</a></p>
+                            <p>You can leave a comment by filling out the form below. Your email address is not required but if you would like us to get back to you then you can enter it and we will try to reply as quickly as possible.</p>
                             <p>All suggestions, bug reports or general feedback are appreciated.</p>
+                        </div>
+                        <div style="text-align: center">
+                            <form action="{% url 'comment' %}" method="post">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button class="btn">Submit</button>
+                            </form>
+                            <br>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn" data-dismiss="modal" style="background-color: #c5c5c5; color: #222222">Close</button>
@@ -157,7 +165,7 @@
                         </div>
                     </div>
                     <div class="col-md-8 overflow-display" style="color: white; text-align: center">
-                        <table class="table-condensed" style="margin: auto; font-size: 150%">
+                        <table class="table-condensed manager-headers" style="margin: auto; font-size: 150%">
                             <tr>
                                 <td>Total Points:</td>
                                 <td style="color: #c4dfe6">{{ headers.0 }}</td>

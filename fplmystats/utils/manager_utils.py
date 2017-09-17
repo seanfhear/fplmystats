@@ -284,13 +284,13 @@ def get_stats(manager_id):
 
                     table_data.general_points[week - 1][7] += math.floor(player_datum[6] / SAVES_DIVIDER)  # saves
 
-                    if position == 1 or position == 2:                                                    # goals conceded
+                    if position == 1 or position == 2:                                                    # goals conc
                         table_data.general_points[week - 1][8] += math.ceil(player_datum[7] / GOALS_CONCEDED_DIVIDER)
 
-                    table_data.general_points[week - 1][9] += player_datum[8] * PENALTIES_SAVED_VALUE     # penalties saved
-                    table_data.general_points[week - 1][10] += player_datum[9] * YELLOW_CARDS_VALUE        # yellow cards
-                    table_data.general_points[week - 1][11] += player_datum[10] * RED_CARDS_VALUE         # red cards
-                    table_data.general_points[week - 1][12] += player_datum[11] * PENALTIES_MISSED_VALUE  # penalties missed
+                    table_data.general_points[week - 1][9] += player_datum[8] * PENALTIES_SAVED_VALUE     # penes saved
+                    table_data.general_points[week - 1][10] += player_datum[9] * YELLOW_CARDS_VALUE       # yellows
+                    table_data.general_points[week - 1][11] += player_datum[10] * RED_CARDS_VALUE         # reds
+                    table_data.general_points[week - 1][12] += player_datum[11] * PENALTIES_MISSED_VALUE  # pens missed
                     table_data.general_points[week - 1][13] += player_datum[12] * OWN_GOALS_VALUE         # own goals
                     table_data.general_points[week - 1][14] += player_datum[13]                           # bonus points
 
@@ -408,7 +408,7 @@ def get_stats(manager_id):
 
             if not bench_boost:
                 try:
-                    max_points_on_pitch += next(item[0] for item in points_list if item[1] == 1)      # 1 goalkeeper
+                    max_points_on_pitch += next(item[0] for item in points_list if item[1] == 1)  # 1 goalkeeper
                     max_points_team.append(next(item for item in points_list if item[1] == 1))
                     points_list.remove(next(item for item in points_list if item[1] == 1))
                     points_list.remove(next(item for item in points_list if item[1] == 1))
@@ -421,7 +421,7 @@ def get_stats(manager_id):
                     except StopIteration:
                         ''
 
-                for i in range(3):                                                                    # 3 defenders
+                for i in range(3):                                                                # 3 defenders
                     try:
                         max_points_on_pitch += next(item[0] for item in points_list if item[1] == 2)
                         max_points_team.append(next(item for item in points_list if item[1] == 2))
@@ -435,7 +435,7 @@ def get_stats(manager_id):
                     except StopIteration:
                         ''
 
-                for i in range(2):                                                                    # 2 midfielders
+                for i in range(2):                                                                # 2 midfielders
                     try:
                         max_points_on_pitch += next(item[0] for item in points_list if item[1] == 3)
                         max_points_team.append(next(item for item in points_list if item[1] == 3))
@@ -450,7 +450,7 @@ def get_stats(manager_id):
                         ''
 
                 try:
-                    max_points_on_pitch += next(item[0] for item in points_list if item[1] == 4)      # 1 forward
+                    max_points_on_pitch += next(item[0] for item in points_list if item[1] == 4)  # 1 forward
                     max_points_team.append(next(item for item in points_list if item[1] == 4))
                     points_list.remove(next(item for item in points_list if item[1] == 4))
                 except StopIteration:
@@ -462,7 +462,7 @@ def get_stats(manager_id):
                     except StopIteration:
                         ''
 
-                for i in range(4):                                                                    # 4 remaining players
+                for i in range(4):                                                                # 4 remaining players
                     try:
                         max_points_on_pitch += next(item[0] for item in points_list)
                         max_points_team.append(next(item for item in points_list))
@@ -531,8 +531,8 @@ def get_stats(manager_id):
             table_data.team_selection[week - 1][9] = bench_points
             table_data.team_selection[week - 1][10] = bench_potential_lost
             table_data.team_selection[week - 1][11] = int(table_data.general_points[week - 1][2] +
-                                                          (table_data.team_selection[week - 1][5] / captain_multiplier) -
-                                                          table_data.team_selection[week - 1][3])
+                                                          (table_data.team_selection[week - 1][5] / captain_multiplier)
+                                                           - table_data.team_selection[week - 1][3])
             table_data.team_selection[week - 1][13] = table_data.team_selection[week - 1][8] +\
                 table_data.team_selection[week - 1][10]
             table_data.team_selection[week - 1][12] = table_data.team_selection[week - 1][11] +\

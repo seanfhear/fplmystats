@@ -18,6 +18,7 @@
 </head>
 
 <body>
+    <body class="home">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-10">
@@ -73,9 +74,16 @@
                             <h3 class="modal-title" style="text-align: center; color: #222222">Leave a Comment</h3>
                         </div>
                         <div class="modal-body" style="color: #222222; text-align: center">
-                            <p>A proper feedback form is in the works, for now if you would like to leave a comment you can contact this email address:</p>
-                            <p style="font-size: 120%"><a href="mailto:info@fplmystats.com?Subject=Feedback" target="_top">info@fplmystats.com</a></p>
+                            <p>You can leave a comment by filling out the form below. Your email address is not required but if you would like us to get back to you then you can enter it and we will try to reply as quickly as possible.</p>
                             <p>All suggestions, bug reports or general feedback are appreciated.</p>
+                        </div>
+                        <div style="text-align: center">
+                            <form action="{% url 'comment' %}" method="post">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button class="btn">Submit</button>
+                            </form>
+                            <br>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn" data-dismiss="modal" style="background-color: #c5c5c5; color: #222222">Close</button>
@@ -124,7 +132,7 @@
             <div class="col-md-12">
                 <div class="col-md-12" style="background-color: #922a0e; border-bottom: solid #6c1700 1px">
                     <br>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <h1 style="margin-top: auto"><a href="https://fantasy.premierleague.com/a/leagues/standings/{{ league_id }}/classic" class="league-link"><b><i>{{ league_name }}</i></b></a></h1>
                         <br>
                         <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#headerModal" class="league-link">here</a> for an explanation of each category.</p>
@@ -156,8 +164,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8" style="color: white; text-align: center">
-                        <table class="table-condensed" style="margin: auto; font-size: 150%">
+                    <div class="col-md-9" style="color: white; text-align: center">
+                        <table class="table-condensed league-headers" style="margin: auto; font-size: 150%">
                             <tr>
                                 <td>Leader:</td>
                                 <td style="color: #ffb9a6">{{ headers.0 }}</td>

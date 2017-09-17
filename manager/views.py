@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from fplmystats.utils import manager_utils
+from fplmystats.forms import ContactForm
 from django.urls import NoReverseMatch
 from urllib.error import HTTPError
 from json import JSONDecodeError
@@ -21,6 +22,7 @@ def search(request):
 def detail(request, manager_id):
 
     try:
+        contact_form = ContactForm
         names = manager_utils.get_name_and_team(manager_id)
         name = names.manager_name
         team = names.team_name
@@ -76,7 +78,8 @@ def detail(request, manager_id):
                    'team_selection_totals': team_selection_string_totals,
                    'max_teams': max_teams,
                    'squad_stats_players': squad_stats_players,
-                   'squad_stats_teams': squad_stats_teams}
+                   'squad_stats_teams': squad_stats_teams,
+                   'form': contact_form}
         return render(request, 'manager/detail.html', context)
     except HTTPError:
         return redirect('index_error', 1, 0)

@@ -85,6 +85,12 @@ th {
 .btn-league:hover {
     color: #ffb9a6;
 }
+.manager-headers tr td {
+    width: 16.5%;
+}
+.league-headers tr td {
+    width: 11.1%;
+}
 .top-manager-display tr td {
     border-color: #5085a0 !important;
     vertical-align: middle;
