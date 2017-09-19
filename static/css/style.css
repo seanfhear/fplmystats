@@ -34,6 +34,10 @@ li {
 th {
     text-align: center;
 }
+table {
+    max-width: none;
+    table-layout: fixed;
+}
 .info-link {
     color: #999999
 }
