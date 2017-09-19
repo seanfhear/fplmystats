@@ -9,13 +9,13 @@ import math
 static_url = 'https://fantasy.premierleague.com/drf/bootstrap-static'
 manager_info_url = 'https://fantasy.premierleague.com/drf/entry/'
 
-# with open('/home/admin/fplmystats/fplmystats/utils/current_season.txt') as file:
-with open('C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\current_season.txt') as file:
+with open('/home/admin/fplmystats/fplmystats/utils/current_season.txt') as file:
+# with open('C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\current_season.txt') as file:
     for x in file:
         current_season = x
 
-# data_file = '/home/admin/fplmystats/FPLdb.sqlite'
-data_file = 'FPLdb.sqlite'
+data_file = '/home/admin/fplmystats/FPLdb.sqlite'
+# data_file = 'FPLdb.sqlite'
 
 MINUTES_LESS_THAN_SIXTY_VALUE = 1
 MINUTES_SIXTY_PLUS_VALUE = 2
