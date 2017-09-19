@@ -7,11 +7,11 @@ class ContactForm(forms.Form):
     content = forms.CharField(
         required=True,
         widget=forms.Textarea,
-        max_length=1500
+        max_length=2500
     )
 
     def __init__(self, *args, **kwargs):
         super(ContactForm, self).__init__(*args, **kwargs)
         self.fields['contact_name'].label = "Name:"
-        self.fields['contact_email'].label = "Email:"
-        self.fields['content'].label = ""
+        self.fields['contact_email'].label = "Email (optional):"
+        self.fields['content'].label = "Comment:"

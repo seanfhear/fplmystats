@@ -51,7 +51,7 @@
                             <h3 class="modal-title" style="text-align: center; color: #222222">Donate</h3>
                         </div>
                         <div class="modal-body" style="color: #222222; text-align: center">
-                            <p>This website is completely free to use and will remain so for the foreseeable future.<br /><br />However, it does cost a small amount to keep it running. If you enjoy using the site and wish to make a contribution to its continued maintenance and development, you can use the button below.</p><br>
+                            <p>This website is free to use and will remain so for the foreseeable future.<br /><br />However, it does cost a small amount to keep it running. If you enjoy using the site and wish to make a contribution to its continued maintenance and development, you can use the button below.</p><br>
                             <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                                 <input type="hidden" name="cmd" value="_s-xclick">
                                 <input type="hidden" name="hosted_button_id" value="WWJVTH7TLMXCY">
@@ -77,9 +77,11 @@
                             <p>All suggestions, bug reports or general feedback are appreciated. If you are encountering a problem, please include the Manager or League ID that you are having trouble with.</p>
                         </div>
                         <div style="text-align: center">
-                            <form action="{% url 'comment' %}" method="post">
+                            <form action="{% url 'comment' %}" method="post" style="margin-left: 10%">
                                 {% csrf_token %}
-                                {{ form.as_p }}
+                                <table>
+                                    {{ form.as_table }}
+                                </table>
                                 <button class="btn">Submit</button>
                             </form>
                             <br>
@@ -124,75 +126,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <br>
-            <div class="col-md-12">
-                <div class="col-md-12" style="background-color: #922a0e; border-bottom: solid #6c1700 1px">
-                    <br>
-                    <div class="col-md-3">
-                        <h1 style="margin-top: auto"><a href="https://fantasy.premierleague.com/a/leagues/standings/{{ league_id }}/classic" class="league-link"><b><i>{{ league_name }}</i></b></a></h1>
-                        <br>
-                        <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#headerModal" class="league-link">here</a> for an explanation of each category.</p>
-                        <div class="modal fade" id="headerModal" role="dialog">
-                            <div class="modal-dialog">
-                                <div class="modal-content" style="background-color: #ffb9a6">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h3 class="modal-title" style="text-align: center; color: #6c1700">League Statistics</h3>
-                                    </div>
-                                    <div class="modal-body" style="color: #6c1700">
-                                        <h4>Leader</h4>
-                                        <ul><li>League leader's name and their total points.</li></ul>
-                                        <h4>Most Goals</h4>
-                                        <ul><li>Name of the manager with the most goals and how many goals they have.</li></ul>
-                                        <h4>Most Clean Sheets</h4>
-                                        <ul><li>Name of the manager with the most clean sheets in defense and how many clean sheets they have.</li></ul>
-                                        <h4>Best Captains</h4>
-                                        <ul><li>Name of the manager with the highest amount of points gained from Captains and how many points they have from Captains.</li></ul>
-                                        <h4>Highest Team Value</h4>
-                                        <ul><li>Name of the manager with the highest team value as of the latest gameweek deadline and the value of their team (including money in the bank) as of the latest gameweek deadline.</li></ul>
-                                        <h4>Most Unique Players</h4>
-                                        <ul><li>Name of the manager who has had the most amount of different players in their squad and how many different players they have had in their squad.</li></ul>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn" data-dismiss="modal" style="background-color: #ffb9a6; color: #6c1700">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-9" style="color: white; text-align: center">
-                        <table class="table-condensed league-headers" style="margin: auto; font-size: 150%">
-                            <tr>
-                                <td>Leader:</td>
-                                <td style="color: #ffb9a6">{{ headers.0 }}</td>
-                                <td style="color: #ffb9a6">{{ headers.1 }}</td>
-                                <td style="border-left: solid #B24528 1px">Most Goals:</td>
-                                <td style="color: #ffb9a6">{{ headers.2 }}</td>
-                                <td style="color: #ffb9a6; border-right: solid #B24528 1px">{{ headers.3 }}</td>
-                                <td>Most Clean Sheets:</td>
-                                <td style="color: #ffb9a6">{{ headers.4 }}</td>
-                                <td style="color: #ffb9a6">{{ headers.5 }}</td>
-                            </tr>
-                            <tr>
-                                <td>Best Captains:</td>
-                                <td style="color: #ffb9a6">{{ headers.6 }}</td>
-                                <td style="color: #ffb9a6">{{ headers.7 }}</td>
-                                <td style="border-left: solid #B24528 1px">Highest Team Value:</td>
-                                <td style="color: #ffb9a6">{{ headers.8 }}</td>
-                                <td style="color: #ffb9a6; border-right: solid #B24528 1px">{{ headers.9 }}</td>
-                                <td>Most Unique Players:</td>
-                                <td style="color: #ffb9a6">{{ headers.10 }}</td>
-                                <td style="color: #ffb9a6">{{ headers.11 }}</td>
-                            </tr>
-                        </table>
-                        <br>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
