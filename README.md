@@ -16,6 +16,7 @@ The user needs only their Manager ID number or League ID number. Instructions to
 * SQLite
 * Bootstrap
 * [Data Tables](https://datatables.net)
+* [Zoho Mail](https://www.zoho.eu/mail/)
 * FPL API: https://fantasy.premierleague.com/drf/
 
 ## Hosted On
