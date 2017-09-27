@@ -2,8 +2,6 @@ from django.shortcuts import render
 from fplmystats.forms import ContactForm
 from django.core.mail import EmailMessage
 
-# TODO fix search boxes on mobile
-
 
 def index(request):
     contact_form = ContactForm
