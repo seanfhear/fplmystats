@@ -436,9 +436,10 @@
                                 </label>
                             </div>
                             <div id="general-number" class="general overflow-display" style="display: block">
-                                <table class="league-general table-hover main-league-display" style="text-align: center; width: 100%">
+                                <table class="league-general-number table-hover main-league-display" style="text-align: center; width: 100%">
                                     <thead>
                                         <tr>
+                                            <th></th>
                                             <th>Manager</th>
                                             <th>Base<br />Points</th>
                                             <th>Minutes</th>
@@ -458,6 +459,7 @@
                                     <tbody>
                                         {% for manager in general_number %}
                                         <tr>
+                                            <td></td>
                                             <td><a href="{% url 'manager:detail' manager.0%}" class="league-link">{{ manager.1 }}</a></td>
                                             {% for item in manager|slice:"2:" %}
                                                 <td>{{ item }}</td>
@@ -469,9 +471,10 @@
                                 <br>
                             </div>
                             <div id="general-points" class="general overflow-display" style="display: none">
-                                <table class="league-general table-hover main-league-display" style="text-align: center; width: 100%">
+                                <table class="league-general-points table-hover main-league-display" style="text-align: center; width: 100%">
                                     <thead>
                                         <tr>
+                                            <th></th>
                                             <th>Manager</th>
                                             <th>Base<br />Points</th>
                                             <th>Minutes</th>
@@ -491,6 +494,7 @@
                                     <tbody>
                                         {% for manager in general_points %}
                                         <tr>
+                                            <td></td>
                                             <td><a href="{% url 'manager:detail' manager.0%}" class="league-link">{{ manager.1 }}</a></td>
                                             {% for item in manager|slice:"2:" %}
                                                 <td>{{ item }}</td>
@@ -546,6 +550,7 @@
                             <table id="" class="league-positions table-hover main-league-display" style="text-align: center; width: 100%">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th>Manager</th>
                                         <th>Preferred<br />Formation</th>
                                         <th>Total<br />Budget</th>
@@ -563,6 +568,7 @@
                                 <tbody>
                                     {% for manager in positions %}
                                         <tr>
+                                            <td></td>
                                             <td><a href="{% url 'manager:detail' manager.0%}" class="league-link">{{ manager.1 }}</a></td>
                                             {% for item in manager|slice:"2:" %}
                                                 <td>{{ item }}</td>
@@ -617,6 +623,7 @@
                             <table id="" class="league-team table-hover main-league-display" style="text-align: center; width: 100%">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th>Manager</th>
                                         <th>Transfer<br />Cost</th>
                                         <th>Preferred<br />Captain</th>
@@ -634,6 +641,7 @@
                                 <tbody>
                                     {% for manager in team_selection %}
                                         <tr>
+                                            <td></td>
                                             <td><a href="{% url 'manager:detail' manager.0%}" class="league-link">{{ manager.1 }}</a></td>
                                             {% for item in manager|slice:"2:" %}
                                                 <td>{{ item }}</td>

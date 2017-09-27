@@ -28,30 +28,87 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-    $('table.league-general').DataTable( {
+    var t = $('table.league-general-number').DataTable( {
         "paging": false,
         "searching": false,
         "bInfo": false,
-        "order": [[1, "desc"]]
+        "order": [[2, "desc"]],
+
+        "columnDefs": [ {
+            "searchable": false,
+            "orderable": false,
+            "targets": 0
+        }]
     });
+
+    t.on( 'order.dt search.dt', function () {
+        t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        });
+    }).draw();
 });
 
 $(document).ready(function() {
-    $('table.league-positions').DataTable( {
+    var t = $('table.league-general-points').DataTable( {
         "paging": false,
         "searching": false,
         "bInfo": false,
-        "order": [[0, "asc"]]
+        "order": [[2, "desc"]],
+
+        "columnDefs": [ {
+            "searchable": false,
+            "orderable": false,
+            "targets": 0
+        }]
     });
+
+    t.on( 'order.dt search.dt', function () {
+        t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        });
+    }).draw();
 });
 
 $(document).ready(function() {
-    $('table.league-team').DataTable( {
+    var t = $('table.league-positions').DataTable( {
         "paging": false,
         "searching": false,
         "bInfo": false,
-        "order": [[9, "desc"]]
+        "order": [[1, "asc"]],
+
+        "columnDefs": [ {
+            "searchable": false,
+            "orderable": false,
+            "targets": 0
+        }]
     });
+
+    t.on( 'order.dt search.dt', function () {
+        t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        });
+    }).draw();
+});
+
+$(document).ready(function() {
+    var t = $('table.league-team').DataTable( {
+        "paging": false,
+        "searching": false,
+        "bInfo": false,
+        "order": [[10, "desc"]],
+
+        "columnDefs": [ {
+            "searchable": false,
+            "orderable": false,
+            "targets": 0
+        }]
+    });
+
+    t.on( 'order.dt search.dt', function () {
+        t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        });
+    }).draw();
 });
 
 $(document).on('change', '.form-control', function() {
