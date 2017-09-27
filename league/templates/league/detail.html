@@ -210,7 +210,6 @@
                         </form>
                         <br>
                     </div>
-
                     <div class="table-view">
                         <div class="general hide">
                             <div class="row">
@@ -380,7 +379,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-md-12 table-view">
                         <div class="general hide">
                             <div id="buttons" class="btn-group" data-toggle="buttons" style="color: lightgray">
@@ -436,74 +434,72 @@
                                 <label for="points-btn" class="btn btn-league" onClick="toggleToPoints()"><b>Points</b>
                                     <input type="radio" id="points-btn">
                                 </label>
-
-                                <div id="general-number" class="general overflow-display" style="display: block">
-                                    <table class="league-general table-hover main-league-display" style="text-align: center; width: 100%">
-                                        <thead>
-                                            <tr>
-                                                <th>Manager</th>
-                                                <th>Base<br />Points</th>
-                                                <th>Minutes</th>
-                                                <th>Goals</th>
-                                                <th>Assists</th>
-                                                <th>Clean<br />Sheets</th>
-                                                <th>Saves</th>
-                                                <th>Goals<br />Conceded</th>
-                                                <th>Penalties<br />Saved</th>
-                                                <th>Yellow<br />Cards</th>
-                                                <th>Red<br />Cards</th>
-                                                <th>Penalties<br />Missed</th>
-                                                <th>Own<br />Goals</th>
-                                                <th>Bonus<br />Points</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for manager in general_number %}
-                                            <tr>
-                                                <td><a href="{% url 'manager:detail' manager.0%}" class="league-link">{{ manager.1 }}</a></td>
-                                                {% for item in manager|slice:"2:" %}
-                                                    <td>{{ item }}</td>
-                                                {% endfor %}
-                                            </tr>
+                            </div>
+                            <div id="general-number" class="general overflow-display" style="display: block">
+                                <table class="league-general table-hover main-league-display" style="text-align: center; width: 100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Manager</th>
+                                            <th>Base<br />Points</th>
+                                            <th>Minutes</th>
+                                            <th>Goals</th>
+                                            <th>Assists</th>
+                                            <th>Clean<br />Sheets</th>
+                                            <th>Saves</th>
+                                            <th>Goals<br />Conceded</th>
+                                            <th>Penalties<br />Saved</th>
+                                            <th>Yellow<br />Cards</th>
+                                            <th>Red<br />Cards</th>
+                                            <th>Penalties<br />Missed</th>
+                                            <th>Own<br />Goals</th>
+                                            <th>Bonus<br />Points</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for manager in general_number %}
+                                        <tr>
+                                            <td><a href="{% url 'manager:detail' manager.0%}" class="league-link">{{ manager.1 }}</a></td>
+                                            {% for item in manager|slice:"2:" %}
+                                                <td>{{ item }}</td>
                                             {% endfor %}
-                                        </tbody>
-                                    </table>
-                                    <br>
-                                </div>
-
-                                <div id="general-points" class="general overflow-display" style="display: none">
-                                    <table class="league-general table-hover main-league-display" style="text-align: center; width: 100%">
-                                        <thead>
-                                            <tr>
-                                                <th>Manager</th>
-                                                <th>Base<br />Points</th>
-                                                <th>Minutes</th>
-                                                <th>Goals</th>
-                                                <th>Assists</th>
-                                                <th>Clean<br />Sheets</th>
-                                                <th>Saves</th>
-                                                <th>Goals<br />Conceded</th>
-                                                <th>Penalties<br />Saved</th>
-                                                <th>Yellow<br />Cards</th>
-                                                <th>Red<br />Cards</th>
-                                                <th>Penalties<br />Missed</th>
-                                                <th>Own<br />Goals</th>
-                                                <th>Bonus<br />Points</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for manager in general_points %}
-                                            <tr>
-                                                <td><a href="{% url 'manager:detail' manager.0%}" class="league-link">{{ manager.1 }}</a></td>
-                                                {% for item in manager|slice:"2:" %}
-                                                    <td>{{ item }}</td>
-                                                {% endfor %}
-                                            </tr>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                <br>
+                            </div>
+                            <div id="general-points" class="general overflow-display" style="display: none">
+                                <table class="league-general table-hover main-league-display" style="text-align: center; width: 100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Manager</th>
+                                            <th>Base<br />Points</th>
+                                            <th>Minutes</th>
+                                            <th>Goals</th>
+                                            <th>Assists</th>
+                                            <th>Clean<br />Sheets</th>
+                                            <th>Saves</th>
+                                            <th>Goals<br />Conceded</th>
+                                            <th>Penalties<br />Saved</th>
+                                            <th>Yellow<br />Cards</th>
+                                            <th>Red<br />Cards</th>
+                                            <th>Penalties<br />Missed</th>
+                                            <th>Own<br />Goals</th>
+                                            <th>Bonus<br />Points</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for manager in general_points %}
+                                        <tr>
+                                            <td><a href="{% url 'manager:detail' manager.0%}" class="league-link">{{ manager.1 }}</a></td>
+                                            {% for item in manager|slice:"2:" %}
+                                                <td>{{ item }}</td>
                                             {% endfor %}
-                                        </tbody>
-                                    </table>
-                                    <br>
-                                </div>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                <br>
                             </div>
                         </div>
                         <div class="positions hide overflow-display">

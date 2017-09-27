@@ -394,74 +394,73 @@
                                 <label for="points-btn" class="btn btn-manager" onClick="toggleToPoints()">
                                     <input type="radio" id="points-btn"><b>Points</b>
                                 </label>
-                                <div id="general-number" style="display: block">
-                                    <table class="weekly table-hover main-manager-display" style="text-align: center; width: 100%">
-                                        <thead>
-                                            <tr>
-                                                <th>Game<br />Week</th>
-                                                <th>Base<br />Points</th>
-                                                <th>Minutes</th>
-                                                <th>Goals</th>
-                                                <th>Assists</th>
-                                                <th>Clean<br />Sheets</th>
-                                                <th>Saves</th>
-                                                <th>Goals<br />Conceded</th>
-                                                <th>Penalties<br />Saved</th>
-                                                <th>Yellow<br />Cards</th>
-                                                <th>Red<br />Cards</th>
-                                                <th>Penalties<br />Missed</th>
-                                                <th>Own<br />Goals</th>
-                                                <th>Bonus<br />Points</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for week in general_number %}
-                                            <tr>
-                                                <td><a href="{{ week.0 }}" class="manager-link">{{ week.1 }}</a></td>
-                                                {% for item in week|slice:"2:" %}
-                                                    <td>{{ item }}</td>
-                                                {% endfor %}
-                                            </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                    <br>
-                                </div>
-                                <div id="general-points" style="display: none">
-                                    <table class="weekly general table-hover main-manager-display" style="text-align: center; width: 100%">
-                                        <thead>
-                                            <tr>
-                                                <th>Game<br />Week</th>
-                                                <th>Base<br />Points</th>
-                                                <th>Minutes</th>
-                                                <th>Goals</th>
-                                                <th>Assists</th>
-                                                <th>Clean<br />Sheets</th>
-                                                <th>Saves</th>
-                                                <th>Goals<br />Conceded</th>
-                                                <th>Penalties<br />Saved</th>
-                                                <th>Yellow<br />Cards</th>
-                                                <th>Red<br />Cards</th>
-                                                <th>Penalties<br />Missed</th>
-                                                <th>Own<br />Goals</th>
-                                                <th>Bonus<br />Points</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for week in general_points %}
-                                            <tr>
-                                                <td><a href="{{ week.0 }}" class="manager-link">{{ week.1 }}</a></td>
-                                                {% for item in week|slice:"2:" %}
-                                                    <td>{{ item }}</td>
-                                                {% endfor %}
-                                            </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                    <br>
-                                </div>
                             </div>
-                            <br>
+                            <div id="general-number" style="display: block">
+                                <table class="weekly table-hover main-manager-display" style="text-align: center; width: 100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Game<br />Week</th>
+                                            <th>Base<br />Points</th>
+                                            <th>Minutes</th>
+                                            <th>Goals</th>
+                                            <th>Assists</th>
+                                            <th>Clean<br />Sheets</th>
+                                            <th>Saves</th>
+                                            <th>Goals<br />Conceded</th>
+                                            <th>Penalties<br />Saved</th>
+                                            <th>Yellow<br />Cards</th>
+                                            <th>Red<br />Cards</th>
+                                            <th>Penalties<br />Missed</th>
+                                            <th>Own<br />Goals</th>
+                                            <th>Bonus<br />Points</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for week in general_number %}
+                                        <tr>
+                                            <td><a href="{{ week.0 }}" class="manager-link">{{ week.1 }}</a></td>
+                                            {% for item in week|slice:"2:" %}
+                                                <td>{{ item }}</td>
+                                            {% endfor %}
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                <br>
+                            </div>
+                            <div id="general-points" style="display: none">
+                                <table class="weekly general table-hover main-manager-display" style="text-align: center; width: 100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Game<br />Week</th>
+                                            <th>Base<br />Points</th>
+                                            <th>Minutes</th>
+                                            <th>Goals</th>
+                                            <th>Assists</th>
+                                            <th>Clean<br />Sheets</th>
+                                            <th>Saves</th>
+                                            <th>Goals<br />Conceded</th>
+                                            <th>Penalties<br />Saved</th>
+                                            <th>Yellow<br />Cards</th>
+                                            <th>Red<br />Cards</th>
+                                            <th>Penalties<br />Missed</th>
+                                            <th>Own<br />Goals</th>
+                                            <th>Bonus<br />Points</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for week in general_points %}
+                                        <tr>
+                                            <td><a href="{{ week.0 }}" class="manager-link">{{ week.1 }}</a></td>
+                                            {% for item in week|slice:"2:" %}
+                                                <td>{{ item }}</td>
+                                            {% endfor %}
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                <br>
+                            </div>
                         </div>
                         <div class="positions hide overflow-display">
                             <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#positionModal" class="manager-link">here</a> for an explanation of each column.</p>
