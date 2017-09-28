@@ -499,7 +499,7 @@ def get_stats(manager_id):
             if max_points_team:
                 max_points_team.sort()
                 max_points_team[-1][2] = max_points_team[-1][2] + ' (C)'
-                max_points_team[-1][0] = max_points_team[-1][0] * 2
+                max_points_team[-1][0] = max_points_team[-1][0] * captain_multiplier
                 max_points_team = sorted(max_points_team, key=lambda l: l[1])
                 for player in max_points_team:
                     if player[1] == 1:
@@ -531,8 +531,8 @@ def get_stats(manager_id):
             table_data.team_selection[week - 1][9] = bench_points
             table_data.team_selection[week - 1][10] = bench_potential_lost
             table_data.team_selection[week - 1][11] = int(table_data.general_points[week - 1][2] +
-                                                          (table_data.team_selection[week - 1][5] / captain_multiplier)
-                                                           - table_data.team_selection[week - 1][3])
+                                                          ((captain_points * captain_multiplier) - captain_points)
+                                                          - table_data.team_selection[week - 1][3])
             table_data.team_selection[week - 1][13] = table_data.team_selection[week - 1][8] +\
                 table_data.team_selection[week - 1][10]
             table_data.team_selection[week - 1][12] = table_data.team_selection[week - 1][11] +\
@@ -610,7 +610,7 @@ def get_stats(manager_id):
         table_data.squad_stats_teams.append([team, teams_dict[team]])
 
     table_data.headers = [0] * 7
-    table_data.headers[0] = sum(entry[11] for entry in table_data.team_selection)
+    table_data.headers[0] = total_points
     table_data.headers[1] = highest_points
     table_data.headers[2] = highest_rank
     table_data.headers[3] = max(player_captain_dict, key=player_captain_dict.get)
