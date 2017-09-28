@@ -1,0 +1,24 @@
+https://fantasy.premierleague.com/drf/bootstrap-static
+	- All static information for the game, all player data, gameweek data etc.
+
+https://fantasy.premierleague.com/drf/bootstrap-dynamic
+	- Contains info for the current gameweek including week number, number of days with fixtures
+	- UPDATED: CAN NO LONGER ACCESS USEFUL INFO UNLESS LOGGED IN
+
+https://fantasy.premierleague.com/drf/entry/[MANAGER_ID]
+	- Summary of a manager's results and info
+
+https://fantasy.premierleague.com/drf/entry/[MANAGER_ID]/event/[GAMEWEEK_NO]/picks
+	- Has the picks for a team for a specific week
+
+https://fantasy.premierleague.com/drf/element-summary/[PLAYER_ID]
+	- Summary of a player's results, includes past seasons weekly results
+
+https://fantasy.premierleague.com/drf/leagues-classic-standings/[LEAGUE_ID]
+	- Gives first 50 members of a classic league
+
+https://fantasy.premierleague.com/drf/leagues-h2h-standings/[LEAGUE_ID]
+	- Head to head leagues
+
+https://fantasy.premierleague.com/drf/fixtures
+	- Contains info for every fixture in the year
