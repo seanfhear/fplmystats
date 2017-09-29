@@ -97,6 +97,7 @@ def get_stats(manager_id):
     for team in teams:
         teams_dict[team[0]] = 0
 
+    active_weeks = 0
     total_points = 0
     highest_points = 0
     highest_rank = 0
@@ -147,6 +148,7 @@ def get_stats(manager_id):
             with urllib.request.urlopen('{}'.format(picks_url)) as url:
                 data = json.loads(url.read().decode())
 
+            active_weeks += 1
             captain_multiplier = 2
             bench_boost = False
             chip = data['active_chip']
@@ -556,15 +558,15 @@ def get_stats(manager_id):
     table_data.general_points_totals = [sum(n) for n in table_data.general_points_totals]
 
     table_data.positions_totals = [0] * 10
-    table_data.positions_totals[0] = round(sum(entry[3] for entry in table_data.positions) / current_week, 1)
-    table_data.positions_totals[1] = round(sum(entry[4] for entry in table_data.positions) / current_week, 1)
+    table_data.positions_totals[0] = round(sum(entry[3] for entry in table_data.positions) / active_weeks, 1)
+    table_data.positions_totals[1] = round(sum(entry[4] for entry in table_data.positions) / active_weeks, 1)
     table_data.positions_totals[2] = sum(entry[5] for entry in table_data.positions)
-    table_data.positions_totals[3] = round(sum(entry[6] for entry in table_data.positions) / current_week, 1)
+    table_data.positions_totals[3] = round(sum(entry[6] for entry in table_data.positions) / active_weeks, 1)
     table_data.positions_totals[4] = sum(entry[7] for entry in table_data.positions)
-    table_data.positions_totals[5] = round(sum(entry[12] for entry in table_data.positions) / current_week, 1)
-    table_data.positions_totals[6] = round(sum(entry[8] for entry in table_data.positions) / current_week, 1)
+    table_data.positions_totals[5] = round(sum(entry[12] for entry in table_data.positions) / active_weeks, 1)
+    table_data.positions_totals[6] = round(sum(entry[8] for entry in table_data.positions) / active_weeks, 1)
     table_data.positions_totals[7] = sum(entry[9] for entry in table_data.positions)
-    table_data.positions_totals[8] = round(sum(entry[10] for entry in table_data.positions) / current_week, 1)
+    table_data.positions_totals[8] = round(sum(entry[10] for entry in table_data.positions) / active_weeks, 1)
     table_data.positions_totals[9] = sum(entry[11] for entry in table_data.positions)
 
     table_data.team_selection_totals = [0]*8

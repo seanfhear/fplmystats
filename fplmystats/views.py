@@ -33,9 +33,10 @@ def send_comment(request):
     comment_info = request.POST
     name = comment_info['contact_name']
     email = comment_info['contact_email']
+    id = comment_info['contact_ID']
     content = comment_info['content']
 
-    email_contents = 'NAME: {}\n\nEMAIL: {}\n\nMESSAGE: {}'.format(name, email, content)
+    email_contents = 'NAME: {}\n\nEMAIL: {}\n\nID: {}\n\nMESSAGE: {}'.format(name, email, id, content)
     email = EmailMessage(
         subject='Feedback',
         body=email_contents,
