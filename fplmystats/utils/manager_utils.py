@@ -377,6 +377,8 @@ def get_stats(manager_id):
                         points_list.append([player_datum[1], position, player_name])  # points, position, player_name
                     bench_points += player_datum[1]
 
+            table_data.positions[week - 1][12] = round(table_data.positions[week - 1][12], 1)
+
             string_formation = '4-4-2'  # default formation if db not updated
             if formation == [5, 4, 1]:
                 string_formation = '5-4-1'
