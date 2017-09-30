@@ -179,6 +179,7 @@ def get_stats(manager_id):
             total_points += week_points
 
             bank = data['entry_history']['bank'] / 10.0
+            total_value = data['entry_history']['value'] / 10.0
 
             for pick in data['picks']:
                 if bench_boost:
@@ -400,9 +401,7 @@ def get_stats(manager_id):
             formation_dict[string_formation] += 1
             table_data.positions[week - 1][2] = string_formation
 
-            team_value = round(table_data.positions[week - 1][4] + table_data.positions[week - 1][6]
-                               + table_data.positions[week - 1][8] + table_data.positions[week - 1][10]
-                               + table_data.positions[week - 1][12] + bank, 1)
+            team_value = round(total_value, 1)
             table_data.positions[week - 1][3] = team_value
 
             max_points_on_pitch = 0
