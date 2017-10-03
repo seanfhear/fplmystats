@@ -87,7 +87,8 @@ def get_stats(league_id):
             data = json.loads(url.read().decode())
 
     for entry in data['standings']['results']:
-        manager_ids.append([entry['entry'], entry['player_name']])
+        if entry['entry'] is not None:
+            manager_ids.append([entry['entry'], entry['player_name']])
 
     for manager_id in manager_ids:
         data = manager_utils.get_stats(manager_id[0])
