@@ -7,6 +7,7 @@ from json import JSONDecodeError
 
 # TODO scroll headers with window
 # TODO highlight differences in best possible lineup vs actual lineup
+# TODO fix highest weekly rank when starting after gameweek 1
 
 
 def search(request):

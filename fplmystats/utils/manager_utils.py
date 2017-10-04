@@ -171,14 +171,13 @@ def get_stats(manager_id):
                 highest_points = week_points
             week_rank = data['entry_history']['rank']
             if week_rank is not None:
-                if week == 1:
+                if active_weeks == 1:
                     highest_rank = week_rank
                 else:
                     if week_rank < highest_rank:
                         highest_rank = week_rank
             total_points += week_points
 
-            bank = data['entry_history']['bank'] / 10.0
             total_value = data['entry_history']['value'] / 10.0
 
             for pick in data['picks']:
@@ -613,7 +612,7 @@ def get_stats(manager_id):
         table_data.squad_stats_teams.append([team, teams_dict[team]])
 
     table_data.headers = [0] * 7
-    table_data.headers[0] = total_points
+    table_data.headers[0] = sum(entry[11] for entry in table_data.team_selection)
     table_data.headers[1] = highest_points
     table_data.headers[2] = highest_rank
     table_data.headers[3] = max(player_captain_dict, key=player_captain_dict.get)
