@@ -7,7 +7,6 @@ from json import JSONDecodeError
 
 # TODO scroll headers with window
 # TODO highlight differences in best possible lineup vs actual lineup
-# TODO fix highest weekly rank when starting after gameweek 1
 
 
 def search(request):
@@ -56,7 +55,7 @@ def detail(request, manager_id):
         team_selection = stats.team_selection
         team_selection_totals = stats.team_selection_totals
         team_selection_string_totals = []
-        for number in team_selection_totals:
+        for number in team_selection_totals[0:8]:
             team_selection_string_totals.append("{:,}".format(number))
         max_teams = stats.max_teams
 

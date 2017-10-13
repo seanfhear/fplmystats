@@ -95,7 +95,7 @@ $(document).ready(function() {
         "paging": false,
         "searching": false,
         "bInfo": false,
-        "order": [[10, "desc"]],
+        "order": [[11, "desc"]],
 
         "columnDefs": [ {
             "searchable": false,

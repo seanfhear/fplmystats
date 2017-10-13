@@ -102,6 +102,8 @@ def get_stats(manager_id):
     highest_points = 0
     highest_rank = 0
 
+    chips_used = []
+
     while week <= current_week:
         week_string = str(week)
         weekly_table = '{}week{}'.format(current_season, week_string)
@@ -151,17 +153,25 @@ def get_stats(manager_id):
             active_weeks += 1
             captain_multiplier = 2
             bench_boost = False
+
             chip = data['active_chip']
+            wildcard_number = 1
+            # chips_available = ['TC', 'BB', 'FH', 'WC1', 'WC2']
             if chip == '3xc':
                 table_data.team_selection[week - 1][2] = 'Triple Captain'
                 captain_multiplier = 3
+                chips_used.append('TC')
             elif chip == 'bboost':
                 table_data.team_selection[week - 1][2] = 'Bench Boost'
                 bench_boost = True
+                chips_used.append('BB')
             elif chip == 'freehit':
                 table_data.team_selection[week - 1][2] = 'Free Hit'
+                chips_used.append('FH')
             elif chip == 'wildcard':
                 table_data.team_selection[week - 1][2] = 'Wildcard'
+                chips_used.append(('WC' + str(wildcard_number)))
+                wildcard_number += 1
             else:
                 table_data.team_selection[week - 1][2] = '-'
             table_data.team_selection[week - 1][3] = data['entry_history']['event_transfers_cost']
@@ -569,15 +579,16 @@ def get_stats(manager_id):
     table_data.positions_totals[8] = round(sum(entry[10] for entry in table_data.positions) / active_weeks, 1)
     table_data.positions_totals[9] = sum(entry[11] for entry in table_data.positions)
 
-    table_data.team_selection_totals = [0]*8
+    table_data.team_selection_totals = [0]*9
     table_data.team_selection_totals[0] = sum(entry[3] for entry in table_data.team_selection)    # transfer cost
     table_data.team_selection_totals[1] = sum(entry[5] for entry in table_data.team_selection)    # captain points
     table_data.team_selection_totals[2] = sum(entry[7] for entry in table_data.team_selection)    # mvp total
     table_data.team_selection_totals[3] = sum(entry[8] for entry in table_data.team_selection)    # captain lost
-    table_data.team_selection_totals[4] = sum(entry[9] for entry in table_data.team_selection)   # bench points
-    table_data.team_selection_totals[5] = sum(entry[10] for entry in table_data.team_selection)    # bench lost
+    table_data.team_selection_totals[4] = sum(entry[9] for entry in table_data.team_selection)    # bench points
+    table_data.team_selection_totals[5] = sum(entry[10] for entry in table_data.team_selection)   # bench lost
     table_data.team_selection_totals[6] = sum(entry[12] for entry in table_data.team_selection)   # max possible
     table_data.team_selection_totals[7] = sum(entry[13] for entry in table_data.team_selection)   # all lost
+    table_data.team_selection_totals[8] = chips_used                                              # chips used
 
     table_data.squad_stats_players = []
     for player in player_apps_xv_dict:
