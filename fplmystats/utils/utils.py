@@ -236,6 +236,36 @@ def update_weekly_table():
     conn.close()
 
 
+def create_manager_tables():
+    """
+    Create weekly tables that hold the necessary data for managers
+    Run once at start of season, tables are updated as managers search for their ID
+    """
+    conn = sqlite3.connect(data_file)
+    c = conn.cursor()
+    week = 1    # always starts at 1
+
+    while week <= 38:
+        table_name = '{}manager{}'.format(str(current_season), str(week))
+        fields = ['id', 'pos1', 'mul1', 'pos2', 'mul2', 'pos3', 'mul3', 'pos4', 'mul4', 'pos5', 'mul5', 'pos6', 'mul6',
+                  'pos7', 'mul7', 'pos8', 'mul8', 'pos9', 'mul9', 'pos10', 'mul10', 'pos11', 'mul11', 'pos12', 'mul12',
+                  'pos13', 'mul13', 'pos14', 'mul14', 'pos15', 'mul15']
+
+        c.execute('CREATE TABLE "{tn}" ({} {ft} PRIMARY KEY, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft},'
+                  '{} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft},{} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft},'
+                  '{} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft},'
+                  '{} {ft}, {} {ft}, {c} {ft}, {vc} {ft}, {p} {ft}, {r} {ft}, {t} {ft}, {v} {ft}, {ch} {ftt})'
+                  .format(tn=table_name, ft=field_type_INT, ftt=field_type_TEXT, *fields,
+                          c='captain',
+                          vc='vicecaptain',
+                          p='points',
+                          r='rank',
+                          t='transfercost',
+                          v='value',
+                          ch='chip'))
+        week += 1
+
+
 def get_all_fixtures():
     """
     Saves a list of every unique kickoff time in the year to a file
@@ -279,3 +309,15 @@ def check_for_fixture():
                 if now > kickoff_time and (now - kickoff_time < datetime.timedelta(hours=HOURS)):
                     update_weekly_table()
                     return
+
+
+def drop():
+    conn = sqlite3.connect(data_file)
+    c = conn.cursor()
+    week = 1  # always starts at 1
+
+    while week <= 38:
+        table_name = '{}manager{}'.format(str(current_season), str(week))
+        print(table_name)
+        c.execute('DROP TABLE "{}"'.format(table_name))
+        week += 1

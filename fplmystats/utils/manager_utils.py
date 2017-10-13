@@ -48,10 +48,91 @@ def get_name_and_team(manager_id):
     return names
 
 
+def update_manager_tables(manager_id):
+    """
+    Check if all the picks for the ID are already in the database and if not, put them in
+    """
+    conn = sqlite3.connect(data_file)
+    c = conn.cursor()
+    week = 1  # always starts at 1
+    manager_string = str(manager_id)
+
+    with urllib.request.urlopen('{}'.format(static_url)) as static_json:
+        static_data = json.loads(static_json.read().decode())
+    current_week = 0
+    for event in static_data['events']:
+        if event['is_current']:
+            current_week = event['id']
+
+    while week <= current_week:
+        week_string = str(week)
+        manager_table = '{}manager{}'.format(current_season, week_string)
+        picks_url = 'https://fantasy.premierleague.com/drf/entry/{}/event/{}/picks'.format(manager_id, week_string)
+
+        c.execute('SELECT id FROM "{}" WHERE id = {}'.format(manager_table, manager_string))
+        weekly_picks = c.fetchone()
+
+        if weekly_picks is not None and week != current_week:
+            week += 1
+        else:
+            if week == current_week:
+                c.execute('DELETE FROM "{}"'.format(manager_table))
+
+            with urllib.request.urlopen('{}'.format(picks_url)) as url:
+                data = json.loads(url.read().decode())
+            weekly_datum = [manager_id]
+
+            captain_id = 0
+            vice_captain_id = 0
+
+            for pick in data['picks']:
+                weekly_datum.append(pick['element'])
+                weekly_datum.append(pick['multiplier'])
+                if pick['is_captain']:
+                    captain_id = pick['element']
+                if pick['is_vice_captain']:
+                    vice_captain_id = pick['element']
+
+            week_points = data['entry_history']['points']
+            week_rank = data['entry_history']['rank']
+            total_value = data['entry_history']['value']
+            transfer_cost = data['entry_history']['event_transfers_cost']
+
+            chip = data['active_chip']
+            if chip == '3xc':
+                chip = 'Triple Captain'
+            elif chip == 'bboost':
+                chip = 'Bench Boost'
+            elif chip == 'freehit':
+                chip = 'Free Hit'
+            elif chip == 'wildcard':
+                chip = 'Wildcard'
+            else:
+                chip = '-'
+
+            weekly_datum.append(captain_id)
+            weekly_datum.append(vice_captain_id)
+            weekly_datum.append(week_points)
+            weekly_datum.append(week_rank)
+            weekly_datum.append(total_value)
+            weekly_datum.append(transfer_cost)
+            weekly_datum.append(chip)
+
+            c.execute('INSERT INTO "{tn}" VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},'
+                      '{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, "{}")'
+                      .format(tn=manager_table, *weekly_datum))
+
+            week += 1
+
+    conn.commit()
+    conn.close()
+
+
 def get_stats(manager_id):
     """
     Return the data for every table in the manager view
     """
+    update_manager_tables(manager_id)
     table_data = namedtuple('table_data', ('headers', 'general_number', 'general_number_totals', 'general_points',
                                            'general_points_totals', 'positions', 'positions_totals', 'team_selection',
                                            'team_selection_totals', 'max_teams', 'squad_stats_players',
@@ -107,6 +188,7 @@ def get_stats(manager_id):
     while week <= current_week:
         week_string = str(week)
         weekly_table = '{}week{}'.format(current_season, week_string)
+        picks_table = '{}picks{}'.format(current_season, week_string)
         picks_url = 'https://fantasy.premierleague.com/drf/entry/{}/event/{}/picks'.format(manager_id, week_string)
 
         pitch_ids = []             # holds ids of players who are on pitch
@@ -156,7 +238,6 @@ def get_stats(manager_id):
 
             chip = data['active_chip']
             wildcard_number = 1
-            # chips_available = ['TC', 'BB', 'FH', 'WC1', 'WC2']
             if chip == '3xc':
                 table_data.team_selection[week - 1][2] = 'Triple Captain'
                 captain_multiplier = 3
