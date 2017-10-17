@@ -78,53 +78,55 @@ def update_manager_tables(manager_id):
             if week == current_week:
                 c.execute('DELETE FROM "{}"'.format(manager_table))
 
-            with urllib.request.urlopen('{}'.format(picks_url)) as url:
-                data = json.loads(url.read().decode())
-            weekly_datum = [manager_id]
+            try:
+                with urllib.request.urlopen('{}'.format(picks_url)) as url:
+                    data = json.loads(url.read().decode())
+                weekly_datum = [manager_id]
 
-            captain_id = 0
-            vice_captain_id = 0
+                captain_id = 0
+                vice_captain_id = 0
 
-            for pick in data['picks']:
-                weekly_datum.append(pick['element'])
-                weekly_datum.append(pick['multiplier'])
-                if pick['is_captain']:
-                    captain_id = pick['element']
-                if pick['is_vice_captain']:
-                    vice_captain_id = pick['element']
+                for pick in data['picks']:
+                    weekly_datum.append(pick['element'])
+                    weekly_datum.append(pick['multiplier'])
+                    if pick['is_captain']:
+                        captain_id = pick['element']
+                    if pick['is_vice_captain']:
+                        vice_captain_id = pick['element']
 
-            week_points = data['entry_history']['points']
-            week_rank = data['entry_history']['rank']
-            if week_rank is None:
-                week_rank = 0
-            total_value = data['entry_history']['value']
-            transfer_cost = data['entry_history']['event_transfers_cost']
+                week_points = data['entry_history']['points']
+                week_rank = data['entry_history']['rank']
+                if week_rank is None:
+                    week_rank = 0
+                total_value = data['entry_history']['value']
+                transfer_cost = data['entry_history']['event_transfers_cost']
 
-            chip = data['active_chip']
-            if chip == '3xc':
-                chip = 'Triple Captain'
-            elif chip == 'bboost':
-                chip = 'Bench Boost'
-            elif chip == 'freehit':
-                chip = 'Free Hit'
-            elif chip == 'wildcard':
-                chip = 'Wildcard'
-            else:
-                chip = '-'
+                chip = data['active_chip']
+                if chip == '3xc':
+                    chip = 'Triple Captain'
+                elif chip == 'bboost':
+                    chip = 'Bench Boost'
+                elif chip == 'freehit':
+                    chip = 'Free Hit'
+                elif chip == 'wildcard':
+                    chip = 'Wildcard'
+                else:
+                    chip = '-'
 
-            weekly_datum.append(captain_id)
-            weekly_datum.append(vice_captain_id)
-            weekly_datum.append(week_points)
-            weekly_datum.append(week_rank)
-            weekly_datum.append(total_value)
-            weekly_datum.append(transfer_cost)
-            weekly_datum.append(chip)
+                weekly_datum.append(captain_id)
+                weekly_datum.append(vice_captain_id)
+                weekly_datum.append(week_points)
+                weekly_datum.append(week_rank)
+                weekly_datum.append(total_value)
+                weekly_datum.append(transfer_cost)
+                weekly_datum.append(chip)
 
-            c.execute('INSERT INTO "{tn}" VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},'
-                      '{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, "{}")'
-                      .format(tn=manager_table, *weekly_datum))
-
-            week += 1
+                c.execute('INSERT INTO "{tn}" VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},'
+                          '{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, "{}")'
+                          .format(tn=manager_table, *weekly_datum))
+                week += 1
+            except HTTPError:
+                week += 1
 
     conn.commit()
     conn.close()

@@ -98,150 +98,146 @@ def get_stats(league_id):
                 manager_ids.append([entry['entry'], entry['player_name']])
 
         for manager_id in manager_ids:
-            try:
-                data = manager_utils.get_stats(manager_id[0])
+            data = manager_utils.get_stats(manager_id[0])
 
-                if not have_leader:
-                    table_data.headers[0] = manager_id[1]
-                    table_data.headers[1] = data.headers[0]
-                    have_leader = True
+            if not have_leader:
+                table_data.headers[0] = manager_id[1]
+                table_data.headers[1] = data.headers[0]
+                have_leader = True
 
-                # general number
-                manager_general_number_totals = ([0] * 15)
-                manager_general_number_totals[0] = manager_id[0]  # manager id
-                manager_general_number_totals[1] = manager_id[1]  # manager name
+            # general number
+            manager_general_number_totals = ([0] * 15)
+            manager_general_number_totals[0] = manager_id[0]  # manager id
+            manager_general_number_totals[1] = manager_id[1]  # manager name
 
-                for i in range(2, 15):
-                    manager_general_number_totals[i] = data.general_number_totals[i - 2]
-                table_data.general_number_totals.append(manager_general_number_totals)
+            for i in range(2, 15):
+                manager_general_number_totals[i] = data.general_number_totals[i - 2]
+            table_data.general_number_totals.append(manager_general_number_totals)
 
-                for i in (0, 1, 2, 3, 4, 6, 11):
-                    if data.general_number_totals[i + 1] > max_number[i][0]:
-                        max_number[i][0] = data.general_number_totals[i + 1]
-                        max_number[i][1] = manager_id[1]
-                for i in (5, 7, 8, 9, 10):
-                    if data.general_number_totals[i + 1] < max_number[i][0]:
-                        max_number[i][0] = data.general_number_totals[i + 1]
-                        max_number[i][1] = manager_id[1]
+            for i in (0, 1, 2, 3, 4, 6, 11):
+                if data.general_number_totals[i + 1] > max_number[i][0]:
+                    max_number[i][0] = data.general_number_totals[i + 1]
+                    max_number[i][1] = manager_id[1]
+            for i in (5, 7, 8, 9, 10):
+                if data.general_number_totals[i + 1] < max_number[i][0]:
+                    max_number[i][0] = data.general_number_totals[i + 1]
+                    max_number[i][1] = manager_id[1]
 
-                # general points
-                manager_general_points_totals = ([0] * 15)
-                manager_general_points_totals[0] = manager_id[0]  # manager id
-                manager_general_points_totals[1] = manager_id[1]  # manager name
+            # general points
+            manager_general_points_totals = ([0] * 15)
+            manager_general_points_totals[0] = manager_id[0]  # manager id
+            manager_general_points_totals[1] = manager_id[1]  # manager name
 
-                for i in range(2, 15):
-                    manager_general_points_totals[i] = data.general_points_totals[i-2]
-                table_data.general_points_totals.append(manager_general_points_totals)
+            for i in range(2, 15):
+                manager_general_points_totals[i] = data.general_points_totals[i-2]
+            table_data.general_points_totals.append(manager_general_points_totals)
 
-                for i in (0, 1, 2, 3, 4, 6, 11):
-                    if data.general_points_totals[i + 1] >= 0:
-                        if data.general_points_totals[i + 1] > max_points[i][0]:
-                            max_points[i][0] = data.general_points_totals[i + 1]
-                            max_points[i][1] = manager_id[1]
-                    else:  # if points are negative
-                        if data.general_points_totals[i + 1] > max_points[i][0]:
-                            max_points[i][0] = data.general_points_totals[i + 1]
-                            max_points[i][1] = manager_id[1]
-                for i in (5, 7, 8, 9, 10):
-                    if data.general_points_totals[i + 1] >= 0:
-                        if data.general_points_totals[i + 1] > max_points[i][0]:
-                            max_points[i][0] = data.general_points_totals[i + 1]
-                            max_points[i][1] = manager_id[1]
-                    else:  # if points are negative
-                        if data.general_points_totals[i + 1] > max_points[i][0]:
-                            max_points[i][0] = data.general_points_totals[i + 1]
-                            max_points[i][1] = manager_id[1]
+            for i in (0, 1, 2, 3, 4, 6, 11):
+                if data.general_points_totals[i + 1] >= 0:
+                    if data.general_points_totals[i + 1] > max_points[i][0]:
+                        max_points[i][0] = data.general_points_totals[i + 1]
+                        max_points[i][1] = manager_id[1]
+                else:  # if points are negative
+                    if data.general_points_totals[i + 1] > max_points[i][0]:
+                        max_points[i][0] = data.general_points_totals[i + 1]
+                        max_points[i][1] = manager_id[1]
+            for i in (5, 7, 8, 9, 10):
+                if data.general_points_totals[i + 1] >= 0:
+                    if data.general_points_totals[i + 1] > max_points[i][0]:
+                        max_points[i][0] = data.general_points_totals[i + 1]
+                        max_points[i][1] = manager_id[1]
+                else:  # if points are negative
+                    if data.general_points_totals[i + 1] > max_points[i][0]:
+                        max_points[i][0] = data.general_points_totals[i + 1]
+                        max_points[i][1] = manager_id[1]
 
-                # positions
-                manager_positions_totals = ([0] * 13)
-                manager_positions_totals[0] = manager_id[0]    # manager id
-                manager_positions_totals[1] = manager_id[1]    # manager name
-                manager_positions_totals[2] = data.headers[6]  # preferred formation
+            # positions
+            manager_positions_totals = ([0] * 13)
+            manager_positions_totals[0] = manager_id[0]    # manager id
+            manager_positions_totals[1] = manager_id[1]    # manager name
+            manager_positions_totals[2] = data.headers[6]  # preferred formation
 
-                team_value = data.positions[-1][3]  # team value at latest gameweek
-                if team_value > max_team_value[0]:
-                    max_team_value[0] = team_value
-                    max_team_value[1] = manager_id[1]
-                manager_positions_totals[3] = team_value
-                max_positions[0][0] = max_team_value[0]
-                max_positions[0][1] = max_team_value[1]
+            team_value = data.positions[-1][3]  # team value at latest gameweek
+            if team_value > max_team_value[0]:
+                max_team_value[0] = team_value
+                max_team_value[1] = manager_id[1]
+            manager_positions_totals[3] = team_value
+            max_positions[0][0] = max_team_value[0]
+            max_positions[0][1] = max_team_value[1]
 
-                for i in range(4, 8):
-                    manager_positions_totals[i] = data.positions_totals[i - 3]
-                for i in range(8, 12):
-                    manager_positions_totals[i] = data.positions_totals[i - 2]
-                manager_positions_totals[12] = data.positions_totals[5]
-                table_data.positions_totals.append(manager_positions_totals)
+            for i in range(4, 8):
+                manager_positions_totals[i] = data.positions_totals[i - 3]
+            for i in range(8, 12):
+                manager_positions_totals[i] = data.positions_totals[i - 2]
+            manager_positions_totals[12] = data.positions_totals[5]
+            table_data.positions_totals.append(manager_positions_totals)
 
-                for i in range(1, 10):
-                    if data.positions_totals[i] > max_positions[i][0]:
-                        max_positions[i][0] = data.positions_totals[i]
-                        max_positions[i][1] = manager_id[1]
+            for i in range(1, 10):
+                if data.positions_totals[i] > max_positions[i][0]:
+                    max_positions[i][0] = data.positions_totals[i]
+                    max_positions[i][1] = manager_id[1]
 
-                chips_used = data.team_selection_totals[8]
-                chips_used_string = ''
-                for chip in chips_used:
-                    chips_used_string += chip + ' '
-                # team selection
-                manager_team_selection_totals = ([0] * 14)
-                manager_team_selection_totals[0] = manager_id[0]                   # manager id
-                manager_team_selection_totals[1] = manager_id[1]                   # manager name
-                manager_team_selection_totals[2] = chips_used_string
+            chips_used = data.team_selection_totals[8]
+            chips_used_string = ''
+            for chip in chips_used:
+                chips_used_string += chip + ' '
+            # team selection
+            manager_team_selection_totals = ([0] * 14)
+            manager_team_selection_totals[0] = manager_id[0]                   # manager id
+            manager_team_selection_totals[1] = manager_id[1]                   # manager name
+            manager_team_selection_totals[2] = chips_used_string
 
-                manager_team_selection_totals[3] = data.team_selection_totals[0]   # transfer cost
-                if data.team_selection_totals[0] < max_team_selection[0][0]:
-                    max_team_selection[0][0] = data.team_selection_totals[0]
-                    max_team_selection[0][1] = manager_id[1]
+            manager_team_selection_totals[3] = data.team_selection_totals[0]   # transfer cost
+            if data.team_selection_totals[0] < max_team_selection[0][0]:
+                max_team_selection[0][0] = data.team_selection_totals[0]
+                max_team_selection[0][1] = manager_id[1]
 
-                manager_team_selection_totals[4] = data.headers[3]                 # preferred captain
-                manager_team_selection_totals[5] = data.team_selection_totals[1]   # captain points
-                if data.team_selection_totals[1] > max_team_selection[1][0]:
-                    max_team_selection[1][0] = data.team_selection_totals[1]
-                    max_team_selection[1][1] = manager_id[1]
+            manager_team_selection_totals[4] = data.headers[3]                 # preferred captain
+            manager_team_selection_totals[5] = data.team_selection_totals[1]   # captain points
+            if data.team_selection_totals[1] > max_team_selection[1][0]:
+                max_team_selection[1][0] = data.team_selection_totals[1]
+                max_team_selection[1][1] = manager_id[1]
 
-                manager_team_selection_totals[6] = data.headers[4]                 # season mvp
-                manager_team_selection_totals[7] = data.headers[5]                 # mvp points
-                if manager_team_selection_totals[7] > max_team_selection[2][0]:
-                    max_team_selection[2][0] = manager_team_selection_totals[7]
-                    max_team_selection[2][1] = manager_id[1]
+            manager_team_selection_totals[6] = data.headers[4]                 # season mvp
+            manager_team_selection_totals[7] = data.headers[5]                 # mvp points
+            if manager_team_selection_totals[7] > max_team_selection[2][0]:
+                max_team_selection[2][0] = manager_team_selection_totals[7]
+                max_team_selection[2][1] = manager_id[1]
 
-                manager_team_selection_totals[8] = data.team_selection_totals[3]   # captain points lost
-                if manager_team_selection_totals[8] < max_team_selection[3][0]:
-                    max_team_selection[3][0] = manager_team_selection_totals[8]
-                    max_team_selection[3][1] = manager_id[1]
+            manager_team_selection_totals[8] = data.team_selection_totals[3]   # captain points lost
+            if manager_team_selection_totals[8] < max_team_selection[3][0]:
+                max_team_selection[3][0] = manager_team_selection_totals[8]
+                max_team_selection[3][1] = manager_id[1]
 
-                manager_team_selection_totals[9] = data.team_selection_totals[4]   # points on bench
-                manager_team_selection_totals[10] = data.team_selection_totals[5]   # bench potential lost
-                if manager_team_selection_totals[10] < max_team_selection[4][0]:
-                    max_team_selection[4][0] = manager_team_selection_totals[10]
-                    max_team_selection[4][1] = manager_id[1]
+            manager_team_selection_totals[9] = data.team_selection_totals[4]   # points on bench
+            manager_team_selection_totals[10] = data.team_selection_totals[5]   # bench potential lost
+            if manager_team_selection_totals[10] < max_team_selection[4][0]:
+                max_team_selection[4][0] = manager_team_selection_totals[10]
+                max_team_selection[4][1] = manager_id[1]
 
-                manager_team_selection_totals[11] = data.headers[0]                # points
-                manager_team_selection_totals[12] = data.team_selection_totals[6]  # max points
-                if manager_team_selection_totals[12] > max_team_selection[5][0]:
-                    max_team_selection[5][0] = manager_team_selection_totals[12]
-                    max_team_selection[5][1] = manager_id[1]
+            manager_team_selection_totals[11] = data.headers[0]                # points
+            manager_team_selection_totals[12] = data.team_selection_totals[6]  # max points
+            if manager_team_selection_totals[12] > max_team_selection[5][0]:
+                max_team_selection[5][0] = manager_team_selection_totals[12]
+                max_team_selection[5][1] = manager_id[1]
 
-                manager_team_selection_totals[13] = data.team_selection_totals[7]  # potential lost
-                if manager_team_selection_totals[13] < max_team_selection[6][0]:
-                    max_team_selection[6][0] = manager_team_selection_totals[13]
-                    max_team_selection[6][1] = manager_id[1]
+            manager_team_selection_totals[13] = data.team_selection_totals[7]  # potential lost
+            if manager_team_selection_totals[13] < max_team_selection[6][0]:
+                max_team_selection[6][0] = manager_team_selection_totals[13]
+                max_team_selection[6][1] = manager_id[1]
 
-                table_data.team_selection_totals.append(manager_team_selection_totals)
+            table_data.team_selection_totals.append(manager_team_selection_totals)
 
-                # headers
-                captain_points = data.team_selection_totals[1]
-                if captain_points > max_captains[0]:
-                    max_captains[0] = captain_points
-                    max_captains[1] = manager_id[1]
+            # headers
+            captain_points = data.team_selection_totals[1]
+            if captain_points > max_captains[0]:
+                max_captains[0] = captain_points
+                max_captains[1] = manager_id[1]
 
-                num_players = len(data.squad_stats_players)
-                if num_players > max_num_players[0]:
-                    max_num_players[0] = num_players
-                    max_num_players[1] = manager_id[1]
-
-            except HTTPError:
-                ''
+            num_players = len(data.squad_stats_players)
+            if num_players > max_num_players[0]:
+                max_num_players[0] = num_players
+                max_num_players[1] = manager_id[1]
 
     for item in max_number:
         if item[0] == 10000:
