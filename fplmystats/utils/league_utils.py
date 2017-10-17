@@ -76,6 +76,7 @@ def get_stats(league_id):
     max_num_players = [0, '']
 
     have_leader = False
+    is_classic_league = True
 
     try:
         data_url = classic_league_info_url + str(league_id)
@@ -85,8 +86,13 @@ def get_stats(league_id):
         data_url = h2h_league_info_url + str(league_id)
         with urllib.request.urlopen('{}'.format(data_url)) as url:
             data = json.loads(url.read().decode())
+        is_classic_league = False
 
-    if data['league']['has_started']:
+    league_has_started = True
+    if not is_classic_league:
+        league_has_started = data['league']['has_started']
+
+    if league_has_started:
 
         for entry in data['standings']['results']:
             if entry['entry'] is not None:
