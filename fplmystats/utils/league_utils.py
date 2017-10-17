@@ -234,6 +234,16 @@ def get_stats(league_id):
                 max_num_players[0] = num_players
                 max_num_players[1] = manager_id[1]
 
+    for item in max_number:
+        if item[0] == 10000:
+            item[0] = 0
+    for item in max_points:
+        if item[0] == -10000:
+            item[0] = 0
+    for item in max_team_selection:
+        if item[0] == 10000:
+            item[0] = 0
+
     table_data.general_number_max = max_number
     table_data.general_points_max = max_points
     table_data.positions_max = max_positions
