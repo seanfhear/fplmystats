@@ -703,6 +703,7 @@
                                 <table class="squad squad-player table-hover squad-one main-manager-display" style="text-align: center; width: 100%">
                                     <thead>
                                         <tr>
+                                            <th></th>
                                             <th>Player<br />Name</th>
                                             <th>Weeks<br />on Pitch</th>
                                             <th>Weeks<br /> in Squad</th>
@@ -715,6 +716,7 @@
                                     <tbody>
                                         {% for player in squad_stats_players %}
                                             <tr>
+                                                <td style="width: 1%; white-space: nowrap"></td>
                                                 {% for item in player %}
                                                     <td>{{ item }}</td>
                                                 {% endfor %}

@@ -10,12 +10,24 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-    $('table.squad-player').DataTable( {
+    var t = $('table.squad-player').DataTable( {
         "paging": false,
         "searching": false,
         "bInfo": false,
-        "order": [[4, "desc"]]
+        "order": [[5, "desc"]],
+
+        "columnDefs": [ {
+            "searchable": false,
+            "orderable": false,
+            "targets": 0
+        }]
     });
+
+    t.on( 'order.dt search.dt', function () {
+        t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        });
+    }).draw();
 });
 
 $(document).ready(function() {

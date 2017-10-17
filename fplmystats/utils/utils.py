@@ -311,13 +311,11 @@ def check_for_fixture():
                     return
 
 
-def drop():
+def count_database_ids():
     conn = sqlite3.connect(data_file)
     c = conn.cursor()
-    week = 1  # always starts at 1
 
-    while week <= 38:
-        table_name = '{}manager{}'.format(str(current_season), str(week))
-        print(table_name)
-        c.execute('DROP TABLE "{}"'.format(table_name))
-        week += 1
+    table_name = "{}manager1".format(current_season)
+    c.execute('SELECT id from "{}"'.format(table_name))
+    results = c.fetchall()
+    print(len(results))

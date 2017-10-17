@@ -50,7 +50,7 @@ def get_name_and_team(manager_id):
 
 def update_manager_tables(manager_id):
     """
-    Check if all the picks for the ID are already in the database and if not, put them in
+    Check if the data for the ID is already in the database and if not, put it in
     """
     conn = sqlite3.connect(data_file)
     c = conn.cursor()
@@ -95,6 +95,8 @@ def update_manager_tables(manager_id):
 
             week_points = data['entry_history']['points']
             week_rank = data['entry_history']['rank']
+            if week_rank is None:
+                week_rank = 0
             total_value = data['entry_history']['value']
             transfer_cost = data['entry_history']['event_transfers_cost']
 
