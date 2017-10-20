@@ -266,14 +266,15 @@ def create_manager_tables():
 
     while week <= 38:
         table_name = '{}manager{}'.format(str(current_season), str(week))
-        fields = ['id', 'pos1', 'mul1', 'pos2', 'mul2', 'pos3', 'mul3', 'pos4', 'mul4', 'pos5', 'mul5', 'pos6', 'mul6',
+        fields = ['id', 'complete', 'pos1', 'mul1', 'pos2', 'mul2', 'pos3', 'mul3', 'pos4', 'mul4', 'pos5', 'mul5', 'pos6', 'mul6',
                   'pos7', 'mul7', 'pos8', 'mul8', 'pos9', 'mul9', 'pos10', 'mul10', 'pos11', 'mul11', 'pos12', 'mul12',
                   'pos13', 'mul13', 'pos14', 'mul14', 'pos15', 'mul15']
 
         c.execute('CREATE TABLE "{tn}" ({} {ft} PRIMARY KEY, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft},'
-                  '{} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft},{} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft},'
-                  '{} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft},'
-                  '{} {ft}, {} {ft}, {c} {ft}, {vc} {ft}, {p} {ft}, {r} {ft}, {t} {ft}, {v} {ft}, {ch} {ftt})'
+                  '{} {ft},' '{} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft},{} {ft}, {} {ft}, {} {ft}, {} {ft},'
+                  '{} {ft},' '{} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft},'
+                  '{} {ft},' '{} {ft}, {} {ft}, {c} {ft}, {vc} {ft}, {p} {ft}, {r} {ft}, {t} {ft}, {v} {ft},'
+                  '{ch} {ftt})'
                   .format(tn=table_name, ft=field_type_INT, ftt=field_type_TEXT, *fields,
                           c='captain',
                           vc='vicecaptain',
@@ -334,9 +335,18 @@ def count_database_ids():
     conn = sqlite3.connect(data_file)
     c = conn.cursor()
 
-    table_name = "{}manager1".format(current_season)
+    table_name = "{}managerIDs".format(current_season)
     c.execute('SELECT id from "{}"'.format(table_name))
     results = c.fetchall()
     print(len(results))
 
+    conn.close()
+
+def drop():
+    conn = sqlite3.connect(data_file)
+    c = conn.cursor()
+
+    for i in range(38):
+        table_name = '{}manager{}'.format(str(current_season), str(i+1))
+        c.execute('DROP TABLE "{}"'.format(table_name))
     conn.close()

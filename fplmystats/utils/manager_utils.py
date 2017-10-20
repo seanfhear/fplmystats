@@ -89,19 +89,23 @@ def update_manager_tables(manager_id):
         manager_table = '{}manager{}'.format(current_season, week_string)
         picks_url = 'https://fantasy.premierleague.com/drf/entry/{}/event/{}/picks'.format(manager_id, week_string)
 
-        c.execute('SELECT id FROM "{}" WHERE id = {}'.format(manager_table, manager_string))
-        weekly_picks = c.fetchone()
+        c.execute('SELECT complete FROM "{}" WHERE id = {}'.format(manager_table, manager_string))
+        manager_week_complete = c.fetchone()
+        if manager_week_complete is not None:
+            manager_week_complete = manager_week_complete[0]
+        is_complete = 1
 
-        if weekly_picks is not None and week != current_week:
+        if manager_week_complete == 1:
             week += 1
         else:
-            if week == current_week:
-                c.execute('DELETE FROM "{}"'.format(manager_table))
-
+            c.execute('DELETE FROM "{}" WHERE id = {}'.format(manager_table, manager_id))
             try:
                 with urllib.request.urlopen('{}'.format(picks_url)) as url:
                     data = json.loads(url.read().decode())
                 weekly_datum = [manager_id]
+                if week == current_week:
+                    is_complete = 0
+                weekly_datum.append(is_complete)
 
                 captain_id = 0
                 vice_captain_id = 0
@@ -137,11 +141,11 @@ def update_manager_tables(manager_id):
                 weekly_datum.append(vice_captain_id)
                 weekly_datum.append(week_points)
                 weekly_datum.append(week_rank)
-                weekly_datum.append(total_value)
                 weekly_datum.append(transfer_cost)
+                weekly_datum.append(total_value)
                 weekly_datum.append(chip)
 
-                c.execute('INSERT INTO "{tn}" VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},'
+                c.execute('INSERT INTO "{tn}" VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},'
                           '{},' '{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, "{}")'
                           .format(tn=manager_table, *weekly_datum))
                 week += 1
@@ -265,7 +269,7 @@ def get_stats(manager_id):
             bench_boost = False
 
             #chip = data['active_chip']
-            chip = result[37]
+            chip = result[38]
             wildcard_number = 1
             if chip == '3xc':
                 table_data.team_selection[week - 1][2] = 'Triple Captain'
@@ -289,11 +293,11 @@ def get_stats(manager_id):
             table_data.team_selection[week - 1][3] = result[36]
 
             #week_points = data['entry_history']['points']
-            week_points = result[33]
+            week_points = result[34]
             if week_points > highest_points:
                 highest_points = week_points
             #week_rank = data['entry_history']['rank']
-            week_rank = result[34]
+            week_rank = result[35]
             if week_rank is not None:
                 if active_weeks == 1:
                     highest_rank = week_rank
@@ -303,10 +307,10 @@ def get_stats(manager_id):
             total_points += week_points
 
             #total_value = data['entry_history']['value'] / 10.0
-            total_value = result[35]
+            total_value = result[37]
 
             #for pick in data['picks']:
-            for i in range(1, 31, 2):
+            for i in range(2, 32, 2):
                 if bench_boost:
                     #pitch_ids.append([pick['element'], pick['multiplier']])
                     pitch_ids.append([result[i], result[i+1]])
@@ -316,7 +320,7 @@ def get_stats(manager_id):
                     #if pick['is_vice_captain']:
                         #vice_captain_id = pick['element']
                 else:
-                    if i < 23:
+                    if i < 24:
                         pitch_ids.append([result[i], result[i+1]])
                     else:
                         bench_ids.append(result[i])
@@ -330,8 +334,8 @@ def get_stats(manager_id):
                     #if pick['is_vice_captain']:
                         #vice_captain_id = pick['element']
 
-            captain_id = result[31]
-            vice_captain_id = result[32]
+            captain_id = result[32]
+            vice_captain_id = result[33]
 
             for player_id in pitch_ids:
                 player_id_string = str(player_id[0])
