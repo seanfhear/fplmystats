@@ -236,6 +236,25 @@ def update_weekly_table():
     conn.close()
 
 
+def create_manager_id_table():
+    """
+    Create a seasonal table to hold the manager IDs and corresponding manager and team names
+    Run once at start of season, tables are updated as managers search for their ID
+    """
+    conn = sqlite3.connect(data_file)
+    c = conn.cursor()
+
+    table_name = '{}managerIDs'.format(str(current_season))
+    fields = ['id', 'name', 'team']
+
+    c.execute('CREATE TABLE "{tn}" ({} {fti} PRIMARY KEY , {} {ftt}, {} {ftt})'
+              .format(tn=table_name,
+                      fti=field_type_INT,
+                      ftt=field_type_TEXT,
+                      *fields))
+    conn.close()
+
+
 def create_manager_tables():
     """
     Create weekly tables that hold the necessary data for managers
@@ -319,3 +338,5 @@ def count_database_ids():
     c.execute('SELECT id from "{}"'.format(table_name))
     results = c.fetchall()
     print(len(results))
+
+    conn.close()

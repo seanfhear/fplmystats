@@ -36,15 +36,35 @@ OWN_GOALS_VALUE = -2
 
 def get_name_and_team(manager_id):
     """
+    Check if the manager exists in the database, if not enter them
     Return the name and team name of the manager
     """
     names = namedtuple('names', ('manager_name', 'team_name'))
+
+    conn = sqlite3.connect(data_file)
+    c = conn.cursor()
+    table_name = '{}managerIDs'.format(str(current_season))
+
+    c.execute('SELECT * FROM "{}" WHERE id = {}'.format(table_name, manager_id))
+    result = c.fetchone()
+
+    if result is not None:
+        names.manager_name = result[1]
+        names.team_name = result[2]
+        return names
+
     data_url = manager_info_url + str(manager_id)
     with urllib.request.urlopen('{}'.format(data_url)) as url:
         data = json.loads(url.read().decode())
 
     names.manager_name = data['entry']['player_first_name'] + ' ' + data['entry']['player_last_name']
     names.team_name = data['entry']['name']
+
+    c.execute('INSERT INTO "{}" VALUES ({}, "{}", "{}")'.format(table_name, manager_id, names.manager_name,
+                                                                names.team_name))
+
+    conn.commit()
+    conn.close()
     return names
 
 
@@ -121,8 +141,8 @@ def update_manager_tables(manager_id):
                 weekly_datum.append(transfer_cost)
                 weekly_datum.append(chip)
 
-                c.execute('INSERT INTO "{tn}" VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},'
-                          '{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, "{}")'
+                c.execute('INSERT INTO "{tn}" VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},'
+                          '{},' '{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, "{}")'
                           .format(tn=manager_table, *weekly_datum))
                 week += 1
             except HTTPError:
@@ -192,8 +212,8 @@ def get_stats(manager_id):
     while week <= current_week:
         week_string = str(week)
         weekly_table = '{}week{}'.format(current_season, week_string)
-        picks_table = '{}picks{}'.format(current_season, week_string)
-        picks_url = 'https://fantasy.premierleague.com/drf/entry/{}/event/{}/picks'.format(manager_id, week_string)
+        manager_table = '{}manager{}'.format(current_season, week_string)
+        #picks_url = 'https://fantasy.premierleague.com/drf/entry/{}/event/{}/picks'.format(manager_id, week_string)
 
         pitch_ids = []             # holds ids of players who are on pitch
         bench_ids = []             # holds ids of players who are on bench
@@ -201,11 +221,11 @@ def get_stats(manager_id):
         second_points_list = []    # holds players who didn't play
         points_on_pitch = 0
         bench_points = 0
-        captain_id = 0
+        #captain_id = 0
         captain_name = ''
         captain_points = 0
         captain_played = False
-        vice_captain_id = 0
+        #vice_captain_id = 0
         vice_captain_name = ''
         vice_captain_points = 0
         vice_captain_played = False
@@ -232,15 +252,20 @@ def get_stats(manager_id):
         table_data.positions[week - 1][1] = week
         table_data.team_selection[week - 1][1] = week
 
-        try:
-            with urllib.request.urlopen('{}'.format(picks_url)) as url:
-                data = json.loads(url.read().decode())
+        #try:
+            #with urllib.request.urlopen('{}'.format(picks_url)) as url:
+                #data = json.loads(url.read().decode())
 
+        c.execute('SELECT * FROM "{}" WHERE id = {}'.format(manager_table, manager_id))
+        result = c.fetchone()
+
+        if result is not None:
             active_weeks += 1
             captain_multiplier = 2
             bench_boost = False
 
-            chip = data['active_chip']
+            #chip = data['active_chip']
+            chip = result[37]
             wildcard_number = 1
             if chip == '3xc':
                 table_data.team_selection[week - 1][2] = 'Triple Captain'
@@ -259,12 +284,16 @@ def get_stats(manager_id):
                 wildcard_number += 1
             else:
                 table_data.team_selection[week - 1][2] = '-'
-            table_data.team_selection[week - 1][3] = data['entry_history']['event_transfers_cost']
 
-            week_points = data['entry_history']['points']
+            #table_data.team_selection[week - 1][3] = data['entry_history']['event_transfers_cost']
+            table_data.team_selection[week - 1][3] = result[36]
+
+            #week_points = data['entry_history']['points']
+            week_points = result[33]
             if week_points > highest_points:
                 highest_points = week_points
-            week_rank = data['entry_history']['rank']
+            #week_rank = data['entry_history']['rank']
+            week_rank = result[34]
             if week_rank is not None:
                 if active_weeks == 1:
                     highest_rank = week_rank
@@ -273,24 +302,36 @@ def get_stats(manager_id):
                         highest_rank = week_rank
             total_points += week_points
 
-            total_value = data['entry_history']['value'] / 10.0
+            #total_value = data['entry_history']['value'] / 10.0
+            total_value = result[35]
 
-            for pick in data['picks']:
+            #for pick in data['picks']:
+            for i in range(1, 31, 2):
                 if bench_boost:
-                    pitch_ids.append([pick['element'], pick['multiplier']])
-                    if pick['is_captain']:
-                        captain_id = pick['element']
-                    if pick['is_vice_captain']:
-                        vice_captain_id = pick['element']
+                    #pitch_ids.append([pick['element'], pick['multiplier']])
+                    pitch_ids.append([result[i], result[i+1]])
+
+                    #if pick['is_captain']:
+                        #captain_id = pick['element']
+                    #if pick['is_vice_captain']:
+                        #vice_captain_id = pick['element']
                 else:
-                    if pick['position'] <= 11:
-                        pitch_ids.append([pick['element'], pick['multiplier']])
+                    if i < 23:
+                        pitch_ids.append([result[i], result[i+1]])
                     else:
-                        bench_ids.append(pick['element'])
-                    if pick['is_captain']:
-                        captain_id = pick['element']
-                    if pick['is_vice_captain']:
-                        vice_captain_id = pick['element']
+                        bench_ids.append(result[i])
+                    #if pick['position'] <= 11:
+                        #pitch_ids.append([pick['element'], pick['multiplier']])
+                    #else:
+                        #bench_ids.append(pick['element'])
+
+                    #if pick['is_captain']:
+                        #captain_id = pick['element']
+                    #if pick['is_vice_captain']:
+                        #vice_captain_id = pick['element']
+
+            captain_id = result[31]
+            vice_captain_id = result[32]
 
             for player_id in pitch_ids:
                 player_id_string = str(player_id[0])
@@ -644,7 +685,8 @@ def get_stats(manager_id):
             table_data.max_teams.append(max_points_team)
 
             week += 1
-        except HTTPError:
+        #except HTTPError:
+        else:
             week += 1
 
     table_data.general_number_totals = [n for n in zip(*table_data.general_number)][2:16]

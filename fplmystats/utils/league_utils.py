@@ -98,6 +98,7 @@ def get_stats(league_id):
                 manager_ids.append([entry['entry'], entry['player_name']])
 
         for manager_id in manager_ids:
+            manager_utils.get_name_and_team(manager_id[0])
             data = manager_utils.get_stats(manager_id[0])
 
             if not have_leader:
