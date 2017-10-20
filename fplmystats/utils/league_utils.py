@@ -182,6 +182,9 @@ def get_stats(league_id):
             chips_used_string = ''
             for chip in chips_used:
                 chips_used_string += chip + ' '
+            if chips_used_string == '':
+                chips_used_string = '-'
+
             # team selection
             manager_team_selection_totals = ([0] * 14)
             manager_team_selection_totals[0] = manager_id[0]                   # manager id

@@ -271,19 +271,19 @@ def get_stats(manager_id):
             #chip = data['active_chip']
             chip = result[38]
             wildcard_number = 1
-            if chip == '3xc':
-                table_data.team_selection[week - 1][2] = 'Triple Captain'
+            if chip == 'Triple Captain':
+                table_data.team_selection[week - 1][2] = chip
                 captain_multiplier = 3
                 chips_used.append('TC')
-            elif chip == 'bboost':
-                table_data.team_selection[week - 1][2] = 'Bench Boost'
+            elif chip == 'Bench Boost':
+                table_data.team_selection[week - 1][2] = chip
                 bench_boost = True
                 chips_used.append('BB')
-            elif chip == 'freehit':
-                table_data.team_selection[week - 1][2] = 'Free Hit'
+            elif chip == 'Free Hit':
+                table_data.team_selection[week - 1][2] = chip
                 chips_used.append('FH')
-            elif chip == 'wildcard':
-                table_data.team_selection[week - 1][2] = 'Wildcard'
+            elif chip == 'Wildcard':
+                table_data.team_selection[week - 1][2] = chip
                 chips_used.append(('WC' + str(wildcard_number)))
                 wildcard_number += 1
             else:

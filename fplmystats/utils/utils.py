@@ -14,9 +14,6 @@ with open('/home/admin/fplmystats/fplmystats/utils/current_season.txt') as file:
 data_file = '/home/admin/fplmystats/FPLdb.sqlite'
 # data_file = 'FPLdb.sqlite'
 
-changes_file = '/home/admin/fplmystats/fplmystats/utils/daily_changes.txt'
-# changes_file = 'C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\daily_changes.txt'
-
 fixtures_file = '/home/admin/fplmystats/fplmystats/utils/fixtures.txt'
 # fixtures_file = 'C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\fixtures.txt'
 
@@ -57,6 +54,7 @@ def player_to_string(player_id):
     c.execute('SELECT name FROM "{}" WHERE id = {}'.format(table_name, team_id))
     team_string = c.fetchone()[0]
 
+    conn.close()
     return "NAME: {}; TEAM: {}; POSITION: {}\n".format(player_name, team_string, position_string)
 
 
@@ -121,7 +119,6 @@ def update_player_id_table():
 
     table_name = '{}playerIDs'.format(str(current_season))
     c.execute('SELECT id FROM "{}"'.format(table_name))
-    pre_list = c.fetchall()
     c.execute('DELETE FROM "{}"'.format(table_name))
 
     with urllib.request.urlopen('{}'.format(static_url)) as url:
@@ -145,22 +142,9 @@ def update_player_id_table():
                           tmv=team_id))
 
     c.execute('SELECT id FROM "{}"'.format(table_name))
-    post_list = c.fetchall()
 
     conn.commit()
     conn.close()
-
-    changed_ids = []
-
-    num_new_players = len(post_list) - len(pre_list)
-    while num_new_players > 0:
-        changed_ids.append(post_list[-num_new_players][0])
-        num_new_players -= 1
-
-    with open(changes_file, 'r+') as changes:
-        changes.truncate()
-        for item in changed_ids:
-            changes.write(player_to_string(item))
 
 
 def create_weekly_tables():
@@ -181,6 +165,8 @@ def create_weekly_tables():
                   '{} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft},{} {ft}, {} {ft}, {} {ft}, {} {ft})'
                   .format(tn=table_name, ft=field_type_INT, *fields))
         week += 1
+    conn.commit()
+    conn.close()
 
 
 def update_weekly_table():
@@ -213,6 +199,7 @@ def update_weekly_table():
 
         results = [0] * 15
         results[0] = player_id
+        previous_price = 0.0
         for event in data['history']:
             if event['round'] == current_week:
                 results[1] += event['total_points']
@@ -229,6 +216,14 @@ def update_weekly_table():
                 results[12] += event['own_goals']
                 results[13] += event['bonus']
                 results[14] = event['value'] / 10.0
+
+                # for some reason not all players are updated in time for the new gameweek
+                # using this as a contingency prevents div by zero errors
+                if results[14] == 0:
+                    results = previous_price
+                else:
+                    previous_price = results
+
         c.execute('INSERT INTO "{tn}" VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {})'
                   .format(tn=weekly_table_name, *results))
 
@@ -252,6 +247,7 @@ def create_manager_id_table():
                       fti=field_type_INT,
                       ftt=field_type_TEXT,
                       *fields))
+    conn.commit()
     conn.close()
 
 
@@ -284,6 +280,8 @@ def create_manager_tables():
                           v='value',
                           ch='chip'))
         week += 1
+    conn.commit()
+    conn.close()
 
 
 def get_all_fixtures():
@@ -340,13 +338,4 @@ def count_database_ids():
     results = c.fetchall()
     print(len(results))
 
-    conn.close()
-
-def drop():
-    conn = sqlite3.connect(data_file)
-    c = conn.cursor()
-
-    for i in range(38):
-        table_name = '{}manager{}'.format(str(current_season), str(i+1))
-        c.execute('DROP TABLE "{}"'.format(table_name))
     conn.close()
