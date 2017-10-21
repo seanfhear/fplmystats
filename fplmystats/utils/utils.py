@@ -14,6 +14,9 @@ with open('/home/admin/fplmystats/fplmystats/utils/current_season.txt') as file:
 data_file = '/home/admin/fplmystats/FPLdb.sqlite'
 # data_file = 'FPLdb.sqlite'
 
+data_man_file = '/home/admin/fplmystats/managerdb.sqlite'
+# data_man_file = 'managerdb.sqlite'
+
 fixtures_file = '/home/admin/fplmystats/fplmystats/utils/fixtures.txt'
 # fixtures_file = 'C:\\Users\\seanh\\PycharmProjects\\fplmystats\\fplmystats\\utils\\fixtures.txt'
 
@@ -40,11 +43,11 @@ def player_to_string(player_id):
         player_name = player[1]
 
     position = player[4]
-    if position == 0:
+    if position == 1:
         position_string = "GK"
-    elif position == 1:
-        position_string = "DEF"
     elif position == 2:
+        position_string = "DEF"
+    elif position == 3:
         position_string = "MID"
     else:
         position_string = "FWD"
@@ -236,7 +239,7 @@ def create_manager_id_table():
     Create a seasonal table to hold the manager IDs and corresponding manager and team names
     Run once at start of season, tables are updated as managers search for their ID
     """
-    conn = sqlite3.connect(data_file)
+    conn = sqlite3.connect(data_man_file)
     c = conn.cursor()
 
     table_name = '{}managerIDs'.format(str(current_season))
@@ -256,7 +259,7 @@ def create_manager_tables():
     Create weekly tables that hold the necessary data for managers
     Run once at start of season, tables are updated as managers search for their ID
     """
-    conn = sqlite3.connect(data_file)
+    conn = sqlite3.connect(data_man_file)
     c = conn.cursor()
     week = 1    # always starts at 1
 
@@ -330,7 +333,7 @@ def check_for_fixture():
 
 
 def count_database_ids():
-    conn = sqlite3.connect(data_file)
+    conn = sqlite3.connect(data_man_file)
     c = conn.cursor()
 
     table_name = "{}managerIDs".format(current_season)

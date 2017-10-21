@@ -17,6 +17,9 @@ with open('/home/admin/fplmystats/fplmystats/utils/current_season.txt') as file:
 data_file = '/home/admin/fplmystats/FPLdb.sqlite'
 # data_file = 'FPLdb.sqlite'
 
+data_man_file = '/home/admin/fplmystats/managerdb.sqlite'
+# data_man_file = 'managerdb.sqlite'
+
 MINUTES_LESS_THAN_SIXTY_VALUE = 1
 MINUTES_SIXTY_PLUS_VALUE = 2
 GOAL_GK_DEF_VALUE = 6
@@ -41,7 +44,7 @@ def get_name_and_team(manager_id):
     """
     names = namedtuple('names', ('manager_name', 'team_name'))
 
-    conn = sqlite3.connect(data_file)
+    conn = sqlite3.connect(data_man_file)
     c = conn.cursor()
     table_name = '{}managerIDs'.format(str(current_season))
 
@@ -72,7 +75,7 @@ def update_manager_tables(manager_id):
     """
     Check if the data for the ID is already in the database and if not, put it in
     """
-    conn = sqlite3.connect(data_file)
+    conn = sqlite3.connect(data_man_file)
     c = conn.cursor()
     week = 1  # always starts at 1
     manager_string = str(manager_id)
@@ -175,6 +178,9 @@ def get_stats(manager_id):
 
     conn = sqlite3.connect(data_file)
     c = conn.cursor()
+    conn_man = sqlite3.connect(data_man_file)
+    c_man = conn_man.cursor()
+
     player_table = '{}playerIDs'.format(str(current_season))
     week = 1    # always starts at 1
 
@@ -260,8 +266,8 @@ def get_stats(manager_id):
             #with urllib.request.urlopen('{}'.format(picks_url)) as url:
                 #data = json.loads(url.read().decode())
 
-        c.execute('SELECT * FROM "{}" WHERE id = {}'.format(manager_table, manager_id))
-        result = c.fetchone()
+        c_man.execute('SELECT * FROM "{}" WHERE id = {}'.format(manager_table, manager_id))
+        result = c_man.fetchone()
 
         if result is not None:
             active_weeks += 1
@@ -298,7 +304,7 @@ def get_stats(manager_id):
                 highest_points = week_points
             #week_rank = data['entry_history']['rank']
             week_rank = result[35]
-            if week_rank is not None:
+            if week_rank is not None and week_rank != 0:
                 if active_weeks == 1:
                     highest_rank = week_rank
                 else:
@@ -307,7 +313,7 @@ def get_stats(manager_id):
             total_points += week_points
 
             #total_value = data['entry_history']['value'] / 10.0
-            total_value = result[37]
+            total_value = result[37] / 10.0
 
             #for pick in data['picks']:
             for i in range(2, 32, 2):
@@ -692,6 +698,9 @@ def get_stats(manager_id):
         #except HTTPError:
         else:
             week += 1
+
+    conn.close()
+    conn_man.close()
 
     table_data.general_number_totals = [n for n in zip(*table_data.general_number)][2:16]
     table_data.general_number_totals = [sum(n) for n in table_data.general_number_totals]
