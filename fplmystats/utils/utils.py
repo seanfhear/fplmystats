@@ -223,9 +223,12 @@ def update_weekly_table():
                 # for some reason not all players are updated in time for the new gameweek
                 # using this as a contingency prevents div by zero errors
                 if results[14] == 0:
-                    results = previous_price
+                    if previous_price != 0:
+                        results[14] = previous_price
+                    else:
+                        results[14] = 6.0  # arbitrary number
                 else:
-                    previous_price = results
+                    previous_price = results[14]
 
         c.execute('INSERT INTO "{tn}" VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {})'
                   .format(tn=weekly_table_name, *results))
@@ -328,6 +331,9 @@ def check_for_fixture():
             if kickoff_date == today:
                 kickoff_time = datetime.datetime(year, month, day, hour, minute)
                 if now > kickoff_time and (now - kickoff_time < datetime.timedelta(hours=HOURS)):
+                    update_weekly_table()
+                    return
+                elif now - kickoff_time < datetime.timedelta(hours=1):
                     update_weekly_table()
                     return
 
