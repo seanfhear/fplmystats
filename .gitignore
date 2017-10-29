@@ -1,3 +1,4 @@
 fplmystats/settings.py
 FPLdb.sqlite
+managerdb.sqlite
 .idea/

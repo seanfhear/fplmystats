@@ -17,7 +17,6 @@ $(document).ready(function() {
         "order": [[5, "desc"]],
 
         "columnDefs": [ {
-            "searchable": false,
             "orderable": false,
             "targets": 0
         }]
@@ -31,11 +30,11 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-    $('table.squad-team').DataTable( {
+    var t = $('table.squad-team').DataTable({
         "paging": false,
         "searching": false,
         "bInfo": false,
-        "order": [[1, "desc"]]
+        "order": [[2, "desc"]]
     });
 });
 
@@ -47,7 +46,6 @@ $(document).ready(function() {
         "order": [[2, "desc"]],
 
         "columnDefs": [ {
-            "searchable": false,
             "orderable": false,
             "targets": 0
         }]
@@ -68,7 +66,6 @@ $(document).ready(function() {
         "order": [[2, "desc"]],
 
         "columnDefs": [ {
-            "searchable": false,
             "orderable": false,
             "targets": 0
         }]
@@ -89,7 +86,6 @@ $(document).ready(function() {
         "order": [[1, "asc"]],
 
         "columnDefs": [ {
-            "searchable": false,
             "orderable": false,
             "targets": 0
         }]
@@ -110,7 +106,6 @@ $(document).ready(function() {
         "order": [[11, "desc"]],
 
         "columnDefs": [ {
-            "searchable": false,
             "orderable": false,
             "targets": 0
         }]

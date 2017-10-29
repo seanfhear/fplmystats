@@ -210,10 +210,9 @@ def get_stats(manager_id):
     c.execute('SELECT name from "{}teamIDs"'.format(str(current_season)))
     teams = c.fetchall()
     for team in teams:
-        teams_dict[team[0]] = 0
+        teams_dict[team[0]] = [0, 0]
 
     active_weeks = 0
-    total_points = 0
     highest_points = 0
     highest_rank = 0
 
@@ -310,7 +309,6 @@ def get_stats(manager_id):
                 else:
                     if week_rank < highest_rank:
                         highest_rank = week_rank
-            total_points += week_points
 
             #total_value = data['entry_history']['value'] / 10.0
             total_value = result[37] / 10.0
@@ -369,7 +367,7 @@ def get_stats(manager_id):
 
                 c.execute('SELECT name from "{}teamIDs" WHERE id = {}'.format(current_season, team_id))
                 team_name = c.fetchone()[0]
-                teams_dict[team_name] += 1
+                teams_dict[team_name][0] += 1
 
                 c.execute('SELECT * FROM "{}" WHERE id = {}'.format(weekly_table, player_id_string))
                 player_datum = c.fetchone()
@@ -443,6 +441,7 @@ def get_stats(manager_id):
                     table_data.general_points[week - 1][14] += player_datum[13]                           # bonus points
 
                     player_points_dict[player_name] += player_datum[1] * player_id[1]
+                    teams_dict[team_name][1] += player_datum[1] * player_id[1]
 
                     if player_datum[1] > mvp_points:
                         mvp_points = player_datum[1]
@@ -463,6 +462,7 @@ def get_stats(manager_id):
                         table_data.positions[week - 1][10] += price
                         table_data.positions[week - 1][11] += player_datum[1]
                         formation[2] += 1
+
                 else:
                     utils.update_weekly_table()
                     get_stats(manager_id)
@@ -730,6 +730,8 @@ def get_stats(manager_id):
     table_data.team_selection_totals[7] = sum(entry[13] for entry in table_data.team_selection)   # all lost
     table_data.team_selection_totals[8] = chips_used                                              # chips used
 
+    total_points = sum(entry[11] for entry in table_data.team_selection)
+
     table_data.squad_stats_players = []
     for player in player_apps_xv_dict:
         name = player
@@ -746,6 +748,8 @@ def get_stats(manager_id):
         if player in player_points_dict:
             points = player_points_dict[player]
 
+        percentage_points = round(points / total_points * 100, 2)
+
         # TODO fix negative points ppg & vapm
         points_per_game = 0.0
         if weeks_in_xi != 0:
@@ -755,15 +759,16 @@ def get_stats(manager_id):
         if weeks_in_xi != 0:
             value_added_per_million = round((points_per_game - 2) / player_value, 2)
 
-        table_data.squad_stats_players.append([name, weeks_in_xi, weeks_in_xv, weeks_captain, points,
+        table_data.squad_stats_players.append([name, weeks_in_xi, weeks_in_xv, weeks_captain, points, percentage_points,
                                               points_per_game, value_added_per_million])
 
     table_data.squad_stats_teams = []
     for team in teams_dict:
-        table_data.squad_stats_teams.append([team, teams_dict[team]])
+        percentage_points = round(teams_dict[team][1] / total_points * 100, 2)
+        table_data.squad_stats_teams.append([team, teams_dict[team][0], teams_dict[team][1], percentage_points])
 
     table_data.headers = [0] * 7
-    table_data.headers[0] = sum(entry[11] for entry in table_data.team_selection)
+    table_data.headers[0] = total_points
     table_data.headers[1] = highest_points
     table_data.headers[2] = highest_rank
     table_data.headers[3] = max(player_captain_dict, key=player_captain_dict.get)
