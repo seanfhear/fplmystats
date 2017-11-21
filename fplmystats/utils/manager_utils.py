@@ -406,8 +406,8 @@ def get_stats(manager_id):
                         table_data.general_number[week - 1][2:15], player_datum[1:14])]
 
                     # Populate general points table
-                    table_data.general_points[week - 1][2] += player_datum[1]                               # points
-                    if player_datum[2] == 0:                                                                # minutes
+                    table_data.general_points[week - 1][2] += player_datum[1]                             # points
+                    if player_datum[2] == 0:                                                              # minutes
                         table_data.general_points[week - 1][3] += 0
                     elif player_datum[2] < 60:
                         table_data.general_points[week - 1][3] += MINUTES_LESS_THAN_SIXTY_VALUE
@@ -730,7 +730,7 @@ def get_stats(manager_id):
     table_data.team_selection_totals[7] = sum(entry[13] for entry in table_data.team_selection)   # all lost
     table_data.team_selection_totals[8] = chips_used                                              # chips used
 
-    total_points = sum(entry[11] for entry in table_data.team_selection)
+    total_points = sum(entry[11] for entry in table_data.team_selection) + table_data.team_selection_totals[0]
 
     table_data.squad_stats_players = []
     for player in player_apps_xv_dict:
@@ -768,7 +768,7 @@ def get_stats(manager_id):
         table_data.squad_stats_teams.append([team, teams_dict[team][0], teams_dict[team][1], percentage_points])
 
     table_data.headers = [0] * 7
-    table_data.headers[0] = total_points
+    table_data.headers[0] = total_points - table_data.team_selection_totals[0]
     table_data.headers[1] = highest_points
     table_data.headers[2] = highest_rank
     table_data.headers[3] = max(player_captain_dict, key=player_captain_dict.get)

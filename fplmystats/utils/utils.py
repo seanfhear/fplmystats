@@ -177,64 +177,67 @@ def update_weekly_table():
     Populate the weekly data table with the latest data for that week
     To be run automatically multiple times per day where there is a game
     """
-    with urllib.request.urlopen('{}'.format(static_url)) as static_json:
-        static_data = json.loads(static_json.read().decode())
-    current_week = 0
-    for entry in static_data['events']:
-        if entry['is_current']:
-            current_week = entry['id']
+    try:
+        with urllib.request.urlopen('{}'.format(static_url)) as static_json:
+            static_data = json.loads(static_json.read().decode())
+        current_week = 0
+        for entry in static_data['events']:
+            if entry['is_current']:
+                current_week = entry['id']
 
-    conn = sqlite3.connect(data_file)
-    c = conn.cursor()
-    weekly_table_name = '{}week{}'.format(str(current_season), str(current_week))
-    c.execute('DELETE FROM "{}"'.format(weekly_table_name))
+        conn = sqlite3.connect(data_file)
+        c = conn.cursor()
+        weekly_table_name = '{}week{}'.format(str(current_season), str(current_week))
+        c.execute('DELETE FROM "{}"'.format(weekly_table_name))
 
-    player_table_name = '{}playerIDs'.format(str(current_season))
-    c.execute('SELECT * from "{}"'.format(player_table_name))
+        player_table_name = '{}playerIDs'.format(str(current_season))
+        c.execute('SELECT * from "{}"'.format(player_table_name))
 
-    players = c.fetchall()
-    for player in players:
-        player_id = player[0]
-        player_url = "https://fantasy.premierleague.com/drf/element-summary/{}".format(str(player_id))
+        players = c.fetchall()
+        for player in players:
+            player_id = player[0]
+            player_url = "https://fantasy.premierleague.com/drf/element-summary/{}".format(str(player_id))
 
-        with urllib.request.urlopen('{}'.format(player_url)) as url:
-            data = json.loads(url.read().decode())
+            with urllib.request.urlopen('{}'.format(player_url)) as url:
+                data = json.loads(url.read().decode())
 
-        results = [0] * 15
-        results[0] = player_id
-        previous_price = 0.0
-        for event in data['history']:
-            if event['round'] == current_week:
-                results[1] += event['total_points']
-                results[2] += event['minutes']
-                results[3] += event['goals_scored']
-                results[4] += event['assists']
-                results[5] += event['clean_sheets']
-                results[6] += event['saves']
-                results[7] += event['goals_conceded']
-                results[8] += event['penalties_saved']
-                results[9] += event['yellow_cards']
-                results[10] += event['red_cards']
-                results[11] += event['penalties_missed']
-                results[12] += event['own_goals']
-                results[13] += event['bonus']
-                results[14] = event['value'] / 10.0
+            results = [0] * 15
+            results[0] = player_id
+            previous_price = 0.0
+            for event in data['history']:
+                if event['round'] == current_week:
+                    results[1] += event['total_points']
+                    results[2] += event['minutes']
+                    results[3] += event['goals_scored']
+                    results[4] += event['assists']
+                    results[5] += event['clean_sheets']
+                    results[6] += event['saves']
+                    results[7] += event['goals_conceded']
+                    results[8] += event['penalties_saved']
+                    results[9] += event['yellow_cards']
+                    results[10] += event['red_cards']
+                    results[11] += event['penalties_missed']
+                    results[12] += event['own_goals']
+                    results[13] += event['bonus']
+                    results[14] = event['value'] / 10.0
 
-                # for some reason not all players are updated in time for the new gameweek
-                # using this as a contingency prevents div by zero errors
-                if results[14] == 0:
-                    if previous_price != 0:
-                        results[14] = previous_price
+                    # for some reason not all players are updated in time for the new gameweek
+                    # using this as a contingency prevents div by zero errors
+                    if results[14] == 0:
+                        if previous_price != 0:
+                            results[14] = previous_price
+                        else:
+                            results[14] = 6.0  # arbitrary number
                     else:
-                        results[14] = 6.0  # arbitrary number
-                else:
-                    previous_price = results[14]
+                        previous_price = results[14]
 
-        c.execute('INSERT INTO "{tn}" VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {})'
-                  .format(tn=weekly_table_name, *results))
+            c.execute('INSERT INTO "{tn}" VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {})'
+                      .format(tn=weekly_table_name, *results))
 
-    conn.commit()
-    conn.close()
+            conn.commit()
+            conn.close()
+    except json.JSONDecodeError:
+        ''
 
 
 def create_manager_id_table():
