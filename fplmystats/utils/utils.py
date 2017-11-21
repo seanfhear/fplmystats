@@ -234,8 +234,8 @@ def update_weekly_table():
             c.execute('INSERT INTO "{tn}" VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {})'
                       .format(tn=weekly_table_name, *results))
 
-            conn.commit()
-            conn.close()
+        conn.commit()
+        conn.close()
     except json.JSONDecodeError:
         ''
 
@@ -271,9 +271,9 @@ def create_manager_tables():
 
     while week <= 38:
         table_name = '{}manager{}'.format(str(current_season), str(week))
-        fields = ['id', 'complete', 'pos1', 'mul1', 'pos2', 'mul2', 'pos3', 'mul3', 'pos4', 'mul4', 'pos5', 'mul5', 'pos6', 'mul6',
-                  'pos7', 'mul7', 'pos8', 'mul8', 'pos9', 'mul9', 'pos10', 'mul10', 'pos11', 'mul11', 'pos12', 'mul12',
-                  'pos13', 'mul13', 'pos14', 'mul14', 'pos15', 'mul15']
+        fields = ['id', 'complete', 'pos1', 'mul1', 'pos2', 'mul2', 'pos3', 'mul3', 'pos4', 'mul4', 'pos5', 'mul5',
+                  'pos6', 'mul6', 'pos7', 'mul7', 'pos8', 'mul8', 'pos9', 'mul9', 'pos10', 'mul10', 'pos11', 'mul11',
+                  'pos12', 'mul12', 'pos13', 'mul13', 'pos14', 'mul14', 'pos15', 'mul15']
 
         c.execute('CREATE TABLE "{tn}" ({} {ft} PRIMARY KEY, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft},'
                   '{} {ft},' '{} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft},{} {ft}, {} {ft}, {} {ft}, {} {ft},'

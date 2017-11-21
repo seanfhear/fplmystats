@@ -103,11 +103,6 @@ table {
     border-color: #d4674a !important;
     vertical-align: middle;
 }
-/*
-.overflow-display {
-    overflow: auto;
-}
-*/
 .main-manager-display thead tr th, .main-manager-display tbody tr td {
     padding: 4px;
     border-color: #5085a0;

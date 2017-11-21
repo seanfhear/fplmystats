@@ -203,6 +203,7 @@ def get_stats(manager_id):
     player_apps_xv_dict = {}           # records the number of times a player has appeared in the squad
     player_captain_dict = {}           # records the number of times a player has been captained
     player_points_dict = {}            # records the number of points obtained via each player
+    player_minutes_dict = {}           # records the number of minutes played by each player
     teams_dict = {}                    # records the number of times a player from each team has appeared in the XI
     price_dict = {}                    # holds prices of each player
 
@@ -222,7 +223,6 @@ def get_stats(manager_id):
         week_string = str(week)
         weekly_table = '{}week{}'.format(current_season, week_string)
         manager_table = '{}manager{}'.format(current_season, week_string)
-        #picks_url = 'https://fantasy.premierleague.com/drf/entry/{}/event/{}/picks'.format(manager_id, week_string)
 
         pitch_ids = []             # holds ids of players who are on pitch
         bench_ids = []             # holds ids of players who are on bench
@@ -230,11 +230,9 @@ def get_stats(manager_id):
         second_points_list = []    # holds players who didn't play
         points_on_pitch = 0
         bench_points = 0
-        #captain_id = 0
         captain_name = ''
         captain_points = 0
         captain_played = False
-        #vice_captain_id = 0
         vice_captain_name = ''
         vice_captain_points = 0
         vice_captain_played = False
@@ -261,10 +259,6 @@ def get_stats(manager_id):
         table_data.positions[week - 1][1] = week
         table_data.team_selection[week - 1][1] = week
 
-        #try:
-            #with urllib.request.urlopen('{}'.format(picks_url)) as url:
-                #data = json.loads(url.read().decode())
-
         c_man.execute('SELECT * FROM "{}" WHERE id = {}'.format(manager_table, manager_id))
         result = c_man.fetchone()
 
@@ -273,7 +267,6 @@ def get_stats(manager_id):
             captain_multiplier = 2
             bench_boost = False
 
-            #chip = data['active_chip']
             chip = result[38]
             wildcard_number = 1
             if chip == 'Triple Captain':
@@ -294,14 +287,12 @@ def get_stats(manager_id):
             else:
                 table_data.team_selection[week - 1][2] = '-'
 
-            #table_data.team_selection[week - 1][3] = data['entry_history']['event_transfers_cost']
             table_data.team_selection[week - 1][3] = result[36]
 
-            #week_points = data['entry_history']['points']
             week_points = result[34]
             if week_points > highest_points:
                 highest_points = week_points
-            #week_rank = data['entry_history']['rank']
+
             week_rank = result[35]
             if week_rank is not None and week_rank != 0:
                 if active_weeks == 1:
@@ -310,33 +301,16 @@ def get_stats(manager_id):
                     if week_rank < highest_rank:
                         highest_rank = week_rank
 
-            #total_value = data['entry_history']['value'] / 10.0
             total_value = result[37] / 10.0
 
-            #for pick in data['picks']:
             for i in range(2, 32, 2):
                 if bench_boost:
-                    #pitch_ids.append([pick['element'], pick['multiplier']])
                     pitch_ids.append([result[i], result[i+1]])
-
-                    #if pick['is_captain']:
-                        #captain_id = pick['element']
-                    #if pick['is_vice_captain']:
-                        #vice_captain_id = pick['element']
                 else:
                     if i < 24:
                         pitch_ids.append([result[i], result[i+1]])
                     else:
                         bench_ids.append(result[i])
-                    #if pick['position'] <= 11:
-                        #pitch_ids.append([pick['element'], pick['multiplier']])
-                    #else:
-                        #bench_ids.append(pick['element'])
-
-                    #if pick['is_captain']:
-                        #captain_id = pick['element']
-                    #if pick['is_vice_captain']:
-                        #vice_captain_id = pick['element']
 
             captain_id = result[32]
             vice_captain_id = result[33]
@@ -359,6 +333,7 @@ def get_stats(manager_id):
                 if player_name not in player_points_dict:
                     player_points_dict[player_name] = 0
                     player_apps_xv_dict[player_name] = 0
+                    player_minutes_dict[player_name] = 0
                 if player_name not in player_apps_xi_dict:
                     player_apps_xi_dict[player_name] = 0
 
@@ -433,7 +408,7 @@ def get_stats(manager_id):
                     if position == 1 or position == 2:                                                    # goals conc
                         table_data.general_points[week - 1][8] += math.ceil(player_datum[7] / GOALS_CONCEDED_DIVIDER)
 
-                    table_data.general_points[week - 1][9] += player_datum[8] * PENALTIES_SAVED_VALUE     # penes saved
+                    table_data.general_points[week - 1][9] += player_datum[8] * PENALTIES_SAVED_VALUE     # pens saved
                     table_data.general_points[week - 1][10] += player_datum[9] * YELLOW_CARDS_VALUE       # yellows
                     table_data.general_points[week - 1][11] += player_datum[10] * RED_CARDS_VALUE         # reds
                     table_data.general_points[week - 1][12] += player_datum[11] * PENALTIES_MISSED_VALUE  # pens missed
@@ -441,6 +416,9 @@ def get_stats(manager_id):
                     table_data.general_points[week - 1][14] += player_datum[13]                           # bonus points
 
                     player_points_dict[player_name] += player_datum[1] * player_id[1]
+                    if player_name == "Robert Elliot":
+                        print(player_datum[2])
+                    player_minutes_dict[player_name] += player_datum[2]
                     teams_dict[team_name][1] += player_datum[1] * player_id[1]
 
                     if player_datum[1] > mvp_points:
@@ -479,7 +457,7 @@ def get_stats(manager_id):
                           .format(player_table, player_id_string))
                 result = c.fetchone()
 
-                # set name equal to first second + second name or webname if webname different to second name
+                # set name equal to first name + second name or webname if webname different to second name
                 if result[0] == result[2]:
                     player_name = result[1] + ' ' + result[2]
                 else:
@@ -489,6 +467,7 @@ def get_stats(manager_id):
                 if player_name not in player_points_dict:
                     player_points_dict[player_name] = 0
                     player_apps_xv_dict[player_name] = 0
+                    player_minutes_dict[player_name] = 0
 
                 player_apps_xv_dict[player_name] += 1
 
@@ -695,7 +674,6 @@ def get_stats(manager_id):
             table_data.max_teams.append(max_points_team)
 
             week += 1
-        #except HTTPError:
         else:
             week += 1
 
@@ -738,29 +716,30 @@ def get_stats(manager_id):
         weeks_in_xi = 0
         weeks_in_xv = player_apps_xv_dict[player]
         weeks_captain = 0
+        minutes = 0
         points = 0
         player_value = round(price_dict[player][0] / price_dict[player][1], 1)
 
         if player in player_apps_xi_dict:
             weeks_in_xi = player_apps_xi_dict[player]
+            points = player_points_dict[player]
+            minutes = player_minutes_dict[player]
         if player in player_captain_dict:
             weeks_captain = player_captain_dict[player]
-        if player in player_points_dict:
-            points = player_points_dict[player]
 
         percentage_points = round(points / total_points * 100, 2)
 
         # TODO fix negative points ppg & vapm
         points_per_game = 0.0
-        if weeks_in_xi != 0:
-            points_per_game = round(points / weeks_in_xi, 1)
-
+        minutes_per_game = 0.0
         value_added_per_million = 0.0
         if weeks_in_xi != 0:
+            points_per_game = round(points / weeks_in_xi, 1)
+            minutes_per_game = round(minutes / weeks_in_xi, 1)
             value_added_per_million = round((points_per_game - 2) / player_value, 2)
 
-        table_data.squad_stats_players.append([name, weeks_in_xi, weeks_in_xv, weeks_captain, points, percentage_points,
-                                              points_per_game, value_added_per_million])
+        table_data.squad_stats_players.append([name, weeks_in_xi, weeks_in_xv, weeks_captain, minutes_per_game, points,
+                                               percentage_points, points_per_game, value_added_per_million])
 
     table_data.squad_stats_teams = []
     for team in teams_dict:
