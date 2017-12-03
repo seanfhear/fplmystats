@@ -205,6 +205,7 @@ def get_stats(manager_id):
     player_points_dict = {}            # records the number of points obtained via each player
     player_minutes_dict = {}           # records the number of minutes played by each player
     teams_dict = {}                    # records the number of times a player from each team has appeared in the XI
+    teams_unique_dict = {}             # records the number of unique players from each team that have been in the XI
     price_dict = {}                    # holds prices of each player
 
     # populate teams dictionary with all 20 teams
@@ -212,6 +213,7 @@ def get_stats(manager_id):
     teams = c.fetchall()
     for team in teams:
         teams_dict[team[0]] = [0, 0]
+        teams_unique_dict[team[0]] = 0
 
     active_weeks = 0
     highest_points = 0
@@ -330,19 +332,20 @@ def get_stats(manager_id):
                 position = result[3]
                 team_id = result[4]
 
+                c.execute('SELECT name from "{}teamIDs" WHERE id = {}'.format(current_season, team_id))
+                team_name = c.fetchone()[0]
+                teams_dict[team_name][0] += 1
+
                 if player_name not in player_points_dict:
                     player_points_dict[player_name] = 0
                     player_apps_xv_dict[player_name] = 0
                     player_minutes_dict[player_name] = 0
+                    teams_unique_dict[team_name] += 1
                 if player_name not in player_apps_xi_dict:
                     player_apps_xi_dict[player_name] = 0
 
                 player_apps_xi_dict[player_name] += 1
                 player_apps_xv_dict[player_name] += 1
-
-                c.execute('SELECT name from "{}teamIDs" WHERE id = {}'.format(current_season, team_id))
-                team_name = c.fetchone()[0]
-                teams_dict[team_name][0] += 1
 
                 c.execute('SELECT * FROM "{}" WHERE id = {}'.format(weekly_table, player_id_string))
                 player_datum = c.fetchone()
@@ -416,8 +419,6 @@ def get_stats(manager_id):
                     table_data.general_points[week - 1][14] += player_datum[13]                           # bonus points
 
                     player_points_dict[player_name] += player_datum[1] * player_id[1]
-                    if player_name == "Robert Elliot":
-                        print(player_datum[2])
                     player_minutes_dict[player_name] += player_datum[2]
                     teams_dict[team_name][1] += player_datum[1] * player_id[1]
 
@@ -453,7 +454,7 @@ def get_stats(manager_id):
             for player_id in bench_ids:
                 player_id_string = str(player_id)
 
-                c.execute('SELECT webname, firstname, secondname, position FROM "{}" WHERE id = {}'
+                c.execute('SELECT webname, firstname, secondname, position, teamID FROM "{}" WHERE id = {}'
                           .format(player_table, player_id_string))
                 result = c.fetchone()
 
@@ -463,11 +464,16 @@ def get_stats(manager_id):
                 else:
                     player_name = result[0]
                 position = result[3]
+                team_id = result[4]
+
+                c.execute('SELECT name from "{}teamIDs" WHERE id = {}'.format(current_season, team_id))
+                team_name = c.fetchone()[0]
 
                 if player_name not in player_points_dict:
                     player_points_dict[player_name] = 0
                     player_apps_xv_dict[player_name] = 0
                     player_minutes_dict[player_name] = 0
+                    teams_unique_dict[team_name] += 1
 
                 player_apps_xv_dict[player_name] += 1
 
@@ -744,7 +750,7 @@ def get_stats(manager_id):
     table_data.squad_stats_teams = []
     for team in teams_dict:
         percentage_points = round(teams_dict[team][1] / total_points * 100, 2)
-        table_data.squad_stats_teams.append([team, teams_dict[team][0], teams_dict[team][1], percentage_points])
+        table_data.squad_stats_teams.append([team, teams_dict[team][0], teams_unique_dict[team], teams_dict[team][1], percentage_points])
 
     table_data.headers = [0] * 7
     table_data.headers[0] = total_points - table_data.team_selection_totals[0]

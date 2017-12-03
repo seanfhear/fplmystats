@@ -34,7 +34,7 @@ $(document).ready(function() {
         "paging": false,
         "searching": false,
         "bInfo": false,
-        "order": [[2, "desc"]]
+        "order": [[3, "desc"]]
     });
 });
 
