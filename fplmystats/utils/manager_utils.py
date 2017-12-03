@@ -750,7 +750,8 @@ def get_stats(manager_id):
     table_data.squad_stats_teams = []
     for team in teams_dict:
         percentage_points = round(teams_dict[team][1] / total_points * 100, 2)
-        table_data.squad_stats_teams.append([team, teams_dict[team][0], teams_unique_dict[team], teams_dict[team][1], percentage_points])
+        table_data.squad_stats_teams.append([team, teams_unique_dict[team], teams_dict[team][0], teams_dict[team][1],
+                                             percentage_points])
 
     table_data.headers = [0] * 7
     table_data.headers[0] = total_points - table_data.team_selection_totals[0]
