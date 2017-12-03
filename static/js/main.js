@@ -14,7 +14,7 @@ $(document).ready(function() {
         "paging": false,
         "searching": false,
         "bInfo": false,
-        "order": [[6, "desc"]],
+        "order": [[5, "desc"]],
 
         "columnDefs": [ {
             "orderable": false,

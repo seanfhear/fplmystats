@@ -744,7 +744,7 @@ def get_stats(manager_id):
             minutes_per_game = round(minutes / weeks_in_xi, 1)
             value_added_per_million = round((points_per_game - 2) / player_value, 2)
 
-        table_data.squad_stats_players.append([name, weeks_in_xi, weeks_in_xv, weeks_captain, minutes_per_game, points,
+        table_data.squad_stats_players.append([name, weeks_in_xi, weeks_in_xv, weeks_captain, points,
                                                percentage_points, points_per_game, value_added_per_million])
 
     table_data.squad_stats_teams = []
