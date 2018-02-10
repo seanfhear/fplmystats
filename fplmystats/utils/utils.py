@@ -235,7 +235,8 @@ def update_weekly_table():
                 c.execute('INSERT INTO "{tn}" VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {})'
                           .format(tn=weekly_table_name, *results))
             except:
-                ''
+                conn.commit()
+                conn.close()
 
         conn.commit()
         conn.close()
@@ -315,6 +316,7 @@ def get_all_fixtures():
         fixtures.truncate()
         for item in fixtures_list:
             fixtures.write(item + '\n')
+    fixtures.close()
 
 
 def check_for_fixture():
@@ -332,6 +334,7 @@ def check_for_fixture():
             day = int(item[8:10])
             hour = int(item[11:13])
             minute = int(item[14:16])
+            fixtures.close()
 
             kickoff_date = datetime.date(year, month, day)
             if kickoff_date == today:
