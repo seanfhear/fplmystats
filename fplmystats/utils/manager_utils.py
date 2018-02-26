@@ -218,6 +218,7 @@ def get_stats(manager_id):
     active_weeks = 0
     highest_points = 0
     highest_rank = 0
+    wildcard_number = 1
 
     chips_used = []
 
@@ -270,7 +271,6 @@ def get_stats(manager_id):
             bench_boost = False
 
             chip = result[38]
-            wildcard_number = 1
             if chip == 'Triple Captain':
                 table_data.team_selection[week - 1][2] = chip
                 captain_multiplier = 3
@@ -284,8 +284,12 @@ def get_stats(manager_id):
                 chips_used.append('FH')
             elif chip == 'Wildcard':
                 table_data.team_selection[week - 1][2] = chip
-                chips_used.append(('WC' + str(wildcard_number)))
-                wildcard_number += 1
+                if week <= 22:
+                    chips_used.append(('WC' + str(1)))
+                else:
+                    chips_used.append(('WC' + str(2)))
+
+                #wildcard_number += 1
             else:
                 table_data.team_selection[week - 1][2] = '-'
 
