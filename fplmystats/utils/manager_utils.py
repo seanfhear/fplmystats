@@ -284,7 +284,7 @@ def get_stats(manager_id):
                 chips_used.append('FH')
             elif chip == 'Wildcard':
                 table_data.team_selection[week - 1][2] = chip
-                if week <= 22:
+                if week < 22:
                     chips_used.append(('WC' + str(1)))
                 else:
                     chips_used.append(('WC' + str(2)))
