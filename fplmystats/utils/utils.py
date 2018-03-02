@@ -308,9 +308,10 @@ def get_all_fixtures():
     fixtures_list = []
 
     for item in data:
-        kickoff_time = item['kickoff_time'][0:10] + '-' + item['kickoff_time_formatted'][-5:]
-        if kickoff_time not in fixtures_list:
-            fixtures_list.append(kickoff_time)
+        if item['kickoff_time'] is not None:
+            kickoff_time = item['kickoff_time'][0:10] + '-' + item['kickoff_time_formatted'][-5:]
+            if kickoff_time not in fixtures_list:
+                fixtures_list.append(kickoff_time)
 
     with open(fixtures_file, 'r+') as fixtures:
         fixtures.truncate()
@@ -334,7 +335,6 @@ def check_for_fixture():
             day = int(item[8:10])
             hour = int(item[11:13])
             minute = int(item[14:16])
-            fixtures.close()
 
             kickoff_date = datetime.date(year, month, day)
             if kickoff_date == today:
