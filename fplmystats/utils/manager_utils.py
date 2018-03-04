@@ -284,6 +284,8 @@ def get_stats(manager_id):
                 chips_used.append('FH')
             elif chip == 'Wildcard':
                 table_data.team_selection[week - 1][2] = chip
+
+                #TODO change this for future seasons
                 if week < 22:
                     chips_used.append(('WC' + str(1)))
                 else:
@@ -447,8 +449,9 @@ def get_stats(manager_id):
                         formation[2] += 1
 
                 else:
-                    utils.update_weekly_table()
-                    get_stats(manager_id)
+                    ''
+                    #utils.update_weekly_table()
+                    #get_stats(manager_id)
 
             table_data.positions[week - 1][4] = round(table_data.positions[week - 1][4], 1)
             table_data.positions[week - 1][6] = round(table_data.positions[week - 1][6], 1)
