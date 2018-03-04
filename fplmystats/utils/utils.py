@@ -144,7 +144,7 @@ def update_player_id_table():
                           psv=position,
                           tmv=team_id))
 
-    c.execute('SELECT id FROM "{}"'.format(table_name))
+    #c.execute('SELECT id FROM "{}"'.format(table_name))
 
     conn.commit()
     conn.close()
@@ -177,6 +177,8 @@ def update_weekly_table():
     Populate the weekly data table with the latest data for that week
     To be run automatically multiple times per day where there is a game
     """
+    conn = sqlite3.connect(data_file)
+    c = conn.cursor()
     try:
         with urllib.request.urlopen('{}'.format(static_url)) as static_json:
             static_data = json.loads(static_json.read().decode())
@@ -185,8 +187,6 @@ def update_weekly_table():
             if entry['is_current']:
                 current_week = entry['id']
 
-        conn = sqlite3.connect(data_file)
-        c = conn.cursor()
         weekly_table_name = '{}week{}'.format(str(current_season), str(current_week))
         c.execute('DELETE FROM "{}"'.format(weekly_table_name))
 
@@ -241,7 +241,8 @@ def update_weekly_table():
         conn.commit()
         conn.close()
     except json.JSONDecodeError:
-        ''
+        conn.commit()
+        conn.close()
 
 
 def create_manager_id_table():
