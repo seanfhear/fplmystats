@@ -235,8 +235,7 @@ def update_weekly_table():
                 c.execute('INSERT INTO "{tn}" VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {})'
                           .format(tn=weekly_table_name, *results))
             except:
-                conn.commit()
-                conn.close()
+                ''
 
         conn.commit()
         conn.close()
@@ -342,10 +341,6 @@ def check_for_fixture():
                 kickoff_time = datetime.datetime(year, month, day, hour, minute)
                 if now > kickoff_time and (now - kickoff_time < datetime.timedelta(hours=HOURS)):
                     update_weekly_table()
-                    return
-                elif now - kickoff_time < datetime.timedelta(hours=1):
-                    update_weekly_table()
-                    return
 
 
 def count_database_ids():
