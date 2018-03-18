@@ -222,15 +222,9 @@ def update_weekly_table():
                         results[13] += event['bonus']
                         results[14] = event['value'] / 10.0
 
-                        # for some reason not all players are updated in time for the new gameweek
-                        # using this as a contingency prevents div by zero errors
-                        if results[14] == 0:
-                            if previous_price != 0:
-                                results[14] = previous_price
-                            else:
-                                results[14] = 6.0  # arbitrary number
-                        else:
-                            previous_price = results[14]
+                # contingency to prevent div by zero errors
+                if results[14] == 0:
+                    results[14] = 6.0  # arbitrary number
 
                 c.execute('INSERT INTO "{tn}" VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {})'
                           .format(tn=weekly_table_name, *results))
