@@ -732,6 +732,8 @@ def get_stats(manager_id):
         minutes = 0
         points = 0
         player_value = round(price_dict[player][0] / price_dict[player][1], 1)
+        if player_value == 0:
+            player_value = 8.0
 
         if player in player_apps_xi_dict:
             weeks_in_xi = player_apps_xi_dict[player]
