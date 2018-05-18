@@ -207,6 +207,7 @@
                             <select class="form-control" title="Analysis View" data-target=".table-view">
                                 <option data-show=".general">General Statistics</option>
                                 <option data-show=".positions">Positions</option>
+                                <option data-show=".ranking">Ranking</option>
                                 <option data-show=".team-selection">Team Selection</option>
                                 <option data-show=".squad-stats">Squad Statistics</option>
                             </select>
@@ -320,6 +321,44 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="ranking hide">
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-8">
+                                    <br>
+                                    <label for="summary" style="color: white">Totals:</label>
+                                    <table class="table-bordered top-manager-display" style="width: 100%; color: white; text-align: center; font-size: 120%">
+                                        <tr style="vertical-align: bottom">
+                                            <td style="border-bottom: none">Avg Total Budget</td>
+                                            <td style="border-bottom: none">Avg GK Budget</td>
+                                            <td style="border-bottom: none">GK Points</td>
+                                            <td style="border-bottom: none">Avg DEF Budget</td>
+                                            <td style="border-bottom: none">DEF Points</td>
+                                        </tr>
+                                        <tr style="color: #c4dfe6; vertical-align: top">
+                                            {% for item in positions_totals|slice:"0:5" %}
+                                                <td style="border-top: none">{{ item }}</td>
+                                            {% endfor %}
+                                        </tr>
+                                        <tr>
+                                            <td style="border-bottom: none">Avg Bench Budget</td>
+                                            <td style="border-bottom: none">Avg MID Budget</td>
+                                            <td style="border-bottom: none">MID Points</td>
+                                            <td style="border-bottom: none">Avg FWD Budget</td>
+                                            <td style="border-bottom: none">FWD Points</td>
+                                        </tr>
+                                        <tr style="color: #c4dfe6; vertical-align: top">
+                                            {% for item in positions_totals|slice:"5:10" %}
+                                                <td style="border-top: none">{{ item }}</td>
+                                            {% endfor %}
+                                        </tr>
+                                    </table>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="team-selection hide">
                             <div class="row">
                                 <div class="col-md-4"></div>
@@ -543,6 +582,81 @@
                             </table>
                             <br>
                         </div>
+
+                        <div class="ranking hide overflow-display">
+                            <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#positionModal" class="manager-link">here</a> for an explanation of each column.</p>
+                            <div class="modal fade" id="positionModal" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content" style="background-color: #c4dfe6">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h3 class="modal-title" style="text-align: center; color: #1c4d66">Positions</h3>
+                                        </div>
+                                        <div class="modal-body" style="color: #1c4d66">
+                                            <p style="color: #1c4d66">Note: The figures used for the budgets are the market values of each player at the Gameweek deadline, not the price paid by the manager for each player.</p>
+                                            <br>
+                                            <h4>Game Week</h4>
+                                            <ul><li>The Gameweek number.</li></ul>
+                                            <h4>Formation</h4>
+                                            <ul><li>The formation used that week. If automatic substitutions are applied then the formation may differ from what was initially intended by the manager.</li></ul>
+                                            <h4>Total Budget</h4>
+                                            <ul><li>Total team value, including money in the bank, as at the gameweek deadline.</li></ul>
+                                            <h4>Points From GK</h4>
+                                            <ul><li>Total points obtained from the Goalkeeper.</li></ul>
+                                            <h4>GK Budget</h4>
+                                            <ul><li>Value of the Goalkeeper on the pitch.</li></ul>
+                                            <h4>Points From DEF</h4>
+                                            <ul><li>Total points obtained from the Defenders.</li></ul>
+                                            <h4>DEF Budget</h4>
+                                            <ul><li>Total value of all the Defenders on the pitch.</li></ul>
+                                            <h4>Points From MID</h4>
+                                            <ul><li>Total points obtained from the Midfielders.</li></ul>
+                                            <h4>MID Budget</h4>
+                                            <ul><li>Total value of all the Midfielders on the pitch.</li></ul>
+                                            <h4>Points From FWD</h4>
+                                            <ul><li>Total points obtained from the Forwards.</li></ul>
+                                            <h4>FWD Budget</h4>
+                                            <ul><li>Total value of all the Forwards on the pitch.</li></ul>
+                                            <h4>Bench Budget</h4>
+                                            <ul><li>Total value of all the players on the bench.</li></ul>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn" data-dismiss="modal" style="background-color: #c4dfe6; color: #1c4d66">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <table id="" class="weekly table-hover main-manager-display" style="text-align: center; width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th>Game<br />Week</th>
+                                        <th>Formation</th>
+                                        <th>Total<br />Budget</th>
+                                        <th>GK<br />Budget</th>
+                                        <th>Points<br />From GK</th>
+                                        <th>DEF<br />Budget</th>
+                                        <th>Points<br />From DEF</th>
+                                        <th>MID<br />Budget</th>
+                                        <th>Points<br />From MID</th>
+                                        <th>FWD<br />Budget</th>
+                                        <th>Points<br />From FWD</th>
+                                        <th>Bench<br />Budget</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for week in positions %}
+                                        <tr>
+                                            <td><a href="{{ week.0 }}" class="manager-link">{{ week.1 }}</a></td>
+                                            {% for item in week|slice:"2:" %}
+                                                <td>{{ item }}</td>
+                                            {% endfor %}
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            <br>
+                        </div>
+
                         <div class="team-selection hide overflow-display">
                             <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#teamModal" class="manager-link">here</a> for an explanation of each column.</p>
                             <div class="modal fade" id="teamModal" role="dialog">
