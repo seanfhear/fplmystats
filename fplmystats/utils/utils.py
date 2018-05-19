@@ -204,7 +204,6 @@ def update_weekly_table():
 
                 results = [0] * 15
                 results[0] = player_id
-                previous_price = 0.0
                 for event in data['history']:
                     if event['round'] == current_week:
                         results[1] += event['total_points']
@@ -225,6 +224,9 @@ def update_weekly_table():
                 # contingency to prevent div by zero errors
                 if results[14] == 0:
                     results[14] = 6.0  # arbitrary number
+                    #TODO implement a fix that finds the latest value for a player
+
+
 
                 c.execute('INSERT INTO "{tn}" VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {})'
                           .format(tn=weekly_table_name, *results))
@@ -274,21 +276,72 @@ def create_manager_tables():
                   'pos12', 'mul12', 'pos13', 'mul13', 'pos14', 'mul14', 'pos15', 'mul15']
 
         c.execute('CREATE TABLE "{tn}" ({} {ft} PRIMARY KEY, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft},'
-                  '{} {ft},' '{} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft},{} {ft}, {} {ft}, {} {ft}, {} {ft},'
-                  '{} {ft},' '{} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft},'
-                  '{} {ft},' '{} {ft}, {} {ft}, {c} {ft}, {vc} {ft}, {p} {ft}, {r} {ft}, {t} {ft}, {v} {ft},'
+                  '{} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft},{} {ft}, {} {ft}, {} {ft}, {} {ft},'
+                  '{} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft}, {} {ft},'
+                  '{} {ft}, {} {ft}, {} {ft}, {c} {ft}, {vc} {ft}, {p} {ft}, {r} {ft}, {ovr} {ft}, {t} {ft}, {v} {ft},'
                   '{ch} {ftt})'
                   .format(tn=table_name, ft=field_type_INT, ftt=field_type_TEXT, *fields,
                           c='captain',
                           vc='vicecaptain',
                           p='points',
                           r='rank',
+                          ovr='overall_rank',
                           t='transfercost',
                           v='value',
                           ch='chip'))
         week += 1
     conn.commit()
     conn.close()
+
+
+def create_scoring_table():
+    """
+    Create table that holds the weekly average and highest scores
+    Run once at start of season, table is updated periodically
+    """
+    conn = sqlite3.connect(data_man_file)
+    c = conn.cursor()
+
+    table_name = '{}scoring'.format(str(current_season))
+    fields = ['week', 'averegescore', 'hiscore', 'hiscoreid']
+
+    c.execute('CREATE TABLE "{tn}" ({} {ft} PRIMARY KEY, {} {ft}, {} {ft}, {} {ft})'
+              .format(tn=table_name, ft=field_type_INT, *fields))
+
+    conn.commit()
+    conn.close()
+
+
+def update_scoring_table():
+    """
+    Populate the scoring table
+    """
+    conn = sqlite3.connect(data_man_file)
+    c = conn.cursor()
+    try:
+        with urllib.request.urlopen('{}'.format(static_url)) as static_json:
+            static_data = json.loads(static_json.read().decode())
+        current_week = 0
+        average_score = 0
+        highest_score = 0
+        highest_score_id = 0
+        for entry in static_data['events']:
+            if entry['is_current']:
+                current_week = entry['id']
+                average_score = entry['average_entry_score']
+                highest_score = entry['highest_score']
+                highest_score_id = entry['highest_scoring_entry']
+
+        scoring_table_name = '{}scoring'.format(str(current_season))
+        c.execute('DELETE FROM "{}" WHERE week={}'.format(scoring_table_name, current_week))
+        c.execute('INSERT INTO "{}" VALUES ({}, {}, {}, {})'.format(scoring_table_name, current_week, average_score,
+                                                                    highest_score, highest_score_id))
+
+        conn.commit()
+        conn.close()
+    except json.JSONDecodeError:
+        conn.commit()
+        conn.close()
 
 
 def get_all_fixtures():
@@ -317,7 +370,7 @@ def get_all_fixtures():
 def check_for_fixture():
     """
     Updates the weekly table if there is a kickoff within the last 4 hours
-    Run automatically every 15 minutes
+    Run automatically every n minutes
     """
 
     today = datetime.date.today()
@@ -337,13 +390,12 @@ def check_for_fixture():
                     update_weekly_table()
 
 
-def count_database_ids():
+def add_ovr_rank():
     conn = sqlite3.connect(data_man_file)
     c = conn.cursor()
 
-    table_name = "{}managerIDs".format(current_season)
-    c.execute('SELECT id from "{}"'.format(table_name))
-    results = c.fetchall()
-    print(len(results))
+    for i in range(38):
 
+        table_name = "{}manager{}".format(current_season, i+1)
+        c.execute('ALTER TABLE "{}" ADD COLUMN overallrank INTEGER'.format(table_name))
     conn.close()
