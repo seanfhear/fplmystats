@@ -20,6 +20,9 @@ data_file = '/home/admin/fplmystats/FPLdb.sqlite'
 data_man_file = '/home/admin/fplmystats/managerdb.sqlite'
 # data_man_file = 'managerdb.sqlite'
 
+SEASON_FINISHED = True
+MAX_WEEK = 39
+
 MINUTES_LESS_THAN_SIXTY_VALUE = 1
 MINUTES_SIXTY_PLUS_VALUE = 2
 GOAL_GK_DEF_VALUE = 6
@@ -80,14 +83,17 @@ def update_manager_tables(manager_id):
     week = 1  # always starts at 1
     manager_string = str(manager_id)
 
-    with urllib.request.urlopen('{}'.format(static_url)) as static_json:
-        static_data = json.loads(static_json.read().decode())
     current_week = 0
-    for event in static_data['events']:
-        if event['is_current']:
-            current_week = event['id']
+    if SEASON_FINISHED:
+        current_week = MAX_WEEK
+    else:
+        with urllib.request.urlopen('{}'.format(static_url)) as static_json:
+            static_data = json.loads(static_json.read().decode())
+        for event in static_data['events']:
+            if event['is_current']:
+                current_week = event['id']
 
-    while week <= current_week:
+    while week <= current_week and week < MAX_WEEK:
         week_string = str(week)
         manager_table = '{}manager{}'.format(current_season, week_string)
         picks_url = 'https://fantasy.premierleague.com/drf/entry/{}/event/{}/picks'.format(manager_id, week_string)
@@ -123,6 +129,7 @@ def update_manager_tables(manager_id):
 
                 week_points = data['entry_history']['points']
                 week_rank = data['entry_history']['rank']
+                week_overall_rank = data['entry_history']['overall_rank']
                 if week_rank is None:
                     week_rank = 0
                 total_value = data['entry_history']['value']
@@ -147,9 +154,11 @@ def update_manager_tables(manager_id):
                 weekly_datum.append(transfer_cost)
                 weekly_datum.append(total_value)
                 weekly_datum.append(chip)
+                weekly_datum.append(week_overall_rank)
 
-                c.execute('INSERT INTO "{tn}" VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},'
-                          '{},' '{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, "{}")'
+                c.execute('INSERT INTO "{tn}" VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},'
+                          '{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},'
+                          '"{}", {})'
                           .format(tn=manager_table, *weekly_datum))
                 week += 1
             except HTTPError:
@@ -169,12 +178,15 @@ def get_stats(manager_id):
                                            'team_selection_totals', 'max_teams', 'squad_stats_players',
                                            'squad_stats_teams'))
 
-    with urllib.request.urlopen('{}'.format(static_url)) as static_json:
-        static_data = json.loads(static_json.read().decode())
     current_week = 0
-    for event in static_data['events']:
-        if event['is_current']:
-            current_week = event['id']
+    if SEASON_FINISHED:
+        current_week = MAX_WEEK
+    else:
+        with urllib.request.urlopen('{}'.format(static_url)) as static_json:
+            static_data = json.loads(static_json.read().decode())
+        for event in static_data['events']:
+            if event['is_current']:
+                current_week = event['id']
 
     conn = sqlite3.connect(data_file)
     c = conn.cursor()
@@ -218,11 +230,10 @@ def get_stats(manager_id):
     active_weeks = 0
     highest_points = 0
     highest_rank = 0
-    wildcard_number = 1
 
     chips_used = []
 
-    while week <= current_week:
+    while week <= current_week and week < MAX_WEEK:
         week_string = str(week)
         weekly_table = '{}week{}'.format(current_season, week_string)
         manager_table = '{}manager{}'.format(current_season, week_string)
@@ -290,8 +301,6 @@ def get_stats(manager_id):
                     chips_used.append(('WC' + str(1)))
                 else:
                     chips_used.append(('WC' + str(2)))
-
-                #wildcard_number += 1
             else:
                 table_data.team_selection[week - 1][2] = '-'
 

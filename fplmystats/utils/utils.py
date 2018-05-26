@@ -24,6 +24,7 @@ field_type_INT = 'INTEGER'
 field_type_TEXT = 'TEXT'
 
 HOURS = 4  # number of hours since kickoff to still update table
+NUM_WEEKS = 38
 
 
 def player_to_string(player_id):
@@ -159,7 +160,7 @@ def create_weekly_tables():
     c = conn.cursor()
     week = 1    # always starts at 1
 
-    while week <= 38:
+    while week <= NUM_WEEKS:
         table_name = '{}week{}'.format(str(current_season), str(week))
         fields = ['id', 'points', 'minutes', 'goals', 'assists', 'cleansheets', 'saves',
                   'goalsconceded', 'pensaves', 'yellows', 'reds', 'penmisses', 'owngoals', 'bonus', 'price']
@@ -269,7 +270,7 @@ def create_manager_tables():
     c = conn.cursor()
     week = 1    # always starts at 1
 
-    while week <= 38:
+    while week <= NUM_WEEKS:
         table_name = '{}manager{}'.format(str(current_season), str(week))
         fields = ['id', 'complete', 'pos1', 'mul1', 'pos2', 'mul2', 'pos3', 'mul3', 'pos4', 'mul4', 'pos5', 'mul5',
                   'pos6', 'mul6', 'pos7', 'mul7', 'pos8', 'mul8', 'pos9', 'mul9', 'pos10', 'mul10', 'pos11', 'mul11',
@@ -394,8 +395,27 @@ def add_ovr_rank():
     conn = sqlite3.connect(data_man_file)
     c = conn.cursor()
 
-    for i in range(38):
+    for i in range(NUM_WEEKS):
 
         table_name = "{}manager{}".format(current_season, i+1)
         c.execute('ALTER TABLE "{}" ADD COLUMN overallrank INTEGER'.format(table_name))
+
+    conn.commit()
     conn.close()
+
+
+def reset_complete(week):
+    # reset complete value in every manager table to 0
+    conn = sqlite3.connect(data_man_file)
+    c = conn.cursor()
+
+    table_name = "{}manager{}".format(current_season, week)
+    c.execute('UPDATE "{}" SET complete =0'.format(table_name))
+
+    conn.commit()
+    conn.close()
+
+
+def reset_complete_all_weeks():
+    for i in range(NUM_WEEKS):
+        reset_complete(i + 1)
