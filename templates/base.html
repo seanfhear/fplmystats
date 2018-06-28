@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta property="og:image" content="http://fplmystats.com/static/images/og_logo.png" />
+    <meta property="og:image:secure_url" content="https://fplmystats.com/static/images/og_logo.png" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://fplmystats.com" />
+	<meta property="og:title" content="FPL: My Stats | Every element of your Fantasy Premier League season broken down" />
+	<meta property="og:description" content="View the stats that define your season, from goals, assists and clean sheets, to captains, your bench, transfers and more" />
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107318524-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments)};
+        gtag('js', new Date());
+        gtag('config', 'UA-107318524-1');
+    </script>
+    <title>{{ title }}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=1024">
+    <meta name="google-site-verification" content="lcs6aSfGYa_m529Ez6DsYXr7yYReg0L4J4zx5EaoMFI" />
+    <meta name="description" content="View the stats that define your season, from goals, assists and clean sheets, to captains, your bench, transfers and more">
+    <meta name="keywords" content="fantasy football, fantasy premier league, FPL, fplmystats, football, statistics, stats, my, analysis, history">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <link rel="icon" href="{% static 'images/favicon.png' %}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <a href={% url 'index' %}>
+                <div class="navbar-brand">
+                    <img src="{% static 'images/logo.png' %}" alt="logo_img" class="img-responsive"/>
+                </div>
+            </a>
+            <div>
+                <ul class="nav navbar-nav">
+                    <li class="navbar-item"><a href={% url 'index' %}>Search</a></li>
+                    <!--<li class="navbar-item"><a href="#">My Stats</a></li>-->
+                    <li class="dropdown navbar-item">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Tools <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="navbar-subitem" href={% url 'tools:league-counter' %}>League Size Calculator</a></li>
+                        </ul>
+                    </li>
+                    <li class="navbar-item"><a href={% url 'contact' %}>Contact</a></li>
+                    <li class="navbar-item"><a href={% url 'help' %}>FAQ</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <!--<li class="navbar-item"><a href="#">Sign In</a></li>-->
+                    <!--<li class="navbar-item"><a href="#">Register</a></li>-->
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% block content %}
+    {% endblock %}
+    <!--
+    <footer>
+        <div class="footer-copyright">
+            <ul class="social-media-buttons list-inline">
+                <li class="social-media-button">
+                    <a class="btn-floating btn-sm btn-tw mx-1">
+                        <i class="fa fa-twitter"> </i>
+                    </a>
+                </li>
+                <li class="social-media-button">
+                    <a class="fa fa-facebook" href="#"></a>
+                </li>
+            </ul>
+        </div>
+    </footer>
+    -->
+</body>
+</html>

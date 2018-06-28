@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+<body>
+    {% block content %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8 main-box">
+                    <br>
+                    <div class="col-md-12 league-counter-top">
+                        <br>
+                        <h1>FAQ</h1>
+                        <br>
+                    </div>
+                    <div class="col-md-12 faq-section">
+                        <b>Q: Can I link directly to a Manager or League stats page?</b>
+                        <br>
+                        A: Yes, the ID you searched will be in the URL of the stats page you are brought to. You can copy that URL and use it to link directly to that page. You can share it with your friends or bookmark it so that you don't have to search your ID every time you want to see your stats.
+                    </div>
+                    <div class="col-md-12 faq-section">
+                        <b>Q: Can I see which weeks I did the best in a particular category?</b>
+                        <br>
+                        A: Yes, every column can be sorted ascending or descending so you can easily see which weeks you got the most or least goals or had the most or least captain points etc.
+                    </div>
+                    <div class="col-md-12 faq-section">
+                        <b>Q: Can I see the team which would have gotten me the most points in a week?</b>
+                        <br>
+                        A: Yes, you can click on the number in the Max Points column in the Team Statistics section to see your optimal team for that week. In future we aim to highlight the differences between this team and the team you played.
+                        <div class="col-md-12">
+                            <div class="col-md-12">
+                                <img src="{% static 'images/faq_max_team_link.png' %}" class="img-responsive">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 faq-section">
+                        <b>Q: Can I quickly get to a Manager's page on the FPL website?</b>
+                        <br>
+                        A: Yes, to get to a Manager or League page on the FPL website, click on the name of the Manager or League in the top left corner of the stats page for that Manager or League. For Managers, you can go the FPL website for a specific week by clicking on the week number in any of the tables.
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <img src="{% static 'images/faq_manager_link.png' %}" class="img-responsive">
+                            </div>
+                            <div class="col-md-6">
+                                <img src="{% static 'images/faq_week_link.png' %}" class="img-responsive">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 faq-section">
+                        <b>Q: Can I see the stats for a Head-to-Head league?</b>
+                        <br>
+                        A: Yes, a Head-to-Head league works the same way as a Classic league. Currently there are no stats relating specifically to Head-to-Head leagues.
+                    </div>
+                    <div class="col-md-12 faq-section">
+                        <b>Q: Can I see the stats for my Country or Club league?</b>
+                        <br>
+                        A: Yes, but only the current top 50 players from those leagues can be shown. A list of public leagues by Club, Region and Gameweek can be found on the League Size Calculator tool page <a href={% url 'tools:league-counter' %}>here</a>
+                    </div>
+                    <div class="col-md-12 faq-section">
+                        <b>Q: Can I go to the Manager Stats for a member of my League?</b>
+                        <br>
+                        A: Yes, you can click on a Manager's name in any of the League tables to go straight to the stats page for that Manager.
+                        <div class="col-md-12">
+                            <div class="col-md-12">
+                                <img src="{% static 'images/faq_league_link.png' %}" class="img-responsive">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+    {% endblock %}
+</body>

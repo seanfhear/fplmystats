@@ -1,238 +1,132 @@
-<!DOCTYPE HTML>
-<html lang="en">
-<head>
-    <!-- Global Site Tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107318524-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments)};
-        gtag('js', new Date());
-        gtag('config', 'UA-107318524-1');
-    </script>
-    <title>FPL: My Stats | Every element of your Fantasy Premier League season broken down</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=1024">
-    <meta name="google-site-verification" content="lcs6aSfGYa_m529Ez6DsYXr7yYReg0L4J4zx5EaoMFI" />
-    <meta name="description" content="View the stats that define your season, from goals, assists and clean sheets, to Captains, benches, transfers and more">
-    <meta name="keywords" content="Fantasy Football, Fantasy Premier League, FPL, fplmystats, Football, Statistics, Stats, My, Analysis">
-    {% load staticfiles %}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <link rel="icon" href="{% static 'images/favicon.png' %}"/>
-</head>
+{% extends 'base.html' %}
+
+{% load staticfiles %}
 
 <body class="home">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-10">
-                <p></p>
-                <a href={% url 'index' %}><img src="{% static 'images/header.png' %}" alt="header_img" class="img-responsive" style="display: inline-block"/></a>
-                <p></p>
-            </div>
-            <div class="col-md-2">
-                <br><br>
-                <div style="display: inline">
-                    <a data-toggle="modal" href="#donateModal">
-                        <p><span class="glyphicon glyphicon-gbp pull-right info-link" style="font-size: 150%; margin-right: 10px"></span></p>
-                    </a>
-                </div>
-                <div style="display: inline">
-                    <a data-toggle="modal" href="#feedbackModal">
-                        <p><span class="glyphicon glyphicon-comment pull-right info-link" style="font-size: 150%; margin-right: 10px"></span></p>
-                    </a>
-                </div>
-                <div style="display: inline">
-                    <a data-toggle="modal" href="#infoModal">
-                        <p><span class="glyphicon glyphicon-question-sign pull-right info-link" style="font-size: 150%; margin-right: 10px"></span></p>
-                    </a>
-                </div>
-            </div>
-            <div class="modal fade" id="donateModal" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content" style="background-color: #c5c5c5">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h3 class="modal-title" style="text-align: center; color: #222222">Donate</h3>
-                        </div>
-                        <div class="modal-body" style="color: #222222; text-align: center">
-                            <p>This website is free to use and will remain so for the foreseeable future.<br /><br />However, it does cost a small amount to keep it running. If you enjoy using the site and wish to make a contribution to its continued maintenance and development, you can use the button below.</p><br>
-                            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                                <input type="hidden" name="cmd" value="_s-xclick">
-                                <input type="hidden" name="hosted_button_id" value="WWJVTH7TLMXCY">
-                                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                                <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn" data-dismiss="modal" style="background-color: #c5c5c5; color: #222222">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" id="feedbackModal" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content" style="background-color: #c5c5c5">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h3 class="modal-title" style="text-align: center; color: #222222">Leave a Comment</h3>
-                        </div>
-                        <div class="modal-body" style="color: #222222; text-align: center">
-                            <p>You can leave a comment by filling out the form below. Your email address is not required but if you would like us to get back to you then you can enter it and we will try to reply as quickly as possible.</p>
-                            <p>All suggestions, bug reports or general feedback are appreciated. If you are encountering a problem, please include the Manager or League ID that you are having trouble with.</p>
-                        </div>
-                        <div style="text-align: center">
-                            <form action="{% url 'comment' %}" method="post" style="margin-left: 10%">
-                                {% csrf_token %}
-                                <table>
-                                    {{ form.as_table }}
-                                </table>
-                                <button class="btn">Submit</button>
-                            </form>
+    {% block content %}
+        <div class="container-fluid">
+            <div class="row">
+                <br>
+                <div class="col-md-6">
+                    <div class="col-md-12" style="background-color: #336B87">
+                        <br>
+                        <h1 style="text-align: center; color: white"><b>Manager Stats</b></h1>
+                        <br>
+                        <form action="{% url 'manager:search' %}" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <!--<p style="text-align: center; color: lightgray"><u>Search disabled until the new season starts</u></p>-->
+                                <div class="input-group manager-search">
+                                    <input class="form-control input-lg" name="manager_id" placeholder="Manager ID" onfocus="placeholder=''" onblur="placeholder = 'Manager ID'"/>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-lg btn-success">
+                                            <i class="glyphicon glyphicon-search"></i> Go
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                        {% if manager_error %}
+                            <div id="manager-err-msg" class="col-md-12" style="color: #1c4d66; background-color: #c4dfe6; border: solid 2px red; border-radius: 10px">
+                                <p></p>
+                                <div class="col-md-4">
+                                    <p><span class="glyphicon glyphicon-exclamation-sign pull-left" style="font-size: 150%"></span></p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p style="font-size: 150%; text-align: center">An Error Occurred</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p><span class="glyphicon glyphicon-exclamation-sign pull-right" style="font-size: 150%"></span></p>
+                                    <p style="color: #c4dfe6">|</p>
+                                </div>
+                                <p style="text-align: center">The Fantasy Premier League website may be updating or else there is no existing Manager corresponding to the ID you entered.</p>
+                            </div>
+                        {% endif %}
+                        <div style="color: white">
+                            <br>
+                            <p>Enter a manager's ID number to view in-depth statistics relating to their team including:</p>
+                            <ul>
+                                <li>How many goals, assists, clean sheets, bonus points etc. have been scored each week</li>
+                                <li>How many points have been obtained from each position</li>
+                                <li>How much money is invested in each position</li>
+                                <li>Which player has been captain most often</li>
+                                <li>How many points have been lost due to inoptimal team selection</li>
+                                <li>Which players have been in the team and how they have performed</li>
+                            </ul>
+                            <br><br>
+                            <p>To find out a manager's ID, click on <b>'View Gameweek history'</b> and see the ID in the URL</p>
+                            <img src="{% static 'images/sample_manager_id.png' %}" alt="sample_manager_ID" class="img-responsive">
                             <br>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn" data-dismiss="modal" style="background-color: #c5c5c5; color: #222222">Close</button>
+                    </div>
+                    <br>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-12" style="background-color: #922a0e">
+                        <br>
+                        <h1 style="text-align: center; color: white"><b>League Stats</b></h1>
+                        <br>
+                        <form action="{% url 'league:search' %}" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <!--<p style="text-align: center; color: lightgray"><u>Search disabled until the new season starts</u></p>-->
+                                <div class="input-group league-search">
+                                    <input class="form-control input-lg" name="league_id" placeholder="League ID" onfocus="placeholder=''" onblur="placeholder = 'League ID'"/>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-lg btn-success">
+                                            <i class="glyphicon glyphicon-search"></i> Go
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                        {% if league_error %}
+                            <div id="league-err-msg" class="col-md-12" style="color: #491a0d; background-color: #fbc2b2; border: solid 2px red; border-radius: 10px">
+                                <p></p>
+                                <div class="col-md-4">
+                                    <p><span class="glyphicon glyphicon-exclamation-sign pull-left" style="font-size: 150%"></span></p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p style="font-size: 150%; text-align: center">An Error Occurred</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p><span class="glyphicon glyphicon-exclamation-sign pull-right" style="font-size: 150%"></span></p>
+                                    <p style="color: #fbc2b2">|</p>
+                                </div>
+                                <p style="text-align: center">The Fantasy Premier League website may be updating or else there is no existing League corresponding to the ID you entered.</p>
+                            </div>
+                        {% endif %}
+                        <div style="color: white">
+                            <br>
+                            <p>Enter a league's ID number to view stats relating to the top 50 players in the league including:</p>
+                            <ul>
+                                <li>Who has the most goals, assists, clean sheets, bonus points etc.</li>
+                                <li>Who has the highest scoring defense, midfield etc.</li>
+                                <li>Which formation each member prefers</li>
+                                <li>Who gains the most points from their captains</li>
+                                <li>Which player is each team's top performer</li>
+                                <li>Who leaves the most points on the bench</li>
+                            </ul>
+                            <br><br>
+                            <p>To find out a league's ID, click on the league and see the ID in the URL</p>
+                            <img src="{% static 'images/sample_league_id.png' %}" alt="sample_league_ID" class="img-responsive">
+                            <br>
                         </div>
                     </div>
+                    <br>
                 </div>
             </div>
-            <div class="modal fade" id="infoModal" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content" style="background-color: #c5c5c5">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h3 class="modal-title" style="text-align: center; color: #222222">Tips & Info</h3>
-                        </div>
-                        <div class="modal-body info-list" style="color: #222222">
-                            <h4>General</h4>
-                            <ul>
-                                <li>Click the banner at the top of the screen to return to the home page</li>
-                                <li>You can search for a Classic or a Head-to-Head league but only the top 50 players will be shown</li>
-                                <li>Bookmark the search result so you don't need to re-enter your Manager or League ID in future. You can also share that link with your friends so that they can bypass the search and go straight to the results page</li>
-                                <li>Every column in the main tables can be sorted to quickly find the highest/lowest values for any category</li>
-                            </ul>
-                            <h4 style="color: #336B87">Manager Stats</h4>
-                            <ul>
-                                <li>Click on the Manager's name in the top left corner to go to that manager's team page on the main FPL website</li>
-                                <li>Click on the week number in any of the main tables to see the manager's team for that week on the main FPL website</li>
-                                <li>Under 'Team Selection' you can click on the number in the Max Points column to see the optimal team lineup for that week</li>
-                            </ul>
-                            <h4 style="color: #922a0e">League Stats</h4>
-                            <ul>
-                                <li>Click on the League name in the top left corner to go to that league's page on the main FPL website</li>
-                                <li>You can click on a Manager's name in any of the the main tables to go to the Manager Stats view for that person</li>
-                            </ul>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn" data-dismiss="modal" style="background-color: #c5c5c5; color: #222222">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid">
-        <div class="row">
             <br>
-            <div class="col-md-6">
-                <div class="col-md-12" style="background-color: #336B87">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6" style="background-color: #373737">
                     <br>
-                    <h1 style="text-align: center; color: white"><b>Manager Stats</b></h1>
-                    <form action="{% url 'manager:search' %}" method="post">
-                        {% csrf_token %}
-                        <div class="input">
-                            <br>
-                            <!--<p style="text-align: center; color: lightgray"><u>Search disabled until the new season starts</u></p>-->
-                            <input  class="form-control input-lg" name="manager_id" id="inputlg" placeholder="Manager ID" onfocus="placeholder=''" onblur="placeholder = 'Manager ID'" style="text-align: center">
-                            <br>
-                        </div>
-                    </form>
-                    {% if manager_error %}
-                        <div id="manager-err-msg" class="col-md-12" style="color: #1c4d66; background-color: #c4dfe6; border: solid 2px red; border-radius: 10px">
-                            <p></p>
-                            <div class="col-md-4">
-                                <p><span class="glyphicon glyphicon-exclamation-sign pull-left" style="font-size: 150%"></span></p>
-                            </div>
-                            <div class="col-md-4">
-                                <p style="font-size: 150%; text-align: center">An Error Occurred</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p><span class="glyphicon glyphicon-exclamation-sign pull-right" style="font-size: 150%"></span></p>
-                                <p style="color: #c4dfe6">|</p>
-                            </div>
-                            <p style="text-align: center">The Fantasy Premier League website may be updating or else there is no existing Manager corresponding to the ID you entered.</p>
-                        </div>
-                    {% endif %}
-                    <div style="color: white">
-                        <br>
-                        <p>Enter a manager's ID number to view in-depth statistics relating to their team including:</p>
-                        <ul>
-                            <li>How many goals, assists, clean sheets, bonus points etc. have been scored each week</li>
-                            <li>How many points have been obtained from each position</li>
-                            <li>How much money is invested in each position</li>
-                            <li>Which player has been captain most often</li>
-                            <li>How many points have been lost due to inoptimal team selection</li>
-                            <li>Which players have been in the team and how they have performed</li>
-                        </ul>
-                        <br><br>
-                        <p>To find out a manager's ID, click on <u>'View Gameweek history'</u> and see the ID in the URL</p>
-                        <img src="{% static 'images/sample_manager_id.png' %}" alt="sample_manager_ID" class="img-responsive">
-                        <br>
-                    </div>
-                </div>
-                <br>
-            </div>
-            <div class="col-md-6">
-                <div class="col-md-12" style="background-color: #922a0e">
+                    <a class="twitter-timeline" data-theme="dark" data-chrome="transparent" data-tweet-limit="3" href="https://twitter.com/fplmystats?ref_src=twsrc%5Etfw">Tweets by fplmystats</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                     <br>
-                    <h1 style="text-align: center; color: white"><b>League Stats</b></h1>
-                    <form action="{% url 'league:search' %}" method="post">
-                        {% csrf_token %}
-                        <div class="input">
-                            <br>
-                            <!--<p style="text-align: center; color: lightgray"><u>Search disabled until the new season starts</u></p>-->
-                            <input class="form-control input-lg" name="league_id" id="inputlg" placeholder="League ID" onfocus="placeholder=''" onblur="placeholder = 'League ID'" style="text-align: center">
-                            <br>
-                        </div>
-                    </form>
-                    {% if league_error %}
-                        <div id="league-err-msg" class="col-md-12" style="color: #491a0d; background-color: #fbc2b2; border: solid 2px red; border-radius: 10px">
-                            <p></p>
-                            <div class="col-md-4">
-                                <p><span class="glyphicon glyphicon-exclamation-sign pull-left" style="font-size: 150%"></span></p>
-                            </div>
-                            <div class="col-md-4">
-                                <p style="font-size: 150%; text-align: center">An Error Occurred</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p><span class="glyphicon glyphicon-exclamation-sign pull-right" style="font-size: 150%"></span></p>
-                                <p style="color: #fbc2b2">|</p>
-                            </div>
-                            <p style="text-align: center">The Fantasy Premier League website may be updating or else there is no existing League corresponding to the ID you entered.</p>
-                        </div>
-                    {% endif %}
-                    <div style="color: white">
-                        <br>
-                        <p>Enter a league's ID number to view stats relating to the top 50 players in the league including:</p>
-                        <ul>
-                            <li>Who has the most goals, assists, clean sheets, bonus points etc.</li>
-                            <li>Who has the highest scoring defense, midfield etc.</li>
-                            <li>Which formation each member prefers</li>
-                            <li>Who gains the most points from their captains</li>
-                            <li>Which player is each team's top performer</li>
-                            <li>Who leaves the most points on the bench</li>
-                        </ul>
-                        <br><br>
-                        <p>To find out a league's ID, click on the league and see the ID in the URL</p>
-                        <img src="{% static 'images/sample_league_id.png' %}" alt="sample_league_ID" class="img-responsive">
-                        <br>
-                    </div>
                 </div>
-                <br>
+                <div class="col-md-3"></div>
             </div>
+            <br>
         </div>
-    </div>
+    {% endblock %}
 </body>
-</html>

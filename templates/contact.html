@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+<body>
+    {% block content %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6 main-box">
+                    <br>
+                    <div class="col-md-12 contact-top">
+                        <br>
+                        <h1>Contact Us</h1>
+                        <br>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
+                            {% if not sent %}
+                                <p>You can leave a comment by filling out the form below. If you leave an email address we
+                                    will try to reply as quickly as possible. All suggestions, bug reports or general
+                                    feedback are welcome.
+                                    <br /><br />
+                                    If you are encountering a problem, please include the Manager or League ID that you are
+                                    having trouble with.</p>
+                                <br><br>
+                            {% endif %}
+                            {% if sent %}
+                                <h3>Feedback Sent!</h3>
+                                <br>
+                                <p style="text-align: center">Thanks for leaving a message.
+                                   <br />
+                                   If you left your email address we will try to reply to you as soon as possible.</p>
+                                <br>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    {% if not sent %}
+                        <div class="col-md-12 contact-bottom">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <div style="text-align: left">
+                                    <form action="{% url 'comment' %}" method="post">
+                                        {% csrf_token %}
+                                        <table class="contact-form">
+                                            {{ form.as_table }}
+                                        </table>
+                                        <br><br>
+                                        <button class="btn btn-success contact-button">
+                                            <i class="glyphicon glyphicon-send"></i> Send
+                                        </button>
+                                    </form>
+                                    <br>
+                                </div>
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+    {% endblock %}
+</body>

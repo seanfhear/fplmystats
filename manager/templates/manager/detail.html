@@ -1,433 +1,379 @@
-<!DOCTYPE HTML>
-<html lang="en">
-<head>
-    <!-- Global Site Tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107318524-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments)};
-        gtag('js', new Date());
-        gtag('config', 'UA-107318524-1');
-    </script>
-    <title>Team Statistics: {{ team_name }}</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=1024">
-    {% load staticfiles %}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
-    <script src="{% static 'js/main.js' %}"></script>
-    <link rel="icon" href="{% static 'images/favicon.png' %}"/>
-</head>
+{% extends 'base.html' %}
+
 <body class="home">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-10">
-                <p></p>
-                <a href={% url 'index' %}><img src="{% static 'images/header.png' %}" alt="header_img" class="img-responsive" style="display: inline-block"/></a>
-                <p></p>
-            </div>
-            <div class="col-md-2">
-                <br><br>
-                <div style="display: inline">
-                    <a data-toggle="modal" href="#donateModal">
-                        <p><span class="glyphicon glyphicon-gbp pull-right info-link" style="font-size: 150%; margin-right: 10px"></span></p>
-                    </a>
-                </div>
-                <div style="display: inline">
-                    <a data-toggle="modal" href="#feedbackModal">
-                        <p><span class="glyphicon glyphicon-comment pull-right info-link" style="font-size: 150%; margin-right: 10px"></span></p>
-                    </a>
-                </div>
-                <div style="display: inline">
-                    <a data-toggle="modal" href="#infoModal">
-                        <p><span class="glyphicon glyphicon-question-sign pull-right info-link" style="font-size: 150%; margin-right: 10px"></span></p>
-                    </a>
-                </div>
-            </div>
-            <div class="modal fade" id="donateModal" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content" style="background-color: #c5c5c5">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h3 class="modal-title" style="text-align: center; color: #222222">Donate</h3>
+    {% block content %}
+        <div class="container-fluid">
+            <div class="row">
+                <br>
+                <div class="col-md-12">
+                    <div class="col-md-12" style="background-color: #336B87; border-bottom: solid #1A526E 1px">
+                        <br>
+                        <div class="col-md-4">
+                            <h1 style="margin-top: auto"><a href="https://fantasy.premierleague.com/a/team/{{ manager_id }}" class="manager-link"><b>{{ manager_name }}</b></a></h1>
+                            <h1 style="margin-top: auto; color: white"><i>{{ team_name }}</i></h1>
+                            <br>
+                            <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#headerModal" class="manager-link">here</a> for an explanation of each category.</p>
+                            <div class="modal fade" id="headerModal" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content" style="background-color: #b3d1df">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h3 class="modal-title" style="text-align: center; color: #0d425c">Manager Statistics</h3>
+                                        </div>
+                                        <div class="modal-body" style="color: #0d425c">
+                                            <h4>Total Points</h4>
+                                            <ul><li>Total points scored in the season.</li></ul>
+                                            <h4>Highest Weekly Score</h4>
+                                            <ul><li>The most points scored in a single gameweek.</li></ul>
+                                            <h4>Highest Weekly Rank</h4>
+                                            <ul><li>The best weekly rank achieved in the season</li></ul>
+                                            <h4>Preferred Captain</h4>
+                                            <ul><li>Name of the player chosen most often as Captain.</li></ul>
+                                            <h4>Season MVP</h4>
+                                            <ul><li>Name of the player who has earned the team the most points.</li></ul>
+                                            <h4>Preferred Formation</h4>
+                                            <ul><li>The formation utilised most often in the season.</li></ul>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn" data-dismiss="modal" style="background-color: #b3d1df; color: #0d425c">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="modal-body" style="color: #222222; text-align: center">
-                            <p>This website is free to use and will remain so for the foreseeable future.<br /><br />However, it does cost a small amount to keep it running. If you enjoy using the site and wish to make a contribution to its continued maintenance and development, you can use the button below.</p><br>
-                            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                                <input type="hidden" name="cmd" value="_s-xclick">
-                                <input type="hidden" name="hosted_button_id" value="WWJVTH7TLMXCY">
-                                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                                <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn" data-dismiss="modal" style="background-color: #c5c5c5; color: #222222">Close</button>
+                        <div class="col-md-8 overflow-display" style="color: white; text-align: center">
+                            <table class="table-condensed manager-headers" style="margin: auto; font-size: 150%">
+                                <tr>
+                                    <td>Total Points:</td>
+                                    <td style="color: #c4dfe6">{{ headers.0 }}</td>
+                                    <td style="border-left: solid #5085a0 1px">Highest Weekly Score:</td>
+                                    <td style="color: #c4dfe6; border-right: solid #5085a0 1px">{{ headers.1 }}</td>
+                                    <td>Highest Weekly Rank:</td>
+                                    <td style="color: #c4dfe6">{{ headers.2 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Preferred Captain:</td>
+                                    <td style="color: #c4dfe6">{{ headers.3 }}</td>
+                                    <td style="border-left: solid #5085a0 1px">Season MVP:</td>
+                                    <td style="color: #c4dfe6; border-right: solid #5085a0 1px">{{ headers.4 }}</td>
+                                    <td>Preferred<br />Formation:</td>
+                                    <td style="color: #c4dfe6">{{ headers.6 }}</td>
+                                </tr>
+                            </table>
+                            <br>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="feedbackModal" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content" style="background-color: #c5c5c5">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h3 class="modal-title" style="text-align: center; color: #222222">Leave a Comment</h3>
-                        </div>
-                        <div class="modal-body" style="color: #222222; text-align: center">
-                            <p>You can leave a comment by filling out the form below. Your email address is not required but if you would like us to get back to you then you can enter it and we will try to reply as quickly as possible.</p>
-                            <p>All suggestions, bug reports or general feedback are appreciated. If you are encountering a problem, please include the Manager or League ID that you are having trouble with.</p>
-                        </div>
-                        <div style="text-align: center">
-                            <form action="{% url 'comment' %}" method="post" style="margin-left: 10%">
-                                {% csrf_token %}
-                                <table>
-                                    {{ form.as_table }}
-                                </table>
-                                <button class="btn">Submit</button>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-12" style="background-color: #336B87">
+                        <br><br>
+                        <div class="col-md-3">
+                            <br>
+                            <form>
+                                <select class="form-control" title="Analysis View" data-target=".table-view">
+                                    <option data-show=".general">General Statistics</option>
+                                    <option data-show=".positions">Positions</option>
+                                    <option data-show=".team-selection">Team Selection</option>
+                                    <option data-show=".squad-stats">Squad Statistics</option>
+                                </select>
                             </form>
                             <br>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn" data-dismiss="modal" style="background-color: #c5c5c5; color: #222222">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" id="infoModal" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content" style="background-color: #c5c5c5">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h3 class="modal-title" style="text-align: center; color: #222222">Tips & Info</h3>
-                        </div>
-                        <div class="modal-body info-list" style="color: #222222">
-                            <h4>General</h4>
-                            <ul>
-                                <li>Click the banner at the top of the screen to return to the home page</li>
-                                <li>You can search for a Classic or a Head-to-Head league but only the top 50 players will be shown</li>
-                                <li>Bookmark the search result so you don't need to re-enter your Manager or League ID in future. You can also share that link with your friends so that they can bypass the search and go straight to the results page</li>
-                                <li>Every column in the main tables can be sorted to quickly find the highest/lowest values for any category</li>
-                            </ul>
-                            <h4 style="color: #336B87">Manager Stats</h4>
-                            <ul>
-                                <li>Click on the Manager's name in the top left corner to go to that manager's team page on the main FPL website</li>
-                                <li>Click on the week number in any of the main tables to see the manager's team for that week on the main FPL website</li>
-                                <li>Under 'Team Selection' you can click on the number in the Max Points column to see the optimal team lineup for that week</li>
-                            </ul>
-                            <h4 style="color: #922a0e">League Stats</h4>
-                            <ul>
-                                <li>Click on the League name in the top left corner to go to that league's page on the main FPL website</li>
-                                <li>You can click on a Manager's name in any of the the main tables to go to the Manager Stats view for that person</li>
-                            </ul>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn" data-dismiss="modal" style="background-color: #c5c5c5; color: #222222">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid">
-        <div class="row">
-            <br>
-            <div class="col-md-12">
-                <div class="col-md-12" style="background-color: #336B87; border-bottom: solid #1A526E 1px">
-                    <br>
-                    <div class="col-md-4">
-                        <h1 style="margin-top: auto"><a href="https://fantasy.premierleague.com/a/team/{{ manager_id }}" class="manager-link"><b>{{ manager_name }}</b></a></h1>
-                        <h1 style="margin-top: auto; color: white"><i>{{ team_name }}</i></h1>
-                        <br>
-                        <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#headerModal" class="manager-link">here</a> for an explanation of each category.</p>
-                        <div class="modal fade" id="headerModal" role="dialog">
-                            <div class="modal-dialog">
-                                <div class="modal-content" style="background-color: #b3d1df">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h3 class="modal-title" style="text-align: center; color: #0d425c">Manager Statistics</h3>
-                                    </div>
-                                    <div class="modal-body" style="color: #0d425c">
-                                        <h4>Total Points</h4>
-                                        <ul><li>Total points scored in the season.</li></ul>
-                                        <h4>Highest Weekly Score</h4>
-                                        <ul><li>The most points scored in a single gameweek.</li></ul>
-                                        <h4>Highest Weekly Rank</h4>
-                                        <ul><li>The best weekly rank achieved in the season</li></ul>
-                                        <h4>Preferred Captain</h4>
-                                        <ul><li>Name of the player chosen most often as Captain.</li></ul>
-                                        <h4>Season MVP</h4>
-                                        <ul><li>Name of the player who has earned the team the most points.</li></ul>
-                                        <h4>Preferred Formation</h4>
-                                        <ul><li>The formation utilised most often in the season.</li></ul>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn" data-dismiss="modal" style="background-color: #b3d1df; color: #0d425c">Close</button>
+                        <div class="table-view">
+                            <div class="general hide">
+                                <div class="row">
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-8">
+                                        <br>
+                                        <div id="general-number-total" style="display: block">
+                                            <label style="color: white">Totals:</label>
+                                            <table class="table-bordered top-manager-display" style="width: 100%; color: white; text-align: center; font-size: 120%">
+                                                <tr style="vertical-align: bottom">
+                                                    <td style="border-bottom: none">Minutes</td>
+                                                    <td style="border-bottom: none">Goals</td>
+                                                    <td style="border-bottom: none">Assists</td>
+                                                    <td style="border-bottom: none">Clean Sheets</td>
+                                                    <td style="border-bottom: none">Saves</td>
+                                                    <td style="border-bottom: none">Goals Conceded</td>
+                                                </tr>
+                                                <tr style="color: #c4dfe6; vertical-align: top">
+                                                    {% for item in general_number_totals|slice:"1:7" %}
+                                                        <td style="border-top: none">{{ item }}</td>
+                                                    {% endfor %}
+                                                </tr>
+                                                <tr style="vertical-align: bottom">
+                                                    <td style="border-bottom: none">Penalties Saved</td>
+                                                    <td style="border-bottom: none">Yellow Cards</td>
+                                                    <td style="border-bottom: none">Red Cards</td>
+                                                    <td style="border-bottom: none">Penalties Missed</td>
+                                                    <td style="border-bottom: none">Own Goals</td>
+                                                    <td style="border-bottom: none">Bonus Points</td>
+                                                </tr>
+                                                <tr style="color: #c4dfe6; vertical-align: top">
+                                                    {% for item in general_number_totals|slice:"7:13" %}
+                                                        <td style="border-top: none">{{ item }}</td>
+                                                    {% endfor %}
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div id="general-points-total" style="display: none">
+                                            <label style="color: white">Totals:</label>
+                                            <table class="table-bordered top-manager-display" style="width: 100%; color: white; text-align: center; font-size: 120%">
+                                                <tr style="vertical-align: bottom">
+                                                    <td style="border-bottom: none">Minutes</td>
+                                                    <td style="border-bottom: none">Goals</td>
+                                                    <td style="border-bottom: none">Assists</td>
+                                                    <td style="border-bottom: none">Clean Sheets</td>
+                                                    <td style="border-bottom: none">Saves</td>
+                                                    <td style="border-bottom: none">Goals Conceded</td>
+                                                </tr>
+                                                <tr style="color: #c4dfe6; vertical-align: top">
+                                                    {% for item in general_points_totals|slice:"1:7" %}
+                                                        <td style="border-top: none">{{ item }}</td>
+                                                    {% endfor %}
+                                                </tr>
+                                                <tr style="vertical-align: bottom">
+                                                    <td style="border-bottom: none">Penalties Saved</td>
+                                                    <td style="border-bottom: none">Yellow Cards</td>
+                                                    <td style="border-bottom: none">Red Cards</td>
+                                                    <td style="border-bottom: none">Penalties Missed</td>
+                                                    <td style="border-bottom: none">Own Goals</td>
+                                                    <td style="border-bottom: none">Bonus Points</td>
+                                                </tr>
+                                                <tr style="color: #c4dfe6; vertical-align: top">
+                                                    {% for item in general_points_totals|slice:"7:13" %}
+                                                        <td style="border-top: none">{{ item }}</td>
+                                                    {% endfor %}
+                                                </tr>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-8 overflow-display" style="color: white; text-align: center">
-                        <table class="table-condensed manager-headers" style="margin: auto; font-size: 150%">
-                            <tr>
-                                <td>Total Points:</td>
-                                <td style="color: #c4dfe6">{{ headers.0 }}</td>
-                                <td style="border-left: solid #5085a0 1px">Highest Weekly Score:</td>
-                                <td style="color: #c4dfe6; border-right: solid #5085a0 1px">{{ headers.1 }}</td>
-                                <td>Highest Weekly Rank:</td>
-                                <td style="color: #c4dfe6">{{ headers.2 }}</td>
-                            </tr>
-                            <tr>
-                                <td>Preferred Captain:</td>
-                                <td style="color: #c4dfe6">{{ headers.3 }}</td>
-                                <td style="border-left: solid #5085a0 1px">Season MVP:</td>
-                                <td style="color: #c4dfe6; border-right: solid #5085a0 1px">{{ headers.4 }}</td>
-                                <td>Preferred<br />Formation:</td>
-                                <td style="color: #c4dfe6">{{ headers.6 }}</td>
-                            </tr>
-                        </table>
-                        <br>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-12" style="background-color: #336B87">
-                <br><br>
-                    <div class="col-md-3">
-                        <br>
-                        <form>
-                            <select class="form-control" title="Analysis View" data-target=".table-view">
-                                <option data-show=".general">General Statistics</option>
-                                <option data-show=".positions">Positions</option>
-                                <option data-show=".ranking">Ranking</option>
-                                <option data-show=".team-selection">Team Selection</option>
-                                <option data-show=".squad-stats">Squad Statistics</option>
-                            </select>
-                        </form>
-                        <br>
-                    </div>
-                    <div class="table-view">
-                        <div class="general hide">
-                            <div class="row">
-                                <div class="col-md-4"></div>
-                                <div class="col-md-8">
-                                    <br>
-                                    <div id="general-number-total" style="display: block">
-                                        <label style="color: white">Totals:</label>
+                            <div class="positions hide">
+                                <div class="row">
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-8">
+                                        <br>
+                                        <label for="summary" style="color: white">Totals:</label>
                                         <table class="table-bordered top-manager-display" style="width: 100%; color: white; text-align: center; font-size: 120%">
                                             <tr style="vertical-align: bottom">
-                                                <td style="border-bottom: none">Minutes</td>
-                                                <td style="border-bottom: none">Goals</td>
-                                                <td style="border-bottom: none">Assists</td>
-                                                <td style="border-bottom: none">Clean Sheets</td>
-                                                <td style="border-bottom: none">Saves</td>
-                                                <td style="border-bottom: none">Goals Conceded</td>
+                                                <td style="border-bottom: none">Avg Total Budget</td>
+                                                <td style="border-bottom: none">Avg GK Budget</td>
+                                                <td style="border-bottom: none">GK Points</td>
+                                                <td style="border-bottom: none">Avg DEF Budget</td>
+                                                <td style="border-bottom: none">DEF Points</td>
                                             </tr>
                                             <tr style="color: #c4dfe6; vertical-align: top">
-                                                {% for item in general_number_totals|slice:"1:7" %}
+                                                {% for item in positions_totals|slice:"0:5" %}
                                                     <td style="border-top: none">{{ item }}</td>
                                                 {% endfor %}
                                             </tr>
-                                            <tr style="vertical-align: bottom">
-                                                <td style="border-bottom: none">Penalties Saved</td>
-                                                <td style="border-bottom: none">Yellow Cards</td>
-                                                <td style="border-bottom: none">Red Cards</td>
-                                                <td style="border-bottom: none">Penalties Missed</td>
-                                                <td style="border-bottom: none">Own Goals</td>
-                                                <td style="border-bottom: none">Bonus Points</td>
+                                            <tr>
+                                                <td style="border-bottom: none">Avg Bench Budget</td>
+                                                <td style="border-bottom: none">Avg MID Budget</td>
+                                                <td style="border-bottom: none">MID Points</td>
+                                                <td style="border-bottom: none">Avg FWD Budget</td>
+                                                <td style="border-bottom: none">FWD Points</td>
                                             </tr>
                                             <tr style="color: #c4dfe6; vertical-align: top">
-                                                {% for item in general_number_totals|slice:"7:13" %}
+                                                {% for item in positions_totals|slice:"5:10" %}
                                                     <td style="border-top: none">{{ item }}</td>
                                                 {% endfor %}
                                             </tr>
                                         </table>
+                                        <br>
                                     </div>
-                                    <div id="general-points-total" style="display: none">
-                                        <label style="color: white">Totals:</label>
+                                </div>
+                            </div>
+                            <div class="team-selection hide">
+                                <div class="row">
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-8">
+                                        <br>
+                                        <label for="summary" style="color: white">Totals:</label>
                                         <table class="table-bordered top-manager-display" style="width: 100%; color: white; text-align: center; font-size: 120%">
                                             <tr style="vertical-align: bottom">
-                                                <td style="border-bottom: none">Minutes</td>
-                                                <td style="border-bottom: none">Goals</td>
-                                                <td style="border-bottom: none">Assists</td>
-                                                <td style="border-bottom: none">Clean Sheets</td>
-                                                <td style="border-bottom: none">Saves</td>
-                                                <td style="border-bottom: none">Goals Conceded</td>
+                                                <td style="border-bottom: none">Transfer<br />Cost</td>
+                                                <td style="border-bottom: none">Captain<br />Points</td>
+                                                <td style="border-bottom: none">MVP<br />Points</td>
+                                                <td style="border-bottom: none">Captain<br />Points Lost</td>
+                                                <td style="border-bottom: none">Points<br />on Bench</td>
+                                                <td style="border-bottom: none">Bench<br />Points Lost</td>
+                                                <td style="border-bottom: none">Max Possible<br />Points</td>
+                                                <td style="border-bottom: none">Potential<br />Lost</td>
                                             </tr>
                                             <tr style="color: #c4dfe6; vertical-align: top">
-                                                {% for item in general_points_totals|slice:"1:7" %}
+                                                {% for item in team_selection_totals %}
                                                     <td style="border-top: none">{{ item }}</td>
                                                 {% endfor %}
-                                            </tr>
-                                            <tr style="vertical-align: bottom">
-                                                <td style="border-bottom: none">Penalties Saved</td>
-                                                <td style="border-bottom: none">Yellow Cards</td>
-                                                <td style="border-bottom: none">Red Cards</td>
-                                                <td style="border-bottom: none">Penalties Missed</td>
-                                                <td style="border-bottom: none">Own Goals</td>
-                                                <td style="border-bottom: none">Bonus Points</td>
-                                            </tr>
-                                            <tr style="color: #c4dfe6; vertical-align: top">
-                                                {% for item in general_points_totals|slice:"7:13" %}
-                                                    <td style="border-top: none">{{ item }}</td>
-                                                {% endfor %}
-                                            </tr>
                                         </table>
+                                        <br>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="positions hide">
-                            <div class="row">
-                                <div class="col-md-4"></div>
-                                <div class="col-md-8">
+                        <div class="col-md-12 table-view">
+                            <div class="general hide overflow-display">
+                                <div id="buttons" class="btn-group" data-toggle="buttons" style="color: lightgray">
+                                    <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#generalModal" class="manager-link">here</a> for an explanation of each column.</p>
+                                    <div class="modal fade" id="generalModal" role="dialog">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content" style="background-color: #c4dfe6">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h3 class="modal-title" style="text-align: center; color: #1c4d66">General Statistics</h3>
+                                                </div>
+                                                <div class="modal-body" style="color: #1c4d66">
+                                                    <h4>Number/Points</h4>
+                                                    <ul><li>Use these buttons to toggle between Number View and Points View. Number View shows you how many of each category has been scored while Points View shows you how many points have been gained or lost in each category.</li></ul>
+                                                    <h4>Game Week</h4>
+                                                    <ul><li>The Gameweek number.</li></ul>
+                                                    <h4>Base Points</h4>
+                                                    <ul><li>Total points before the Captain multiplier is applied or deductions for transfers are made.</li></ul>
+                                                    <h4>Minutes</h4>
+                                                    <ul><li>Total amount of minutes played by all players or points gained from minutes played.</li></ul>
+                                                    <h4>Goals</h4>
+                                                    <ul><li>Total goals scored by all players or total points gained from goals.</li></ul>
+                                                    <h4>Assists</h4>
+                                                    <ul><li>Total assists made by all players or total points gained from assists.</li></ul>
+                                                    <h4>Clean Sheets</h4>
+                                                    <ul><li>For Number View, shows the number of clean sheets kept by the Goalkeeper and Defenders.<br />For Points View, shows the points obtained from clean sheets kept by the Goalkeeper, Defenders <i>and</i> Midfielders.</li></ul>
+                                                    <h4>Saves</h4>
+                                                    <ul><li>Total saves made by all players or total points gained from saves.</li></ul>
+                                                    <h4>Goals Conceded</h4>
+                                                    <ul><li>Total goals conceded by the Goalkeeper and Defenders or total points lost from goals conceded.</li></ul>
+                                                    <h4>Penalties Saved</h4>
+                                                    <ul><li>Total penalties saved by all players or total points gained from penalties saved.</li></ul>
+                                                    <h4>Yellow Cards</h4>
+                                                    <ul><li>Total yellow cards received by all players or total points lost from yellow cards.</li></ul>
+                                                    <h4>Red Cards</h4>
+                                                    <ul><li>Total red cards received by all players or total points lost from red cards.</li></ul>
+                                                    <h4>Penalties Missed</h4>
+                                                    <ul><li>Total penalties missed by all players or total points lost from penalties missed.</li></ul>
+                                                    <h4>Own Goals</h4>
+                                                    <ul><li>Total own goals scored by all players or total points lost from own goals.</li></ul>
+                                                    <h4>Bonus Points</h4>
+                                                    <ul><li>Total Bonus Points awarded to all players.</li></ul>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn" data-dismiss="modal" style="background-color: #c4dfe6; color: #1c4d66">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <label for="number-btn" class="btn btn-manager active" onClick="toggleToNumber()">
+                                        <input type="radio" id="number-btn"><b>Number</b>
+                                    </label>
+                                    <label for="points-btn" class="btn btn-manager" onClick="toggleToPoints()">
+                                        <input type="radio" id="points-btn"><b>Points</b>
+                                    </label>
+                                </div>
+                                <div id="general-number" style="display: block">
+                                    <table class="weekly table-hover main-manager-display" style="text-align: center; width: 100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Game<br />Week</th>
+                                                <th>Base<br />Points</th>
+                                                <th>Minutes</th>
+                                                <th>Goals</th>
+                                                <th>Assists</th>
+                                                <th>Clean<br />Sheets</th>
+                                                <th>Saves</th>
+                                                <th>Goals<br />Conceded</th>
+                                                <th>Penalties<br />Saved</th>
+                                                <th>Yellow<br />Cards</th>
+                                                <th>Red<br />Cards</th>
+                                                <th>Penalties<br />Missed</th>
+                                                <th>Own<br />Goals</th>
+                                                <th>Bonus<br />Points</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for week in general_number %}
+                                            <tr>
+                                                <td><a href="{{ week.0 }}" class="manager-link">{{ week.1 }}</a></td>
+                                                {% for item in week|slice:"2:" %}
+                                                    <td>{{ item }}</td>
+                                                {% endfor %}
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
                                     <br>
-                                    <label for="summary" style="color: white">Totals:</label>
-                                    <table class="table-bordered top-manager-display" style="width: 100%; color: white; text-align: center; font-size: 120%">
-                                        <tr style="vertical-align: bottom">
-                                            <td style="border-bottom: none">Avg Total Budget</td>
-                                            <td style="border-bottom: none">Avg GK Budget</td>
-                                            <td style="border-bottom: none">GK Points</td>
-                                            <td style="border-bottom: none">Avg DEF Budget</td>
-                                            <td style="border-bottom: none">DEF Points</td>
-                                        </tr>
-                                        <tr style="color: #c4dfe6; vertical-align: top">
-                                            {% for item in positions_totals|slice:"0:5" %}
-                                                <td style="border-top: none">{{ item }}</td>
+                                </div>
+                                <div id="general-points" style="display: none">
+                                    <table class="weekly general table-hover main-manager-display" style="text-align: center; width: 100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Game<br />Week</th>
+                                                <th>Base<br />Points</th>
+                                                <th>Minutes</th>
+                                                <th>Goals</th>
+                                                <th>Assists</th>
+                                                <th>Clean<br />Sheets</th>
+                                                <th>Saves</th>
+                                                <th>Goals<br />Conceded</th>
+                                                <th>Penalties<br />Saved</th>
+                                                <th>Yellow<br />Cards</th>
+                                                <th>Red<br />Cards</th>
+                                                <th>Penalties<br />Missed</th>
+                                                <th>Own<br />Goals</th>
+                                                <th>Bonus<br />Points</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for week in general_points %}
+                                            <tr>
+                                                <td><a href="{{ week.0 }}" class="manager-link">{{ week.1 }}</a></td>
+                                                {% for item in week|slice:"2:" %}
+                                                    <td>{{ item }}</td>
+                                                {% endfor %}
+                                            </tr>
                                             {% endfor %}
-                                        </tr>
-                                        <tr>
-                                            <td style="border-bottom: none">Avg Bench Budget</td>
-                                            <td style="border-bottom: none">Avg MID Budget</td>
-                                            <td style="border-bottom: none">MID Points</td>
-                                            <td style="border-bottom: none">Avg FWD Budget</td>
-                                            <td style="border-bottom: none">FWD Points</td>
-                                        </tr>
-                                        <tr style="color: #c4dfe6; vertical-align: top">
-                                            {% for item in positions_totals|slice:"5:10" %}
-                                                <td style="border-top: none">{{ item }}</td>
-                                            {% endfor %}
-                                        </tr>
+                                        </tbody>
                                     </table>
                                     <br>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="ranking hide">
-                            <div class="row">
-                                <div class="col-md-4"></div>
-                                <div class="col-md-8">
-                                    <br>
-                                    <label for="summary" style="color: white">Totals:</label>
-                                    <table class="table-bordered top-manager-display" style="width: 100%; color: white; text-align: center; font-size: 120%">
-                                        <tr style="vertical-align: bottom">
-                                            <td style="border-bottom: none">Avg Total Budget</td>
-                                            <td style="border-bottom: none">Avg GK Budget</td>
-                                            <td style="border-bottom: none">GK Points</td>
-                                            <td style="border-bottom: none">Avg DEF Budget</td>
-                                            <td style="border-bottom: none">DEF Points</td>
-                                        </tr>
-                                        <tr style="color: #c4dfe6; vertical-align: top">
-                                            {% for item in positions_totals|slice:"0:5" %}
-                                                <td style="border-top: none">{{ item }}</td>
-                                            {% endfor %}
-                                        </tr>
-                                        <tr>
-                                            <td style="border-bottom: none">Avg Bench Budget</td>
-                                            <td style="border-bottom: none">Avg MID Budget</td>
-                                            <td style="border-bottom: none">MID Points</td>
-                                            <td style="border-bottom: none">Avg FWD Budget</td>
-                                            <td style="border-bottom: none">FWD Points</td>
-                                        </tr>
-                                        <tr style="color: #c4dfe6; vertical-align: top">
-                                            {% for item in positions_totals|slice:"5:10" %}
-                                                <td style="border-top: none">{{ item }}</td>
-                                            {% endfor %}
-                                        </tr>
-                                    </table>
-                                    <br>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="team-selection hide">
-                            <div class="row">
-                                <div class="col-md-4"></div>
-                                <div class="col-md-8">
-                                    <br>
-                                    <label for="summary" style="color: white">Totals:</label>
-                                    <table class="table-bordered top-manager-display" style="width: 100%; color: white; text-align: center; font-size: 120%">
-                                        <tr style="vertical-align: bottom">
-                                            <td style="border-bottom: none">Transfer<br />Cost</td>
-                                            <td style="border-bottom: none">Captain<br />Points</td>
-                                            <td style="border-bottom: none">MVP<br />Points</td>
-                                            <td style="border-bottom: none">Captain<br />Points Lost</td>
-                                            <td style="border-bottom: none">Points<br />on Bench</td>
-                                            <td style="border-bottom: none">Bench<br />Points Lost</td>
-                                            <td style="border-bottom: none">Max Possible<br />Points</td>
-                                            <td style="border-bottom: none">Potential<br />Lost</td>
-                                        </tr>
-                                        <tr style="color: #c4dfe6; vertical-align: top">
-                                            {% for item in team_selection_totals %}
-                                                <td style="border-top: none">{{ item }}</td>
-                                            {% endfor %}
-                                    </table>
-                                    <br>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12 table-view">
-                        <div class="general hide overflow-display">
-                            <div id="buttons" class="btn-group" data-toggle="buttons" style="color: lightgray">
-                                <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#generalModal" class="manager-link">here</a> for an explanation of each column.</p>
-                                <div class="modal fade" id="generalModal" role="dialog">
+                            <div class="positions hide overflow-display">
+                                <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#positionModal" class="manager-link">here</a> for an explanation of each column.</p>
+                                <div class="modal fade" id="positionModal" role="dialog">
                                     <div class="modal-dialog">
                                         <div class="modal-content" style="background-color: #c4dfe6">
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                <h3 class="modal-title" style="text-align: center; color: #1c4d66">General Statistics</h3>
+                                                <h3 class="modal-title" style="text-align: center; color: #1c4d66">Positions</h3>
                                             </div>
                                             <div class="modal-body" style="color: #1c4d66">
-                                                <h4>Number/Points</h4>
-                                                <ul><li>Use these buttons to toggle between Number View and Points View. Number View shows you how many of each category has been scored while Points View shows you how many points have been gained or lost in each category.</li></ul>
+                                                <p style="color: #1c4d66">Note: The figures used for the budgets are the market values of each player at the Gameweek deadline, not the price paid by the manager for each player.</p>
+                                                <br>
                                                 <h4>Game Week</h4>
                                                 <ul><li>The Gameweek number.</li></ul>
-                                                <h4>Base Points</h4>
-                                                <ul><li>Total points before the Captain multiplier is applied or deductions for transfers are made.</li></ul>
-                                                <h4>Minutes</h4>
-                                                <ul><li>Total amount of minutes played by all players or points gained from minutes played.</li></ul>
-                                                <h4>Goals</h4>
-                                                <ul><li>Total goals scored by all players or total points gained from goals.</li></ul>
-                                                <h4>Assists</h4>
-                                                <ul><li>Total assists made by all players or total points gained from assists.</li></ul>
-                                                <h4>Clean Sheets</h4>
-                                                <ul><li>For Number View, shows the number of clean sheets kept by the Goalkeeper and Defenders.<br />For Points View, shows the points obtained from clean sheets kept by the Goalkeeper, Defenders <i>and</i> Midfielders.</li></ul>
-                                                <h4>Saves</h4>
-                                                <ul><li>Total saves made by all players or total points gained from saves.</li></ul>
-                                                <h4>Goals Conceded</h4>
-                                                <ul><li>Total goals conceded by the Goalkeeper and Defenders or total points lost from goals conceded.</li></ul>
-                                                <h4>Penalties Saved</h4>
-                                                <ul><li>Total penalties saved by all players or total points gained from penalties saved.</li></ul>
-                                                <h4>Yellow Cards</h4>
-                                                <ul><li>Total yellow cards received by all players or total points lost from yellow cards.</li></ul>
-                                                <h4>Red Cards</h4>
-                                                <ul><li>Total red cards received by all players or total points lost from red cards.</li></ul>
-                                                <h4>Penalties Missed</h4>
-                                                <ul><li>Total penalties missed by all players or total points lost from penalties missed.</li></ul>
-                                                <h4>Own Goals</h4>
-                                                <ul><li>Total own goals scored by all players or total points lost from own goals.</li></ul>
-                                                <h4>Bonus Points</h4>
-                                                <ul><li>Total Bonus Points awarded to all players.</li></ul>
+                                                <h4>Formation</h4>
+                                                <ul><li>The formation used that week. If automatic substitutions are applied then the formation may differ from what was initially intended by the manager.</li></ul>
+                                                <h4>Total Budget</h4>
+                                                <ul><li>Total team value, including money in the bank, as at the gameweek deadline.</li></ul>
+                                                <h4>Points From GK</h4>
+                                                <ul><li>Total points obtained from the Goalkeeper.</li></ul>
+                                                <h4>GK Budget</h4>
+                                                <ul><li>Value of the Goalkeeper on the pitch.</li></ul>
+                                                <h4>Points From DEF</h4>
+                                                <ul><li>Total points obtained from the Defenders.</li></ul>
+                                                <h4>DEF Budget</h4>
+                                                <ul><li>Total value of all the Defenders on the pitch.</li></ul>
+                                                <h4>Points From MID</h4>
+                                                <ul><li>Total points obtained from the Midfielders.</li></ul>
+                                                <h4>MID Budget</h4>
+                                                <ul><li>Total value of all the Midfielders on the pitch.</li></ul>
+                                                <h4>Points From FWD</h4>
+                                                <ul><li>Total points obtained from the Forwards.</li></ul>
+                                                <h4>FWD Budget</h4>
+                                                <ul><li>Total value of all the Forwards on the pitch.</li></ul>
+                                                <h4>Bench Budget</h4>
+                                                <ul><li>Total value of all the players on the bench.</li></ul>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn" data-dismiss="modal" style="background-color: #c4dfe6; color: #1c4d66">Close</button>
@@ -435,388 +381,148 @@
                                         </div>
                                     </div>
                                 </div>
-                                <label for="number-btn" class="btn btn-manager active" onClick="toggleToNumber()">
-                                    <input type="radio" id="number-btn"><b>Number</b>
-                                </label>
-                                <label for="points-btn" class="btn btn-manager" onClick="toggleToPoints()">
-                                    <input type="radio" id="points-btn"><b>Points</b>
-                                </label>
+                                <table id="" class="weekly table-hover main-manager-display" style="text-align: center; width: 100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Game<br />Week</th>
+                                            <th>Formation</th>
+                                            <th>Total<br />Budget</th>
+                                            <th>GK<br />Budget</th>
+                                            <th>Points<br />From GK</th>
+                                            <th>DEF<br />Budget</th>
+                                            <th>Points<br />From DEF</th>
+                                            <th>MID<br />Budget</th>
+                                            <th>Points<br />From MID</th>
+                                            <th>FWD<br />Budget</th>
+                                            <th>Points<br />From FWD</th>
+                                            <th>Bench<br />Budget</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for week in positions %}
+                                            <tr>
+                                                <td><a href="{{ week.0 }}" class="manager-link">{{ week.1 }}</a></td>
+                                                {% for item in week|slice:"2:" %}
+                                                    <td>{{ item }}</td>
+                                                {% endfor %}
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                <br>
                             </div>
-                            <div id="general-number" style="display: block">
+                            <div class="team-selection hide overflow-display">
+                                <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#teamModal" class="manager-link">here</a> for an explanation of each column.</p>
+                                <div class="modal fade" id="teamModal" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content" style="background-color: #c4dfe6">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h3 class="modal-title" style="text-align: center; color: #1c4d66">Team Selection</h3>
+                                            </div>
+                                            <div class="modal-body" style="color: #1c4d66">
+                                                <h4>Game Week</h4>
+                                                <ul><li>The Gameweek number.</li></ul>
+                                                <h4>Chip Used</h4>
+                                                <ul><li>Which Chip was played, if any.</li></ul>
+                                                <h4>Transfer Cost</h4>
+                                                <ul><li>The amount of points spent on transfers.</li></ul>
+                                                <h4>Captain</h4>
+                                                <ul><li>Which player was chosen as Captain. If the Vice Captain played and the Captain didn't play (or has yet to play in the current week), the Vice Captain's name will be here instead.</li></ul>
+                                                <h4>Captain Points</h4>
+                                                <ul><li>How many points the Captain (or Vice Captain, if applicable) scored including the 2x multiplier. (Or 3x if the Triple Captain chip was played.)</li></ul>
+                                                <h4>MVP</h4>
+                                                <ul><li>Which player scored the most points.</li></ul>
+                                                <h4>MVP Points</h4>
+                                                <ul><li>How many points the MVP scored.<br />Note that the Total figure for MVP points shown is the cumulative figure of the MVP of each week. The number of points that the Season MVP has scored can be seen on the Squad Statistics page.</li></ul>
+                                                <h4>Captain Points Lost</h4>
+                                                <ul><li>How many points the team lost due to not selecting the highest scoring player as Captain. This is equal to the MVP's base points minus the Captain's base points, or double that if the Triple Captain chip was in effect.</li></ul>
+                                                <h4>Points on Bench</h4>
+                                                <ul><li>Total number of points scored by the players on the bench.</li></ul>
+                                                <h4>Bench Points Lost</h4>
+                                                <ul><li>How many points on the bench could have been on the pitch.</li></ul>
+                                                <h4>Points</h4>
+                                                <ul><li>Total points scored, including the Captain multiplier and deductions for transfers.</li></ul>
+                                                <h4>Maximum Points</h4>
+                                                <ul><li>The maximum amount of points that could have been obtained by choosing the best Captain and starting eleven.<br />Click on the number to see the best possible lineup for that week.</li></ul>
+                                                <h4>Potential Lost</h4>
+                                                <ul><li>Total points lost by not choosing the optimal Captain and starting eleven.</li></ul>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn" data-dismiss="modal" style="background-color: #c4dfe6; color: #1c4d66">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <table class="weekly table-hover main-manager-display" style="text-align: center; width: 100%">
                                     <thead>
                                         <tr>
                                             <th>Game<br />Week</th>
-                                            <th>Base<br />Points</th>
-                                            <th>Minutes</th>
-                                            <th>Goals</th>
-                                            <th>Assists</th>
-                                            <th>Clean<br />Sheets</th>
-                                            <th>Saves</th>
-                                            <th>Goals<br />Conceded</th>
-                                            <th>Penalties<br />Saved</th>
-                                            <th>Yellow<br />Cards</th>
-                                            <th>Red<br />Cards</th>
-                                            <th>Penalties<br />Missed</th>
-                                            <th>Own<br />Goals</th>
-                                            <th>Bonus<br />Points</th>
+                                            <th>Chip<br />Used</th>
+                                            <th>Transfer<br />Cost</th>
+                                            <th>Captain</th>
+                                            <th>Captain<br />Points</th>
+                                            <th>MVP</th>
+                                            <th>MVP<br />Points</th>
+                                            <th>Captain<br />Pts Lost</th>
+                                            <th>Points<br />on Bench</th>
+                                            <th>Bench<br />Pts Lost</th>
+                                            <th>Points</th>
+                                            <th>Maximum<br />Points</th>
+                                            <th>Potential<br />Lost</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for week in general_number %}
-                                        <tr>
-                                            <td><a href="{{ week.0 }}" class="manager-link">{{ week.1 }}</a></td>
-                                            {% for item in week|slice:"2:" %}
-                                                <td>{{ item }}</td>
-                                            {% endfor %}
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                                <br>
-                            </div>
-                            <div id="general-points" style="display: none">
-                                <table class="weekly general table-hover main-manager-display" style="text-align: center; width: 100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Game<br />Week</th>
-                                            <th>Base<br />Points</th>
-                                            <th>Minutes</th>
-                                            <th>Goals</th>
-                                            <th>Assists</th>
-                                            <th>Clean<br />Sheets</th>
-                                            <th>Saves</th>
-                                            <th>Goals<br />Conceded</th>
-                                            <th>Penalties<br />Saved</th>
-                                            <th>Yellow<br />Cards</th>
-                                            <th>Red<br />Cards</th>
-                                            <th>Penalties<br />Missed</th>
-                                            <th>Own<br />Goals</th>
-                                            <th>Bonus<br />Points</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for week in general_points %}
-                                        <tr>
-                                            <td><a href="{{ week.0 }}" class="manager-link">{{ week.1 }}</a></td>
-                                            {% for item in week|slice:"2:" %}
-                                                <td>{{ item }}</td>
-                                            {% endfor %}
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                                <br>
-                            </div>
-                        </div>
-                        <div class="positions hide overflow-display">
-                            <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#positionModal" class="manager-link">here</a> for an explanation of each column.</p>
-                            <div class="modal fade" id="positionModal" role="dialog">
-                                <div class="modal-dialog">
-                                    <div class="modal-content" style="background-color: #c4dfe6">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h3 class="modal-title" style="text-align: center; color: #1c4d66">Positions</h3>
-                                        </div>
-                                        <div class="modal-body" style="color: #1c4d66">
-                                            <p style="color: #1c4d66">Note: The figures used for the budgets are the market values of each player at the Gameweek deadline, not the price paid by the manager for each player.</p>
-                                            <br>
-                                            <h4>Game Week</h4>
-                                            <ul><li>The Gameweek number.</li></ul>
-                                            <h4>Formation</h4>
-                                            <ul><li>The formation used that week. If automatic substitutions are applied then the formation may differ from what was initially intended by the manager.</li></ul>
-                                            <h4>Total Budget</h4>
-                                            <ul><li>Total team value, including money in the bank, as at the gameweek deadline.</li></ul>
-                                            <h4>Points From GK</h4>
-                                            <ul><li>Total points obtained from the Goalkeeper.</li></ul>
-                                            <h4>GK Budget</h4>
-                                            <ul><li>Value of the Goalkeeper on the pitch.</li></ul>
-                                            <h4>Points From DEF</h4>
-                                            <ul><li>Total points obtained from the Defenders.</li></ul>
-                                            <h4>DEF Budget</h4>
-                                            <ul><li>Total value of all the Defenders on the pitch.</li></ul>
-                                            <h4>Points From MID</h4>
-                                            <ul><li>Total points obtained from the Midfielders.</li></ul>
-                                            <h4>MID Budget</h4>
-                                            <ul><li>Total value of all the Midfielders on the pitch.</li></ul>
-                                            <h4>Points From FWD</h4>
-                                            <ul><li>Total points obtained from the Forwards.</li></ul>
-                                            <h4>FWD Budget</h4>
-                                            <ul><li>Total value of all the Forwards on the pitch.</li></ul>
-                                            <h4>Bench Budget</h4>
-                                            <ul><li>Total value of all the players on the bench.</li></ul>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn" data-dismiss="modal" style="background-color: #c4dfe6; color: #1c4d66">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <table id="" class="weekly table-hover main-manager-display" style="text-align: center; width: 100%">
-                                <thead>
-                                    <tr>
-                                        <th>Game<br />Week</th>
-                                        <th>Formation</th>
-                                        <th>Total<br />Budget</th>
-                                        <th>GK<br />Budget</th>
-                                        <th>Points<br />From GK</th>
-                                        <th>DEF<br />Budget</th>
-                                        <th>Points<br />From DEF</th>
-                                        <th>MID<br />Budget</th>
-                                        <th>Points<br />From MID</th>
-                                        <th>FWD<br />Budget</th>
-                                        <th>Points<br />From FWD</th>
-                                        <th>Bench<br />Budget</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for week in positions %}
-                                        <tr>
-                                            <td><a href="{{ week.0 }}" class="manager-link">{{ week.1 }}</a></td>
-                                            {% for item in week|slice:"2:" %}
-                                                <td>{{ item }}</td>
-                                            {% endfor %}
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                            <br>
-                        </div>
-
-                        <div class="ranking hide overflow-display">
-                            <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#rankingModal" class="manager-link">here</a> for an explanation of each column.</p>
-                            <div class="modal fade" id="rankingModal" role="dialog">
-                                <div class="modal-dialog">
-                                    <div class="modal-content" style="background-color: #c4dfe6">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h3 class="modal-title" style="text-align: center; color: #1c4d66">Ranking</h3>
-                                        </div>
-                                        <div class="modal-body" style="color: #1c4d66">
-                                            <p style="color: #1c4d66">Note: The figures used for the budgets are the market values of each player at the Gameweek deadline, not the price paid by the manager for each player.</p>
-                                            <br>
-                                            <h4>Game Week</h4>
-                                            <ul><li>The Gameweek number.</li></ul>
-                                            <h4>Formation</h4>
-                                            <ul><li>The formation used that week. If automatic substitutions are applied then the formation may differ from what was initially intended by the manager.</li></ul>
-                                            <h4>Total Budget</h4>
-                                            <ul><li>Total team value, including money in the bank, as at the gameweek deadline.</li></ul>
-                                            <h4>Points From GK</h4>
-                                            <ul><li>Total points obtained from the Goalkeeper.</li></ul>
-                                            <h4>GK Budget</h4>
-                                            <ul><li>Value of the Goalkeeper on the pitch.</li></ul>
-                                            <h4>Points From DEF</h4>
-                                            <ul><li>Total points obtained from the Defenders.</li></ul>
-                                            <h4>DEF Budget</h4>
-                                            <ul><li>Total value of all the Defenders on the pitch.</li></ul>
-                                            <h4>Points From MID</h4>
-                                            <ul><li>Total points obtained from the Midfielders.</li></ul>
-                                            <h4>MID Budget</h4>
-                                            <ul><li>Total value of all the Midfielders on the pitch.</li></ul>
-                                            <h4>Points From FWD</h4>
-                                            <ul><li>Total points obtained from the Forwards.</li></ul>
-                                            <h4>FWD Budget</h4>
-                                            <ul><li>Total value of all the Forwards on the pitch.</li></ul>
-                                            <h4>Bench Budget</h4>
-                                            <ul><li>Total value of all the players on the bench.</li></ul>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn" data-dismiss="modal" style="background-color: #c4dfe6; color: #1c4d66">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <table id="" class="weekly table-hover main-manager-display" style="text-align: center; width: 100%">
-                                <thead>
-                                    <tr>
-                                        <th>Game<br />Week</th>
-                                        <th>Formation</th>
-                                        <th>Total<br />Budget</th>
-                                        <th>GK<br />Budget</th>
-                                        <th>Points<br />From GK</th>
-                                        <th>DEF<br />Budget</th>
-                                        <th>Points<br />From DEF</th>
-                                        <th>MID<br />Budget</th>
-                                        <th>Points<br />From MID</th>
-                                        <th>FWD<br />Budget</th>
-                                        <th>Points<br />From FWD</th>
-                                        <th>Bench<br />Budget</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for week in positions %}
-                                        <tr>
-                                            <td><a href="{{ week.0 }}" class="manager-link">{{ week.1 }}</a></td>
-                                            {% for item in week|slice:"2:" %}
-                                                <td>{{ item }}</td>
-                                            {% endfor %}
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                            <br>
-                        </div>
-
-                        <div class="team-selection hide overflow-display">
-                            <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#teamModal" class="manager-link">here</a> for an explanation of each column.</p>
-                            <div class="modal fade" id="teamModal" role="dialog">
-                                <div class="modal-dialog">
-                                    <div class="modal-content" style="background-color: #c4dfe6">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h3 class="modal-title" style="text-align: center; color: #1c4d66">Team Selection</h3>
-                                        </div>
-                                        <div class="modal-body" style="color: #1c4d66">
-                                            <h4>Game Week</h4>
-                                            <ul><li>The Gameweek number.</li></ul>
-                                            <h4>Chip Used</h4>
-                                            <ul><li>Which Chip was played, if any.</li></ul>
-                                            <h4>Transfer Cost</h4>
-                                            <ul><li>The amount of points spent on transfers.</li></ul>
-                                            <h4>Captain</h4>
-                                            <ul><li>Which player was chosen as Captain. If the Vice Captain played and the Captain didn't play (or has yet to play in the current week), the Vice Captain's name will be here instead.</li></ul>
-                                            <h4>Captain Points</h4>
-                                            <ul><li>How many points the Captain (or Vice Captain, if applicable) scored including the 2x multiplier. (Or 3x if the Triple Captain chip was played.)</li></ul>
-                                            <h4>MVP</h4>
-                                            <ul><li>Which player scored the most points.</li></ul>
-                                            <h4>MVP Points</h4>
-                                            <ul><li>How many points the MVP scored.<br />Note that the Total figure for MVP points shown is the cumulative figure of the MVP of each week. The number of points that the Season MVP has scored can be seen on the Squad Statistics page.</li></ul>
-                                            <h4>Captain Points Lost</h4>
-                                            <ul><li>How many points the team lost due to not selecting the highest scoring player as Captain. This is equal to the MVP's base points minus the Captain's base points, or double that if the Triple Captain chip was in effect.</li></ul>
-                                            <h4>Points on Bench</h4>
-                                            <ul><li>Total number of points scored by the players on the bench.</li></ul>
-                                            <h4>Bench Points Lost</h4>
-                                            <ul><li>How many points on the bench could have been on the pitch.</li></ul>
-                                            <h4>Points</h4>
-                                            <ul><li>Total points scored, including the Captain multiplier and deductions for transfers.</li></ul>
-                                            <h4>Maximum Points</h4>
-                                            <ul><li>The maximum amount of points that could have been obtained by choosing the best Captain and starting eleven.<br />Click on the number to see the best possible lineup for that week.</li></ul>
-                                            <h4>Potential Lost</h4>
-                                            <ul><li>Total points lost by not choosing the optimal Captain and starting eleven.</li></ul>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn" data-dismiss="modal" style="background-color: #c4dfe6; color: #1c4d66">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <table class="weekly table-hover main-manager-display" style="text-align: center; width: 100%">
-                                <thead>
-                                    <tr>
-                                        <th>Game<br />Week</th>
-                                        <th>Chip<br />Used</th>
-                                        <th>Transfer<br />Cost</th>
-                                        <th>Captain</th>
-                                        <th>Captain<br />Points</th>
-                                        <th>MVP</th>
-                                        <th>MVP<br />Points</th>
-                                        <th>Captain<br />Pts Lost</th>
-                                        <th>Points<br />on Bench</th>
-                                        <th>Bench<br />Pts Lost</th>
-                                        <th>Points</th>
-                                        <th>Maximum<br />Points</th>
-                                        <th>Potential<br />Lost</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for week in team_selection %}
-                                        <tr>
-                                            <td><a href="{{ week.0 }}" class="manager-link">{{ week.1 }}</a></td>
-                                            {% for item in week|slice:"2:12" %}
-                                                <td>{{ item }}</td>
-                                            {% endfor %}
-                                            <td><a data-toggle="modal" href="#maxModal{{ week.1 }}" class="manager-link">{{ week.12 }}</a></td>
-                                            <td>{{ week.13 }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                            <br>
-                            {% for team in max_teams %}
-                            <div class="modal fade" id="maxModal{{ team.0 }}" role="dialog">
-                                <div class="modal-dialog">
-                                    <div class="modal-content" style="background-color: #c4dfe6">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h3 class="modal-title" style="text-align: center; color: #1c4d66">Week {{ team.0 }} Best Possible Team</h3>
-                                        </div>
-                                        <div class="modal-body">
-                                            <table class="modal-table" style="width: 100%; color: #1c4d66; text-align: center">
-                                                <tr style="font-size: 140%">
-                                                    <td>Position</td>
-                                                    <td>Player</td>
-                                                    <td>Points</td>
-                                                </tr>
-                                                {% for points, position, player in team|slice:"4:" %}
-                                                    <tr style="font-size: 120%">
-                                                        <td>{{ position }}</td>
-                                                        <td>{{ player }}</td>
-                                                        <td>{{ points }}</td>
-                                                    </tr>
+                                        {% for week in team_selection %}
+                                            <tr>
+                                                <td><a href="{{ week.0 }}" class="manager-link">{{ week.1 }}</a></td>
+                                                {% for item in week|slice:"2:12" %}
+                                                    <td>{{ item }}</td>
                                                 {% endfor %}
-                                                <tr style="font-size: 120%">
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td style="border-top: solid #1c4d66 1px">{{ team.1 }}</td>
-                                                </tr>
-                                                <tr style="font-size: 120%">
-                                                    <td></td>
-                                                    <td>Transfer Cost</td>
-                                                    <td>{{ team.2 }}</td>
-                                                </tr><tr style="font-size: 140%">
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td style="border-top: solid #1c4d66 1px">{{ team.3 }}</td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn" data-dismiss="modal" style="background-color: #c4dfe6; color: #1c4d66">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                        <div class="squad-stats hide overflow-display">
-                            <div class="col-md-7">
-                                <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#squadModal" class="manager-link">here</a> for an explanation of each column.</p>
-                                <div class="modal fade" id="squadModal" role="dialog">
+                                                <td><a data-toggle="modal" href="#maxModal{{ week.1 }}" class="manager-link">{{ week.12 }}</a></td>
+                                                <td>{{ week.13 }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                <br>
+                                {% for team in max_teams %}
+                                <div class="modal fade" id="maxModal{{ team.0 }}" role="dialog">
                                     <div class="modal-dialog">
                                         <div class="modal-content" style="background-color: #c4dfe6">
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                <h3 class="modal-title" style="text-align: center; color: #1c4d66">Squad Statistics</h3>
+                                                <h3 class="modal-title" style="text-align: center; color: #1c4d66">Week {{ team.0 }} Best Possible Team</h3>
                                             </div>
-                                            <div class="modal-body" style="color: #1c4d66">
-                                                <h4><b>Players</b></h4>
-                                                <h4>Player Name</h4>
-                                                <ul><li>Name of any player who has featured in the matchday squad.</li></ul>
-                                                <h4>Weeks on Pitch</h4>
-                                                <ul><li>Number of times the player has featured on the pitch, including times where they were selected on the bench but were substituted in.</li></ul>
-                                                <h4>Weeks in Squad</h4>
-                                                <ul><li>Number of times the player has featured in the matchday squad.</li></ul>
-                                                <h4>Weeks Captain</h4>
-                                                <ul><li>Number of times the player has acted as Captain, including when they were chosen as Vice Captain and ended up as Captain due to the original Captain not playing.</li></ul>
-                                                <h4>Points</h4>
-                                                <ul><li>How many points the player has contributed to the total points. Points are only counted if the player was on the pitch and the multiplier for the Captain is included.</li></ul>
-                                                <h4>% of Total</h4>
-                                                <ul><li>The percentage of total points earned by the player. Total points does not include points deducted for transfers.</li></ul>
-                                                <h4>Points/Game</h4>
-                                                <ul><li>Average points scored per game. Points are only counted if the player was on the pitch and games where the player was on the bench aren't included in the average.</li></ul>
-                                                <h4>V.A.P.M.</h4>
-                                                <ul><li>Value Added Per Million pounds of value, an indication of value for money.<br />If we assume that every player gets 2 points for minutes played, their added value is any points above or below 2 points and their V.A.P.M. is their average value per game divided by their cost.<br />For example, a player who costs 8.0 and scores 8 points adds 6 value. They have an average Points Per Million (P.P.M.) of 1.0 and a V.A.P.M. of 0.75. A player who costs 4.0 and scores 4 points adds 2 value. They also have an average P.P.M. of 1.0 but their V.A.P.M. is only 0.5. Thus, V.A.P.M. accounts for a bias towards cheaper players which occurs if we only consider a total points per game average.<br />The price paid by a manager for a player is private, therefore the value used for each player is their average market value across the weeks they've been in the team. As a result, the V.A.P.M. may be slightly innacurate if this value differs from what the manager paid for the player.</li></ul>
-                                                <h4><b><br />Teams</b></h4>
-                                                <h4>PL Team</h4>
-                                                <ul><li>Each team in the Premier League</li></ul>
-                                                <h4>Unique Players</h4>
-                                                <ul><li>Number of different players that have been selected in the matchday squad from each team.</li></ul>
-                                                <h4>Players Started</h4>
-                                                <ul><li>Cumulative number of players who were on the pitch from each team. For example, if you have 2 Spurs players on the pitch for GW1 and 3 Spurs players on the pitch for GW2, your total players started from Spurs after two weeks is 5.</li></ul>
-                                                <h4>Points</h4>
-                                                <ul><li>How many points players from this team have contributed to the total points. Points are only counted if the player was on the pitch and the multiplier for the Captain is included.</li></ul>
-                                                <h4>% of Total</h4>
-                                                <ul><li>The percentage of total points earned by players from this team. Total points does not include points deducted for transfers.</li></ul>
+                                            <div class="modal-body">
+                                                <table class="modal-table" style="width: 100%; color: #1c4d66; text-align: center">
+                                                    <tr style="font-size: 140%">
+                                                        <td>Position</td>
+                                                        <td>Player</td>
+                                                        <td>Points</td>
+                                                    </tr>
+                                                    {% for points, position, player in team|slice:"4:" %}
+                                                        <tr style="font-size: 120%">
+                                                            <td>{{ position }}</td>
+                                                            <td>{{ player }}</td>
+                                                            <td>{{ points }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    <tr style="font-size: 120%">
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td style="border-top: solid #1c4d66 1px">{{ team.1 }}</td>
+                                                    </tr>
+                                                    <tr style="font-size: 120%">
+                                                        <td></td>
+                                                        <td>Transfer Cost</td>
+                                                        <td>{{ team.2 }}</td>
+                                                    </tr><tr style="font-size: 140%">
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td style="border-top: solid #1c4d66 1px">{{ team.3 }}</td>
+                                                    </tr>
+                                                </table>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn" data-dismiss="modal" style="background-color: #c4dfe6; color: #1c4d66">Close</button>
@@ -824,63 +530,111 @@
                                         </div>
                                     </div>
                                 </div>
-                                <table class="squad squad-player table-hover squad-one main-manager-display" style="text-align: center; width: 100%">
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th>Player<br />Name</th>
-                                            <th>Weeks<br />on Pitch</th>
-                                            <th>Weeks<br /> in Squad</th>
-                                            <th>Weeks<br />Captain</th>
-                                            <th>Points</th>
-                                            <th>% of<br />Total</th>
-                                            <th>Points<br />/Game</th>
-                                            <th>V.A.P.M.</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for player in squad_stats_players %}
-                                            <tr>
-                                                <td style="width: 1%; white-space: nowrap"></td>
-                                                {% for item in player %}
-                                                    <td>{{ item }}</td>
-                                                {% endfor %}
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                                <br>
+                                {% endfor %}
                             </div>
-                            <div class="col-md-5">
-                                <p style="font-size: 85%; color: #336B87">;)</p>
-                                <table class="squad squad-team table-hover squad-two main-manager-display" style="text-align: center; width: 100%">
-                                    <thead>
-                                        <tr>
-                                            <th>PL<br />Team</th>
-                                            <th>Unique<br />Players</th>
-                                            <th>Players<br />Started</th>
-                                            <th>Points</th>
-                                            <th>% of<br />Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for team in squad_stats_teams %}
+                            <div class="squad-stats hide overflow-display">
+                                <div class="col-md-7">
+                                    <p style="font-size: 85%; color: lightgray">Click <a data-toggle="modal" href="#squadModal" class="manager-link">here</a> for an explanation of each column.</p>
+                                    <div class="modal fade" id="squadModal" role="dialog">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content" style="background-color: #c4dfe6">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h3 class="modal-title" style="text-align: center; color: #1c4d66">Squad Statistics</h3>
+                                                </div>
+                                                <div class="modal-body" style="color: #1c4d66">
+                                                    <h4><b>Players</b></h4>
+                                                    <h4>Player Name</h4>
+                                                    <ul><li>Name of any player who has featured in the matchday squad.</li></ul>
+                                                    <h4>Weeks on Pitch</h4>
+                                                    <ul><li>Number of times the player has featured on the pitch, including times where they were selected on the bench but were substituted in.</li></ul>
+                                                    <h4>Weeks in Squad</h4>
+                                                    <ul><li>Number of times the player has featured in the matchday squad.</li></ul>
+                                                    <h4>Weeks Captain</h4>
+                                                    <ul><li>Number of times the player has acted as Captain, including when they were chosen as Vice Captain and ended up as Captain due to the original Captain not playing.</li></ul>
+                                                    <h4>Points</h4>
+                                                    <ul><li>How many points the player has contributed to the total points. Points are only counted if the player was on the pitch and the multiplier for the Captain is included.</li></ul>
+                                                    <h4>% of Total</h4>
+                                                    <ul><li>The percentage of total points earned by the player. Total points does not include points deducted for transfers.</li></ul>
+                                                    <h4>Points/Game</h4>
+                                                    <ul><li>Average points scored per game. Points are only counted if the player was on the pitch and games where the player was on the bench aren't included in the average.</li></ul>
+                                                    <h4>V.A.P.M.</h4>
+                                                    <ul><li>Value Added Per Million pounds of value, an indication of value for money.<br />If we assume that every player gets 2 points for minutes played, their added value is any points above or below 2 points and their V.A.P.M. is their average value per game divided by their cost.<br />For example, a player who costs 8.0 and scores 8 points adds 6 value. They have an average Points Per Million (P.P.M.) of 1.0 and a V.A.P.M. of 0.75. A player who costs 4.0 and scores 4 points adds 2 value. They also have an average P.P.M. of 1.0 but their V.A.P.M. is only 0.5. Thus, V.A.P.M. accounts for a bias towards cheaper players which occurs if we only consider a total points per game average.<br />The price paid by a manager for a player is private, therefore the value used for each player is their average market value across the weeks they've been in the team. As a result, the V.A.P.M. may be slightly innacurate if this value differs from what the manager paid for the player.</li></ul>
+                                                    <h4><b><br />Teams</b></h4>
+                                                    <h4>PL Team</h4>
+                                                    <ul><li>Each team in the Premier League</li></ul>
+                                                    <h4>Unique Players</h4>
+                                                    <ul><li>Number of different players that have been selected in the matchday squad from each team.</li></ul>
+                                                    <h4>Players Started</h4>
+                                                    <ul><li>Cumulative number of players who were on the pitch from each team. For example, if you have 2 Spurs players on the pitch for GW1 and 3 Spurs players on the pitch for GW2, your total players started from Spurs after two weeks is 5.</li></ul>
+                                                    <h4>Points</h4>
+                                                    <ul><li>How many points players from this team have contributed to the total points. Points are only counted if the player was on the pitch and the multiplier for the Captain is included.</li></ul>
+                                                    <h4>% of Total</h4>
+                                                    <ul><li>The percentage of total points earned by players from this team. Total points does not include points deducted for transfers.</li></ul>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn" data-dismiss="modal" style="background-color: #c4dfe6; color: #1c4d66">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table class="squad squad-player table-hover squad-one main-manager-display" style="text-align: center; width: 100%">
+                                        <thead>
                                             <tr>
-                                                {% for item in team %}
-                                                    <td>{{ item }}</td>
-                                                {% endfor %}
+                                                <th></th>
+                                                <th>Player<br />Name</th>
+                                                <th>Weeks<br />on Pitch</th>
+                                                <th>Weeks<br /> in Squad</th>
+                                                <th>Weeks<br />Captain</th>
+                                                <th>Points</th>
+                                                <th>% of<br />Total</th>
+                                                <th>Points<br />/Game</th>
+                                                <th>V.A.P.M.</th>
                                             </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                                <br>
+                                        </thead>
+                                        <tbody>
+                                            {% for player in squad_stats_players %}
+                                                <tr>
+                                                    <td style="width: 1%; white-space: nowrap"></td>
+                                                    {% for item in player %}
+                                                        <td>{{ item }}</td>
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    <br>
+                                </div>
+                                <div class="col-md-5">
+                                    <p style="font-size: 85%; color: #336B87">;)</p>
+                                    <table class="squad squad-team table-hover squad-two main-manager-display" style="text-align: center; width: 100%">
+                                        <thead>
+                                            <tr>
+                                                <th>PL<br />Team</th>
+                                                <th>Unique<br />Players</th>
+                                                <th>Players<br />Started</th>
+                                                <th>Points</th>
+                                                <th>% of<br />Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for team in squad_stats_teams %}
+                                                <tr>
+                                                    {% for item in team %}
+                                                        <td>{{ item }}</td>
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    <br>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <br>
+        <br>
+    {% endblock %}
 </body>
-</html>
