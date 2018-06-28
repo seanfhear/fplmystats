@@ -1,6 +1,8 @@
 # https://fplmystats.com
 Fantasy Premier League tool.
 
+NOTE: The website no longer runs out of this repository. These files can be used for reference but aren't up to date with the site.
+
 A website that displays in-depth statistics relating to users in FPL.
 
 ### Prerequisites
