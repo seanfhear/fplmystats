@@ -3,6 +3,8 @@ Fantasy Premier League tool.
 
 A website that displays in-depth statistics relating to users in FPL.
 
+NOTE: The website no longer runs out of this repository. These files can be used for reference but aren't up to date with the site.
+
 ### Prerequisites
 
 ```
