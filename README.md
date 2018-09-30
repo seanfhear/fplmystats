@@ -3,7 +3,7 @@ Fantasy Premier League tool.
 
 A website that displays in-depth statistics relating to users in FPL.
 
-NOTE: The website no longer runs out of this repository. These files can be used for reference but aren't up to date with the site.
+### NOTE: The website no longer runs out of this repository. These files can be used for reference but aren't up to date with the site.
 
 ### Prerequisites
 
@@ -15,7 +15,8 @@ The user needs only their Manager ID number or League ID number. Instructions to
 
 * Python 3
 * Django
-* SQLite
+* ~~SQLite~~
+* PostgreSQL
 * Bootstrap
 * [Data Tables](https://datatables.net)
 * [Zoho Mail](https://www.zoho.eu/mail/)
